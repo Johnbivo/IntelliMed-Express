@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="main_panel" prefHeight="720.0" prefWidth="1280.0" type="AnchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inteliMedExpress.controllers.RegisterController">
+<AnchorPane fx:id="main_panel"   stylesheets="@../css/register.css"  prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inteliMedExpress.controllers.RegisterController">
     <children>
         <ImageView fitHeight="329.0" fitWidth="296.0" layoutX="480.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -46,36 +46,36 @@
                     </font>
                 </Label>
                 <PasswordField fx:id="password_textfield" layoutX="16.0" layoutY="259.0" promptText="Password" />
-                <Button fx:id="login_button" layoutX="37.0" layoutY="395.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Register" />
-                <Hyperlink fx:id="register_hyper" layoutX="546.0" layoutY="397.0" text="Already have an account?" />
-            <Label fx:id="username_label1" alignment="CENTER" layoutX="173.0" layoutY="182.0" prefHeight="20.0" prefWidth="151.0" text="Email" textAlignment="CENTER">
+                <Button fx:id="register_button" layoutX="37.0" layoutY="395.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Register" />
+                <Hyperlink fx:id="back_to_login_hype" layoutX="546.0" layoutY="397.0" onAction="#back_to_login" text="Already have an account?" />
+            <Label fx:id="email_label" alignment="CENTER" layoutX="173.0" layoutY="182.0" prefHeight="20.0" prefWidth="151.0" text="Email" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="username_textfield1" layoutX="175.0" layoutY="202.0" promptText="Email" />
-            <Label fx:id="username_label11" alignment="CENTER" layoutX="173.0" layoutY="239.0" prefHeight="20.0" prefWidth="151.0" text="Address" textAlignment="CENTER">
+            <TextField fx:id="email_textfield" layoutX="175.0" layoutY="202.0" promptText="Email" />
+            <Label fx:id="address_label" alignment="CENTER" layoutX="173.0" layoutY="239.0" prefHeight="20.0" prefWidth="151.0" text="Address" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="username_textfield11" layoutX="175.0" layoutY="259.0" promptText="Address" />
-            <Label fx:id="username_label12" alignment="CENTER" layoutX="331.0" layoutY="182.0" prefHeight="20.0" prefWidth="151.0" text="Phone Number" textAlignment="CENTER">
+            <TextField fx:id="address_textfield" layoutX="175.0" layoutY="259.0" promptText="Address" />
+            <Label fx:id="phone_label" alignment="CENTER" layoutX="331.0" layoutY="182.0" prefHeight="20.0" prefWidth="151.0" text="Phone Number" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="username_textfield12" layoutX="333.0" layoutY="202.0" promptText="Email" />
-            <Label fx:id="username_label121" alignment="CENTER" layoutX="331.0" layoutY="239.0" prefHeight="20.0" prefWidth="151.0" text="Age" textAlignment="CENTER">
+            <TextField fx:id="phone_textfield" layoutX="333.0" layoutY="202.0" promptText="Email" />
+            <Label fx:id="age_label" alignment="CENTER" layoutX="331.0" layoutY="239.0" prefHeight="20.0" prefWidth="151.0" text="Age" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="username_textfield121" layoutX="333.0" layoutY="259.0" promptText="Age" />
-            <ChoiceBox layoutX="16.0" layoutY="312.0" prefHeight="25.0" prefWidth="149.0" />
-            <ChoiceBox layoutX="512.0" layoutY="202.0" prefWidth="150.0" />
-            <ChoiceBox layoutX="512.0" layoutY="259.0" prefWidth="150.0" />
+            <TextField fx:id="age_textfield" layoutX="333.0" layoutY="259.0" promptText="Age" />
+            <ChoiceBox fx:id="gender_dropdown" layoutX="16.0" layoutY="312.0" prefHeight="25.0" prefWidth="149.0" />
+            <ChoiceBox fx:id="profession_dropdown" layoutX="512.0" layoutY="202.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="department_specialty" layoutX="512.0" layoutY="259.0" prefWidth="150.0" />
             </children>
         </AnchorPane>
     </children>
-</fx:root>
+</AnchorPane>

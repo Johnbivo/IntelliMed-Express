@@ -25,7 +25,7 @@ public class Main extends Application {
 
 
             // Configure the primary stage
-            primaryStage.setTitle("InteliMedExpress - Healthcare Management System");
+            primaryStage.setTitle("InteliMedExpress - Login");
             primaryStage.setScene(scene);
 
 

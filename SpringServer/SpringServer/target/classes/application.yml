@@ -1,0 +1,7 @@
+server:
+  port: 8080
+  ssl:
+    key-alias: SPRINGSERVER
+    key-store: classpath:intellimed.jks
+    key-store-type: JKS
+    key-password: password

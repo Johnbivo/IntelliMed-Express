@@ -11,6 +11,7 @@ module com.inteliMedExpress {
 
     // Web functionality
     requires java.net.http;
+    requires json.simple;
 
     // Export packages to make them accessible
     exports com.inteliMedExpress;  // Export the root package where Main is located

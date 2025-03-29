@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             // Load the main application FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
             Parent root = loader.load();
 
             // Set up the primary scene
@@ -28,13 +28,18 @@ public class Main extends Application {
             primaryStage.setTitle("InteliMedExpress - Healthcare Management System");
             primaryStage.setScene(scene);
 
-            // Set application icon if available
+
+            Image icon = new Image(getClass().getResource("/com/inteliMedExpress/resources/images/logo.png").toString());
+            primaryStage.getIcons().add(icon);
 
 
             // Set minimum window size for better UX
-            primaryStage.setMinWidth(1024);
-            primaryStage.setMinHeight(768);
+            primaryStage.setMinWidth(1280);
+            primaryStage.setMinHeight(720);
 
+
+            primaryStage.setResizable(false);
+            primaryStage.centerOnScreen();
             // Show the application window
             primaryStage.show();
 

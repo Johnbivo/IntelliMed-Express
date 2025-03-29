@@ -36,8 +36,11 @@
     -fx-background-radius: 5;
 }
 
+
+
 #login_button:hover {
     -fx-background-color: #0953a0; /* Slightly darker when hovered */
+    -fx-cursor:hand;
 }
 
 #login_button:pressed {

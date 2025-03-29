@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 
 public class RegisterController implements Initializable {
-
+    private static final String CLASS_NAME = RegisterController.class.getSimpleName();
 
     @FXML
     private TextField username_textfield;
@@ -49,7 +49,7 @@ public class RegisterController implements Initializable {
 
 
 
-
+    private static final String LOGIN_API_URL = "http://localhost:7777/api/register";
 
 
     @Override
@@ -86,6 +86,34 @@ public class RegisterController implements Initializable {
         });
 
     }
+
+
+    public void register(ActionEvent event) throws IOException {
+
+        String username = username_textfield.getText();
+        String password = password_textfield.getText();
+        String email = email_textfield.getText();
+        String phone = phone_textfield.getText();
+        String address = address_textfield.getText();
+        String age = age_textfield.getText();
+        String gender = gender_dropdown.getValue();
+        String profession = profession_dropdown.getValue();
+        String department = department_specialty.getValue();
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 package com.inteliMedExpress.controllers;
 
 
+import com.inteliMedExpress.utils.AppLogger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 
 
 public class LoginController {
-
+    private static final String CLASS_NAME = LoginController.class.getSimpleName();
     @FXML
     private TextField username_textfield;
 
@@ -39,7 +40,15 @@ public class LoginController {
     @FXML
     private Hyperlink register_hyper;
 
-    private static final String LOGIN_API_URL = "http://localhost:7777/api/login";
+    private static final String LOGIN_API_URL = "http://localhost:5000/api/login";
+
+
+
+
+    public void initialize(){
+        AppLogger.initialize();
+        AppLogger.info(CLASS_NAME, "LoginController initialized");
+    }
 
 
     // function that gets triggered by the login button
@@ -51,11 +60,13 @@ public class LoginController {
             showAlert("Error", "Please enter both the username and password fields.");
             return;
         }
+        AppLogger.info(CLASS_NAME, "Login attempt for user: " + username);
 
         try{
             boolean loginSuccess = sendLoginRequest(username,password);
                 if(loginSuccess){
                     showAlert("Success", "Login successful.");
+                    AppLogger.info(CLASS_NAME, username + " successfully logged in.");
                 }
                 else{
                     showAlert("Error", "Login failed");
@@ -77,7 +88,7 @@ public class LoginController {
     private boolean sendLoginRequest(String username, String password) throws IOException {
         URL url = new URL(LOGIN_API_URL);
 
-
+        AppLogger.info(CLASS_NAME, "Sending login request to " + url.toString());
         //Opens the connection
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 

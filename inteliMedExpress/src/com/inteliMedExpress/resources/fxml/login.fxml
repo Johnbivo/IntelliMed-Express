@@ -50,5 +50,6 @@
             <Hyperlink fx:id="register_hyper" layoutX="150.0" layoutY="448.0" onAction="#register" text="You dont have an account?" />
          </children>
       </AnchorPane>
+      <Hyperlink fx:id="credits" layoutX="1202.0" layoutY="674.0" onAction="#showCredits" text="Credits" />
    </children>
 </AnchorPane>

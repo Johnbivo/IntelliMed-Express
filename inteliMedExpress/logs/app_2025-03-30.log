@@ -1,0 +1,150 @@
+2025-03-30 14:26:42.116 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:26:42.119 [INFO] LoginController: LoginController initialized
+2025-03-30 14:26:51.754 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 14:26:51.760 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 14:26:53.205 [INFO] LoginController: admin successfully logged in.
+2025-03-30 14:30:05.670 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:30:05.673 [INFO] LoginController: LoginController initialized
+2025-03-30 14:30:11.633 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 14:30:11.636 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 14:30:12.868 [INFO] LoginController: admin successfully logged in.
+2025-03-30 14:41:35.823 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:41:35.828 [INFO] LoginController: LoginController initialized
+2025-03-30 14:43:59.079 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:43:59.086 [INFO] LoginController: LoginController initialized
+2025-03-30 14:44:05.153 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 14:44:05.156 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 14:44:06.352 [INFO] LoginController: admin successfully logged in.
+2025-03-30 14:45:43.337 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:45:43.340 [INFO] LoginController: LoginController initialized
+2025-03-30 14:45:48.896 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 14:45:48.898 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 14:45:49.794 [INFO] LoginController: admin successfully logged in.
+2025-03-30 14:46:23.192 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 14:46:23.197 [INFO] LoginController: LoginController initialized
+2025-03-30 14:46:28.942 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 14:46:28.944 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 14:46:29.931 [INFO] LoginController: admin successfully logged in.
+2025-03-30 15:19:18.728 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 15:19:18.734 [INFO] LoginController: LoginController initialized
+2025-03-30 15:19:28.244 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 15:19:28.247 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 15:19:29.299 [INFO] LoginController: admin successfully logged in.
+2025-03-30 15:31:03.902 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 15:31:03.910 [INFO] LoginController: LoginController initialized
+2025-03-30 15:34:13.676 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 15:34:13.679 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 15:34:14.726 [INFO] LoginController: admin successfully logged in.
+2025-03-30 15:40:16.728 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 15:40:16.734 [INFO] LoginController: LoginController initialized
+2025-03-30 15:40:25.549 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 15:40:25.552 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 15:40:26.856 [INFO] LoginController: admin successfully logged in.
+2025-03-30 15:46:52.224 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 15:46:52.231 [INFO] LoginController: LoginController initialized
+2025-03-30 15:46:58.714 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 15:46:58.717 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 15:46:59.852 [INFO] LoginController: admin successfully logged in.
+2025-03-30 15:56:01.087 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 15:56:01.093 [INFO] LoginController: LoginController initialized
+2025-03-30 15:56:07.695 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 15:56:07.697 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 15:56:08.823 [INFO] LoginController: admin successfully logged in.
+2025-03-30 16:01:27.345 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 16:01:27.349 [INFO] LoginController: LoginController initialized
+2025-03-30 16:01:32.847 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 16:01:32.849 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 16:01:40.359 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 16:01:40.359 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 16:01:41.269 [INFO] LoginController: admin successfully logged in.
+2025-03-30 16:03:00.739 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 16:03:00.744 [INFO] LoginController: LoginController initialized
+2025-03-30 16:03:07.778 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 16:03:07.781 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 16:03:08.845 [INFO] LoginController: admin successfully logged in.
+2025-03-30 16:43:17.260 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 16:43:17.263 [INFO] LoginController: LoginController initialized
+2025-03-30 16:43:23.853 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 16:43:23.855 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 16:43:32.889 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 16:43:32.891 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 16:43:33.773 [INFO] LoginController: admin successfully logged in.
+2025-03-30 17:02:09.259 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 17:02:09.262 [INFO] LoginController: LoginController initialized
+2025-03-30 17:36:33.230 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 17:36:33.236 [INFO] LoginController: LoginController initialized
+2025-03-30 17:37:11.554 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 17:37:11.556 [INFO] LoginController: Sending login request to http://localhost:8080/api/auth/login
+2025-03-30 17:37:41.230 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 17:37:41.237 [INFO] LoginController: LoginController initialized
+2025-03-30 17:38:02.438 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 17:38:02.441 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 17:40:41.286 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 17:40:41.292 [INFO] LoginController: LoginController initialized
+2025-03-30 17:40:49.644 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 17:40:49.647 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 17:40:50.777 [INFO] LoginController: admin successfully logged in.
+2025-03-30 17:44:35.937 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 17:44:35.946 [INFO] LoginController: LoginController initialized
+2025-03-30 17:44:57.364 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 17:44:57.366 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 17:44:58.345 [INFO] LoginController: admin successfully logged in.
+2025-03-30 18:06:52.125 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:06:52.131 [INFO] LoginController: LoginController initialized
+2025-03-30 18:07:16.137 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 18:07:16.139 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 18:07:25.846 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 18:07:25.846 [INFO] LoginController: Sending login request to http://localhost:8080/api/login
+2025-03-30 18:07:26.784 [INFO] LoginController: admin successfully logged in.
+2025-03-30 18:23:28.934 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:23:28.942 [INFO] LoginController: LoginController initialized
+2025-03-30 18:23:47.152 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 18:23:47.153 [INFO] LoginController: Using truststore: /C:/Users/User/Desktop/inteliMedExpress/inteliMedExpress/out/production/inteliMedExpress/com/inteliMedExpress/resources/certs/intellimed.jks
+2025-03-30 18:23:47.155 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 18:28:22.281 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:28:22.284 [INFO] LoginController: LoginController initialized
+2025-03-30 18:28:31.890 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 18:28:31.890 [INFO] LoginController: Loading truststore from resources
+2025-03-30 18:28:56.211 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 18:28:56.212 [INFO] LoginController: Loading truststore from resources
+2025-03-30 18:29:18.029 [INFO] LoginController: Login attempt for user: testuser1
+2025-03-30 18:29:18.030 [INFO] LoginController: Loading truststore from resources
+2025-03-30 18:32:27.001 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:32:27.007 [INFO] LoginController: LoginController initialized
+2025-03-30 18:33:07.282 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:33:07.285 [INFO] LoginController: LoginController initialized
+2025-03-30 18:33:20.748 [INFO] LoginController: LoginController initialized
+2025-03-30 18:33:34.535 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:33:34.544 [INFO] LoginController: LoginController initialized
+2025-03-30 18:35:51.234 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 18:35:51.236 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 18:37:26.065 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:37:26.068 [INFO] LoginController: LoginController initialized
+2025-03-30 18:37:26.225 [INFO] LoginController: SSL context initialized successfully
+2025-03-30 18:37:31.345 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 18:37:31.346 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 18:37:33.442 [SEVERE] LoginController: Login error: (internal_error) Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+2025-03-30 18:39:59.421 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 18:39:59.427 [INFO] LoginController: LoginController initialized
+2025-03-30 18:39:59.638 [INFO] LoginController: Trust-all SSL context initialized for development
+2025-03-30 18:39:59.638 [INFO] LoginController: SSL context initialized successfully
+2025-03-30 18:40:08.967 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 18:40:08.968 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 18:40:09.742 [INFO] LoginController: Login response code: 200
+2025-03-30 18:40:11.165 [INFO] LoginController: admin successfully logged in.
+2025-03-30 19:00:03.630 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 19:00:03.636 [INFO] LoginController: LoginController initialized
+2025-03-30 19:00:09.869 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 19:00:09.871 [INFO] LoginController: Sending login request to https://localhost:8080/api/auth/login
+2025-03-30 19:00:55.492 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 19:00:55.495 [INFO] LoginController: LoginController initialized
+2025-03-30 19:01:03.391 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 19:01:03.392 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-03-30 19:02:51.772 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 19:02:51.774 [INFO] LoginController: LoginController initialized
+2025-03-30 19:03:05.036 [INFO] LoginController: Login attempt for user: admin
+2025-03-30 19:03:05.036 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-03-30 19:03:06.629 [INFO] LoginController: admin successfully logged in.
+2025-03-30 19:07:38.978 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-03-30.log
+2025-03-30 19:07:38.984 [INFO] LoginController: LoginController initialized
+2025-03-30 19:08:00.600 [INFO] LoginController: LoginController initialized

@@ -103,6 +103,7 @@
     -fx-background-color: #f8fbff; /* Even lighter blue */
 }
 
+/* Original selection style that will be overridden */
 .table-view .table-row-cell:selected {
     -fx-background-color: #d0e6f5; /* Lighter selection */
     -fx-text-fill: #1e67a8;
@@ -272,4 +273,66 @@
 
 .dialog-pane .button:hover {
     -fx-background-color: #f0f8ff;
+}
+
+/* Refresh Button Styling for GIF version */
+#refresh_button {
+    -fx-background-color: white;
+    -fx-text-fill: #2986cc;
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+/* Hover effect */
+#refresh_button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
+}
+
+/* Pressed effect */
+#refresh_button:pressed {
+    -fx-background-color: #d0e6f5;
+    -fx-border-color: #0953a0;
+    -fx-text-fill: #0953a0;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Disabled state - used during animation */
+#refresh_button:disabled {
+    -fx-opacity: 0.9;
+    -fx-background-color: #f0f8ff;
+}
+
+/* ======= NEW TABLE SELECTION STYLES (THESE OVERRIDE THE PROBLEMATIC STYLES ABOVE) ======= */
+
+/* Modified table selection styles */
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(30, 103, 168, 0.3); /* Darker blue with 30% opacity */
+    -fx-text-fill: #000000; /* Black text for better contrast */
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #000000; /* Ensure text inside selected cells is black */
+}
+
+.table-view .table-row-cell:selected > .table-cell {
+    -fx-text-fill: #000000; /* Ensure text in all selected cells is black */
+    -fx-opacity: 1.0; /* Ensure full opacity */
+}
+
+/* Optional: Add a subtle border to selected rows for better visibility */
+.table-view .table-row-cell:selected {
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 1 0; /* Just bottom border */
 }

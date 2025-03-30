@@ -22,5 +22,9 @@ module com.inteliMedExpress {
     // Open packages for FXML and reflection
     opens com.inteliMedExpress to javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.controllers to javafx.fxml;
-    opens com.inteliMedExpress.classes to java.base;
+    opens com.inteliMedExpress.classes to java.base, javafx.fxml, javafx.graphics;
+    exports com.inteliMedExpress.classes.patients;
+    opens com.inteliMedExpress.classes.patients to java.base, javafx.fxml, javafx.graphics;
+    exports com.inteliMedExpress.classes.appointments;
+    opens com.inteliMedExpress.classes.appointments to java.base, javafx.fxml, javafx.graphics;
 }

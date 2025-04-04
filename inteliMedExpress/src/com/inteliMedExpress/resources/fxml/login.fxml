@@ -45,9 +45,9 @@
                </font>
             </Label>
             <PasswordField fx:id="password_textfield" layoutX="160.0" layoutY="284.0" promptText="Password" />
-            <Button fx:id="login_button" layoutX="208.0" layoutY="329.0" mnemonicParsing="false" onAction="#login" text="Login" />
-            <Hyperlink fx:id="forgot_password_hyper" layoutX="176.0" layoutY="372.0" text="Forgot Password?" />
-            <Hyperlink fx:id="register_hyper" layoutX="150.0" layoutY="448.0" onAction="#register" text="You dont have an account?" />
+            <Button fx:id="login_button" layoutX="186.0" layoutY="327.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="101.0" text="Login" />
+            <Hyperlink fx:id="forgot_password_hyper" layoutX="188.0" layoutY="360.0" text="Forgot Password?" />
+            <Hyperlink fx:id="register_hyper" layoutX="162.0" layoutY="445.0" onAction="#register" text="You dont have an account?" />
          </children>
       </AnchorPane>
       <Hyperlink fx:id="credits" layoutX="1202.0" layoutY="674.0" onAction="#showCredits" text="Credits" />

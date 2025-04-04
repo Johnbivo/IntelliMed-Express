@@ -2,6 +2,7 @@ package com.inteliMedExpress.controllers;
 
 import com.inteliMedExpress.classes.*;
 import com.inteliMedExpress.classes.appointments.Appointment;
+import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
 import com.inteliMedExpress.classes.patients.Patient;
 import com.inteliMedExpress.classes.patients.PatientDialog;
 import com.inteliMedExpress.classes.patients.PatientService;
@@ -28,16 +29,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class GeneralMedicineDoctorController {
 
     @FXML
     private Label doctorName;
-    @FXML
-    private Label general_medicine_title;
-    @FXML
-    private ToolBar toolbar;
+
 
     // Patient Table
     @FXML
@@ -134,6 +133,60 @@ public class GeneralMedicineDoctorController {
     private ImageView staticRefreshIconAppointment;
     private ImageView animatedRefreshIconAppointment;
 
+
+
+    //Medical Records Table
+    @FXML
+    private TableView<MedicalRecord> MedicalRecordsTable;
+    @FXML
+    private TableColumn<MedicalRecord, Integer> MedicalRecordID;
+    @FXML
+    private TableColumn<MedicalRecord, String> medical_record_name;
+    @FXML
+    private TableColumn<MedicalRecord, String> medical_record_surname;
+    @FXML
+    private TableColumn<MedicalRecord, String> medical_record_doc_surname;
+    @FXML
+    private TableColumn<MedicalRecord, String> record_diagnosis;
+    @FXML
+    private TableColumn<MedicalRecord, String> record_treatment;
+    @FXML
+    private TableColumn<MedicalRecord, String> record_prescription;
+    @FXML
+    private TableColumn<MedicalRecord, String> record_status;
+    @FXML
+    private TableColumn<MedicalRecord, LocalDate> record_date;
+
+    private ObservableList<MedicalRecord> medicalRecordsList = FXCollections.observableArrayList();
+
+
+    //Medical Records Buttons
+
+    @FXML
+    private Button add_record_button;
+    @FXML
+    private Button modify_record_button;
+    @FXML
+    private Button delete_record_button;
+    @FXML
+    private Button view_medical_history_button;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @FXML
     public void initialize() {
         try {
@@ -168,69 +221,39 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    private void setupPatientTable() {
-        // Configure patient table
-        patientsTableView.setEditable(false);
-        TableView.TableViewSelectionModel<Patient> selectionModel = patientsTableView.getSelectionModel();
-        selectionModel.setSelectionMode(SelectionMode.SINGLE);
 
-        // Configure patient table columns
-        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
-        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // Date Formatter
-        birthDateColumn.setCellFactory(column -> {
-            return new TableCell<Patient, LocalDate>() {
-                @Override
-                protected void updateItem(LocalDate date, boolean empty) {
-                    super.updateItem(date, empty);
-                    if (empty || date == null) {
-                        setText(null);
-                    } else {
-                        setText(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-                    }
-                }
-            };
-        });
 
-        patientsTableView.setItems(patientsList);
+    @FXML
+    public void logout(ActionEvent event) {
+        try {
+            // Load the login.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
+            Parent loginRoot = loader.load();
 
-        // Setup patient action buttons
-        add_patient_button.setOnAction(event -> handleAddPatient());
-        update_patient_button.setOnAction(event -> handleUpdatePatient());
-        delete_patient_button.setOnAction(event -> handleDeletePatient());
+            // Create a new scene with the login form
+            Scene loginScene = new Scene(loginRoot);
+
+            // Get the current stage from the event source
+            Stage currentStage = (Stage) logout_button.getScene().getWindow();
+
+            // Set the new scene on the current stage
+            currentStage.setScene(loginScene);
+            currentStage.setTitle("InteliMedExpress - Login");
+            currentStage.centerOnScreen();
+
+            System.out.println("Navigation to login form successful");
+        } catch (IOException e) {
+            UIHelper.showAlert("Navigation Error", "Could not load login form: " + e.getMessage());
+            System.err.println("Error navigating to login form: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void setupAppointmentTable() {
-        // Configure appointment table
-        TableView.TableViewSelectionModel<Appointment> selectionModel = appointmentsViewTable.getSelectionModel();
-        selectionModel.setSelectionMode(SelectionMode.SINGLE);
 
-        // Configure appointment table columns
-        appointmentID_column.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        patient_name_column.setCellValueFactory(new PropertyValueFactory<>("patientName"));
-        patient_surname_column.setCellValueFactory(new PropertyValueFactory<>("patientSurname"));
-        doctor_surname_column.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
-        nurse_surname_column.setCellValueFactory(new PropertyValueFactory<>("nurseSurname"));
-        appointment_date_column.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
-        appointment_status_column.setCellValueFactory(new PropertyValueFactory<>("status"));
-        appointment_notes_column.setCellValueFactory(new PropertyValueFactory<>("notes"));
 
-        appointmentsViewTable.setItems(appointmentList);
 
-        // Setup appointment action buttons - add event handlers
-        create_appointment_button.setOnAction(event -> handleCreateAppointment());
-        modify_appointment_button.setOnAction(event -> handleModifyAppointment());
-        delete_appointment_button.setOnAction(event -> handleDeleteAppointment());
-    }
+    //Setup the navigation buttons
 
     private void setupNavigationButtons() {
         // Setup navigation button actions
@@ -255,9 +278,43 @@ public class GeneralMedicineDoctorController {
             navigationManager = new NavigationManager(navButtons);
         } catch (Exception e) {
             System.err.println("Warning: Could not initialize navigation manager: " + e.getMessage());
-            // Fall back to simple navigation without style management
         }
     }
+
+
+
+    // Refreshing navigation buttons
+    private void resetAllButtons() {
+        String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: #1e67a8; -fx-font-weight: normal;";
+        appointments_button.setStyle(defaultStyle);
+        patients_button.setStyle(defaultStyle);
+        medical_records_button.setStyle(defaultStyle);
+        AI_diagnostics_button.setStyle(defaultStyle);
+        lab_tests_button.setStyle(defaultStyle);
+        hospital_beds_button.setStyle(defaultStyle);
+    }
+
+    //Getting the doctor name for a greeting
+
+    public void setDoctorName(String doctorName) {
+        this.loggedInDoctorName = doctorName;
+        updateDoctorGreeting();
+    }
+
+
+    // Setting the text for greeting
+    private void updateDoctorGreeting() {
+        if (loggedInDoctorName != null && !loggedInDoctorName.isEmpty()) {
+            doctorName.setText("Welcome, Dr. " + loggedInDoctorName);
+        } else {
+            doctorName.setText("Welcome, Doctor");
+        }
+    }
+
+
+
+
+
 
     private void handleNavigation(Button selectedButton) {
         try {
@@ -289,30 +346,119 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    private void resetAllButtons() {
-        String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: #1e67a8; -fx-font-weight: normal;";
-        appointments_button.setStyle(defaultStyle);
-        patients_button.setStyle(defaultStyle);
-        medical_records_button.setStyle(defaultStyle);
-        AI_diagnostics_button.setStyle(defaultStyle);
-        lab_tests_button.setStyle(defaultStyle);
-        hospital_beds_button.setStyle(defaultStyle);
+
+
+
+    //Setup of tables
+
+
+    private void setupPatientTable() {
+        // Configure patient table
+        patientsTableView.setEditable(false);
+        TableView.TableViewSelectionModel<Patient> selectionModel = patientsTableView.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+
+        // Configure patient table columns
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("PatientID"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("PatientEmail"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("PatientPhone"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("PatientAddress"));
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("PatientAge"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("Gender"));
+        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("DateOfBirth"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("PatientStatus"));
+
+        // Date Formatter
+        birthDateColumn.setCellFactory(column -> {
+            return new TableCell<Patient, LocalDate>() {
+                @Override
+                protected void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    if (empty || date == null) {
+                        setText(null);
+                    } else {
+                        setText(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                    }
+                }
+            };
+        });
+
+        patientsTableView.setItems(patientsList);
+
+        // Setup patient action buttons
+        add_patient_button.setOnAction(event -> handleAddPatient());
+        update_patient_button.setOnAction(event -> handleUpdatePatient());
+        delete_patient_button.setOnAction(event -> handleDeletePatient());
     }
 
-    public void setDoctorName(String doctorName) {
-        this.loggedInDoctorName = doctorName;
-        updateDoctorGreeting();
+
+
+
+
+
+
+    private void setupAppointmentTable() {
+        // Configure appointment table
+        TableView.TableViewSelectionModel<Appointment> selectionModel = appointmentsViewTable.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+
+        // Configure appointment table columns
+        appointmentID_column.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+        patient_name_column.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
+        patient_surname_column.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
+        doctor_surname_column.setCellValueFactory(new PropertyValueFactory<>("DoctorSurname"));
+        nurse_surname_column.setCellValueFactory(new PropertyValueFactory<>("NurseSurname"));
+        appointment_date_column.setCellValueFactory(new PropertyValueFactory<>("AppointmentDate"));
+        appointment_status_column.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        appointment_notes_column.setCellValueFactory(new PropertyValueFactory<>("Notes"));
+
+        appointmentsViewTable.setItems(appointmentList);
+
+        // Setup appointment action buttons - add event handlers
+        create_appointment_button.setOnAction(event -> handleCreateAppointment());
+        modify_appointment_button.setOnAction(event -> handleModifyAppointment());
+        delete_appointment_button.setOnAction(event -> handleDeleteAppointment());
     }
 
-    private void updateDoctorGreeting() {
-        if (loggedInDoctorName != null && !loggedInDoctorName.isEmpty()) {
-            doctorName.setText("Welcome, Dr. " + loggedInDoctorName);
-        } else {
-            doctorName.setText("Welcome, Doctor");
-        }
+
+
+    private void setupMedicalRecordTable() {
+
+        // Configure MedicalRecord table
+        TableView.TableViewSelectionModel<MedicalRecord> selectionModel = MedicalRecordsTable.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+
+
+        //Configure medicalRecords table columns
+        MedicalRecordID.setCellValueFactory(new PropertyValueFactory<>("RecordID"));
+        medical_record_name.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
+        medical_record_surname.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
+        medical_record_doc_surname.setCellValueFactory(new PropertyValueFactory<>("DoctorSurname"));
+        record_diagnosis.setCellValueFactory(new PropertyValueFactory<>("Diagnosis"));
+        record_treatment.setCellValueFactory(new PropertyValueFactory<>("Treatment"));
+        record_prescription.setCellValueFactory(new PropertyValueFactory<>("Prescription"));
+        record_status.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        record_date.setCellValueFactory(new PropertyValueFactory<>("RecordDate"));
+
+        MedicalRecordsTable.setItems(medicalRecordsList);
+
+
+
+        add_record_button.setOnAction(event -> handleAddRecord());
+        modify_record_button.setOnAction(actionEvent -> handleUpdateRecord());
+        delete_record_button.setOnAction(actionEvent -> handleDeleteRecord());
+        view_medical_history_button.setOnAction(actionEvent -> handleViewMedicalHistory());
+
+
+
     }
 
-    private void initializeRefreshButton() {
+
+    //refresh buttons
+
+    private void initializePatientRefreshButton() {
         try {
             // Load static icon for normal state
             staticRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
@@ -350,7 +496,7 @@ public class GeneralMedicineDoctorController {
 
     private void initializeRefreshButtons() {
         // Initialize patient refresh button
-        initializeRefreshButton();
+        initializePatientRefreshButton();
 
         // Initialize appointment refresh button using same resources
         try {
@@ -386,6 +532,11 @@ public class GeneralMedicineDoctorController {
         });
     }
 
+
+
+    //Enable-Disable Components
+
+
     // Patients dashboard
     private void disablePatientComponents(){
         patientsTableView.setVisible(false);
@@ -402,6 +553,9 @@ public class GeneralMedicineDoctorController {
         delete_patient_button.setVisible(true);
         refresh_button.setVisible(true);
     }
+
+
+
 
     // Appointments dashboard
     private void disableAppointmentComponents(){
@@ -420,46 +574,45 @@ public class GeneralMedicineDoctorController {
         refresh_appointment_button.setVisible(true);
     }
 
-    @FXML
-    public void logout(ActionEvent event) {
-        try {
-            // Load the login.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
-            Parent loginRoot = loader.load();
 
-            // Create a new scene with the login form
-            Scene loginScene = new Scene(loginRoot);
 
-            // Get the current stage from the event source
-            Stage currentStage = (Stage) logout_button.getScene().getWindow();
+    //Medical Records dashboard
+    private void disableMedicalRecordComponents(){
+        MedicalRecordsTable.setVisible(false);
+        add_record_button.setVisible(false);
+        modify_record_button.setVisible(false);
+        delete_record_button.setVisible(false);
+        view_medical_history_button.setVisible(false);
 
-            // Set the new scene on the current stage
-            currentStage.setScene(loginScene);
-            currentStage.setTitle("InteliMedExpress - Login");
-            currentStage.centerOnScreen();
-
-            System.out.println("Navigation to login form successful");
-        } catch (IOException e) {
-            UIHelper.showAlert("Navigation Error", "Could not load login form: " + e.getMessage());
-            System.err.println("Error navigating to login form: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
+    private void enableMedicalRecordComponents(){
+        MedicalRecordsTable.setVisible(true);
+        add_record_button.setVisible(true);
+        modify_record_button.setVisible(true);
+        delete_record_button.setVisible(true);
+        view_medical_history_button.setVisible(true);
+    }
+
+
+
+
+
+
+
+
+
+    // Patient Handlers
 
     private void loadPatientsFromServer() {
         // Create a background thread to fetch data
         new Thread(() -> {
             try {
-                // Use the service to get patients
                 List<Patient> serverPatients = patientService.getAllPatients();
-
-                // Update UI on the JavaFX application thread
                 Platform.runLater(() -> {
                     patientsList.clear();
                     patientsList.addAll(serverPatients);
                 });
             } catch (IOException e) {
-                // Handle error on JavaFX thread
                 Platform.runLater(() -> {
                     UIHelper.showAlert("Connection Error", "Failed to fetch patients from server: " + e.getMessage());
                 });
@@ -545,6 +698,13 @@ public class GeneralMedicineDoctorController {
         }
     }
 
+
+
+
+
+
+    //Appointment Handlers
+
     private void loadAllAppointments() {
         // Create a background thread to fetch data
         new Thread(() -> {
@@ -596,4 +756,59 @@ public class GeneralMedicineDoctorController {
 
         UIHelper.showAlert("Feature Coming Soon", "Delete appointment functionality is not yet implemented.");
     }
+
+
+
+
+
+    //Medical Records Handlers
+
+
+
+    private void loadAllMedicalRecords() {
+        new Thread(() -> {
+            try {
+                // Use the static method from Appointment class
+                List<MedicalRecord> serverMedicalRecords = MedicalRecord.loadMedicalRecords();
+
+                // Update UI on the JavaFX application thread
+                Platform.runLater(() -> {
+                    medicalRecordsList.clear();
+                    medicalRecordsList.addAll(serverMedicalRecords);
+                });
+            } catch (IOException e) {
+                // Handle error on JavaFX thread
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Connection Error", "Failed to fetch Medical Records from server: " + e.getMessage());
+                });
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    private void handleAddRecord(){
+
+    }
+
+    private void handleUpdateRecord(){
+
+    }
+
+    private void handleDeleteRecord(){
+
+    }
+    private void handleViewMedicalHistory(){
+
+    }
+
+
+
+
+
+
 }
+
+
+
+

@@ -28,7 +28,7 @@
                   <Image url="@../images/profile-user-blue.png" />
                </image>
             </ImageView>
-            <Label fx:id="login_area_title" layoutX="203.0" layoutY="141.0" text="Login Area">
+            <Label fx:id="login_area_title" layoutX="187.0" layoutY="144.0" text="Login Area">
                <font>
                   <Font size="20.0" />
                </font>
@@ -50,5 +50,6 @@
             <Hyperlink fx:id="register_hyper" layoutX="150.0" layoutY="448.0" onAction="#register" text="You dont have an account?" />
          </children>
       </AnchorPane>
+      <Hyperlink fx:id="credits" layoutX="1202.0" layoutY="674.0" onAction="#showCredits" text="Credits" />
    </children>
 </AnchorPane>

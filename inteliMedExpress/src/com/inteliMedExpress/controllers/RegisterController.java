@@ -1,5 +1,6 @@
 package com.inteliMedExpress.controllers;
 
+import com.inteliMedExpress.classes.UIHelper;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,9 +10,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +27,7 @@ import java.util.ResourceBundle;
 
 
 public class RegisterController implements Initializable {
-
+    private static final String CLASS_NAME = RegisterController.class.getSimpleName();
 
     @FXML
     private TextField username_textfield;
@@ -49,7 +56,7 @@ public class RegisterController implements Initializable {
 
 
 
-
+    private static final String LOGIN_API_URL = "http://localhost:8080/api/auth/register";
 
 
     @Override
@@ -88,6 +95,34 @@ public class RegisterController implements Initializable {
     }
 
 
+    public void register(ActionEvent event) throws IOException {
+
+        String username = username_textfield.getText();
+        String password = password_textfield.getText();
+        String email = email_textfield.getText();
+        String phone = phone_textfield.getText();
+        String address = address_textfield.getText();
+        String age = age_textfield.getText();
+        String gender = gender_dropdown.getValue();
+        String profession = profession_dropdown.getValue();
+        String department = department_specialty.getValue();
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 
     public void back_to_login(ActionEvent event) {
         try {
@@ -108,7 +143,7 @@ public class RegisterController implements Initializable {
 
             System.out.println("Navigation to login form successful");
         } catch (IOException e) {
-            showAlert("Navigation Error", "Could not load login form: " + e.getMessage());
+            UIHelper.showAlert("Navigation Error", "Could not load login form: " + e.getMessage());
             System.err.println("Error navigating to login form: " + e.getMessage());
             e.printStackTrace();
         }
@@ -117,16 +152,6 @@ public class RegisterController implements Initializable {
 
 
 
-
-
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
 
 

@@ -1,29 +1,41 @@
 package com.inteliMedExpress.controllers;
 
 
+import com.inteliMedExpress.utils.AppLogger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 
+import com.inteliMedExpress.classes.UIHelper;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
 
 public class LoginController {
-
+    private static final String CLASS_NAME = LoginController.class.getSimpleName();
     @FXML
     private TextField username_textfield;
 
@@ -39,7 +51,21 @@ public class LoginController {
     @FXML
     private Hyperlink register_hyper;
 
-    private static final String LOGIN_API_URL = "http://localhost:7777/api/login";
+    @FXML
+    private Hyperlink credits;
+
+    private static final String LOGIN_API_URL = "https://127.0.0.1:8080/api/auth/login";
+
+
+
+
+    public void initialize(){
+        AppLogger.initialize();
+        AppLogger.info(CLASS_NAME, "LoginController initialized");
+
+
+        setupSSLWithCertificate();
+    }
 
 
     // function that gets triggered by the login button
@@ -48,27 +74,54 @@ public class LoginController {
         String password = password_textfield.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Error", "Please enter both the username and password fields.");
+            UIHelper.showAlert("Error", "Please enter both the username and password fields.");
             return;
         }
+        AppLogger.info(CLASS_NAME, "Login attempt for user: " + username);
 
         try{
             boolean loginSuccess = sendLoginRequest(username,password);
                 if(loginSuccess){
-                    showAlert("Success", "Login successful.");
+                    UIHelper.showAlert("Success", "Login successful.");
+                    AppLogger.info(CLASS_NAME, username + " successfully logged in.");
+
+                    String doctorName = getDoctorName(username);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml"));
+                    Parent dashboardRoot = loader.load();
+
+
+                    GeneralMedicineDoctorController controller = loader.getController();
+                    controller.setDoctorName(doctorName);
+
+                    // Create new scene
+                    Scene dashboardScene = new Scene(dashboardRoot);
+
+                    // Get current stage and set new scene
+                    Stage currentStage = (Stage) login_button.getScene().getWindow();
+                    currentStage.setScene(dashboardScene);
+                    currentStage.setTitle("InteliMedExpress - General Medicine Doctor");
+                    currentStage.centerOnScreen();
                 }
                 else{
-                    showAlert("Error", "Login failed");
+                    UIHelper.showAlert("Error", "Login failed");
 
                 }
 
 
         } catch (IOException e) {
-            showAlert("Login Error", e.getMessage());
+            UIHelper.showAlert("Login Error", e.getMessage());
             System.out.println("Login Error" + e);
         }
 
 
+    }
+
+    private String getDoctorName(String username) {
+        // This should be implemented to get the actual doctor name from your system
+        // For example, from a database query or from the login API response
+
+
+        return username;
     }
 
 
@@ -77,16 +130,15 @@ public class LoginController {
     private boolean sendLoginRequest(String username, String password) throws IOException {
         URL url = new URL(LOGIN_API_URL);
 
+        AppLogger.info(CLASS_NAME, "Sending login request to " + url.toString());
+        // Cast to HttpsURLConnection for HTTPS
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-        //Opens the connection
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        //Sets request method
+        // Sets request method
         connection.setRequestMethod("POST");
-
         connection.setDoOutput(true);
 
-        //Enables input/output streams
+        // Enables input/output streams
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
 
@@ -95,41 +147,25 @@ public class LoginController {
         loginData.put("username", username);
         loginData.put("password", password);
 
-
         // Convert JSON to string and get bytes
         String jsonInputString = loginData.toString();
         byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-
-
 
         // Set content length
         connection.setRequestProperty("Content-Length", String.valueOf(input.length));
 
         // Write JSON data to output stream
-        try(OutputStream outputStream = connection.getOutputStream()) {
-            outputStream.write(input,0,input.length);
-
+        try (OutputStream outputStream = connection.getOutputStream()) {
+            outputStream.write(input, 0, input.length);
         }
+
         // Get response code
         int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
+        if (responseCode == HttpsURLConnection.HTTP_OK) {
             return true;
-        }else {
+        } else {
             return false;
         }
-
-
-
-    }
-
-
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
 
@@ -154,7 +190,7 @@ public class LoginController {
 
             System.out.println("Navigation to registration form successful");
         } catch (IOException e) {
-            showAlert("Navigation Error", "Could not load registration form: " + e.getMessage());
+            UIHelper.showAlert("Navigation Error", "Could not load registration form: " + e.getMessage());
             System.err.println("Error navigating to registration form: " + e.getMessage());
             e.printStackTrace();
         }
@@ -163,7 +199,55 @@ public class LoginController {
 
 
 
+    public void showCredits(ActionEvent event) {
+        UIHelper.showAlert("Credits", "Icons by icons8.com - https:/icon8.com");
+
+    }
 
 
+
+
+
+
+    private void setupSSLWithCertificate() {
+        try {
+            // Load the certificate from the resources
+            InputStream certStream = getClass().getResourceAsStream("/com/inteliMedExpress/resources/certs/server_certificate.cer");
+
+            if (certStream == null) {
+                System.err.println("Certificate file not found!");
+                return;
+            }
+
+            // Create a certificate factory
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            X509Certificate cert = (X509Certificate) cf.generateCertificate(certStream);
+            certStream.close();
+
+            // Create a KeyStore containing our trusted certificate
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("server", cert);
+
+            // Create a TrustManager that trusts our certificate
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(keyStore);
+
+            // Create an SSLContext with our TrustManager
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
+
+            // Set this as the default SSL socket factory
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // IMPORTANT: Add this line to disable hostname verification
+            HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+
+            System.out.println("SSL setup complete with specific certificate and hostname verification disabled");
+        } catch (Exception e) {
+            System.err.println("Error setting up SSL: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 }

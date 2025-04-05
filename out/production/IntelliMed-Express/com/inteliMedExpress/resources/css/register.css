@@ -1,0 +1,84 @@
+/* Register panel styling with a light blue tint */
+#login_panel {
+    -fx-background-color: #f0f8ff; /* Alice blue - very light blue background */
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Title styling */
+#login_area_title {
+    -fx-text-fill: #1e67a8; /* Medium-dark blue */
+    -fx-font-weight: bold;
+}
+
+/* All labels styling */
+.label {
+    -fx-text-fill: #2c7bb6; /* Medium blue */
+}
+
+/* Specific labels if you want to target them individually */
+#username_label, #password_label, #email_label, #address_label,
+#phone_label, #age_label {
+    -fx-text-fill: #2c7bb6; /* Medium blue */
+}
+
+/* Text fields */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: #a9d6e5; /* Light blue border */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2986cc; /* Brighter blue when focused */
+    -fx-border-width: 2;
+}
+
+/* Choice boxes (dropdowns) */
+.choice-box {
+    -fx-background-color: white;
+    -fx-border-color: #a9d6e5; /* Light blue border */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.choice-box:focused {
+    -fx-border-color: #2986cc; /* Brighter blue when focused */
+    -fx-border-width: 2;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: white;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #a9d6e5; /* Light blue highlight */
+}
+
+/* Register button */
+#register_button {
+    -fx-background-color: #1e67a8; /* Medium-dark blue */
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+#register_button:hover {
+    -fx-background-color: #0953a0; /* Slightly darker when hovered */
+}
+
+#register_button:pressed {
+    -fx-background-color: #084086; /* Even darker when pressed */
+}
+
+/* Hyperlinks */
+#back_to_login_hype {
+    -fx-text-fill: #2986cc; /* Bright blue for hyperlinks */
+}
+
+#back_to_login_hype:hover {
+    -fx-text-fill: #0953a0; /* Darker blue when hovered */
+    -fx-underline: true;
+}

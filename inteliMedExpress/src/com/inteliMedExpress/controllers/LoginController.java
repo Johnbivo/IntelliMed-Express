@@ -2,6 +2,7 @@ package com.inteliMedExpress.controllers;
 
 
 import com.inteliMedExpress.utils.AppLogger;
+import com.inteliMedExpress.utils.HttpsUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,7 +65,9 @@ public class LoginController {
         AppLogger.info(CLASS_NAME, "LoginController initialized");
 
 
-        setupSSLWithCertificate();
+
+        //Setting up the certificate verification
+        HttpsUtil.setupSSL();
     }
 
 
@@ -117,9 +120,6 @@ public class LoginController {
     }
 
     private String getDoctorName(String username) {
-        // This should be implemented to get the actual doctor name from your system
-        // For example, from a database query or from the login API response
-
 
         return username;
     }
@@ -128,6 +128,12 @@ public class LoginController {
 
 
     private boolean sendLoginRequest(String username, String password) throws IOException {
+
+        if (!HttpsUtil.isSSLInitialized()){
+            HttpsUtil.setupSSL();
+        }
+
+
         URL url = new URL(LOGIN_API_URL);
 
         AppLogger.info(CLASS_NAME, "Sending login request to " + url.toString());
@@ -161,11 +167,8 @@ public class LoginController {
 
         // Get response code
         int responseCode = connection.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            return true;
-        } else {
-            return false;
-        }
+        return responseCode == HttpURLConnection.HTTP_OK;
+
     }
 
 
@@ -176,14 +179,10 @@ public class LoginController {
             // Load the register.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/register.fxml"));
             Parent registerRoot = loader.load();
-
-            // Create a new scene with the register form
             Scene registerScene = new Scene(registerRoot);
-
-            // Get the current stage from the event source
             Stage currentStage = (Stage) register_hyper.getScene().getWindow();
 
-            // Set the new scene on the current stage
+
             currentStage.setScene(registerScene);
             currentStage.setTitle("InteliMedExpress - Registration");
             currentStage.centerOnScreen();
@@ -208,46 +207,5 @@ public class LoginController {
 
 
 
-
-    private void setupSSLWithCertificate() {
-        try {
-            // Load the certificate from the resources
-            InputStream certStream = getClass().getResourceAsStream("/com/inteliMedExpress/resources/certs/server_certificate.cer");
-
-            if (certStream == null) {
-                System.err.println("Certificate file not found!");
-                return;
-            }
-
-            // Create a certificate factory
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            X509Certificate cert = (X509Certificate) cf.generateCertificate(certStream);
-            certStream.close();
-
-            // Create a KeyStore containing our trusted certificate
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("server", cert);
-
-            // Create a TrustManager that trusts our certificate
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmf.init(keyStore);
-
-            // Create an SSLContext with our TrustManager
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, tmf.getTrustManagers(), null);
-
-            // Set this as the default SSL socket factory
-            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-
-            // IMPORTANT: Add this line to disable hostname verification
-            HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
-
-            System.out.println("SSL setup complete with specific certificate and hostname verification disabled");
-        } catch (Exception e) {
-            System.err.println("Error setting up SSL: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 
 }

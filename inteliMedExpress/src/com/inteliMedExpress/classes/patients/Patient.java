@@ -16,9 +16,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inteliMedExpress.utils.HttpsUtil;
+import javax.net.ssl.HttpsURLConnection;
+
 public class Patient {
     // Server URLs
-    private static final String SERVER_BASE_URL = "http://localhost:8080/api";
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
     private static final String GET_PATIENTS_URL = SERVER_BASE_URL + "/patients";
     private static final String ADD_PATIENT_URL = SERVER_BASE_URL + "/patients/add";
     private static final String UPDATE_PATIENT_URL = SERVER_BASE_URL + "/patients/update";
@@ -37,7 +40,11 @@ public class Patient {
     private String status;
 
     // Constructors
-    public Patient() {}
+    public Patient() {
+        if (!HttpsUtil.isSSLInitialized()) {
+            HttpsUtil.setupSSL();
+        }
+    }
 
     public Patient(Integer patientId, String name, String surname, String email,
                    String phone, String address, Integer age, String gender,
@@ -52,6 +59,10 @@ public class Patient {
         this.gender = gender;
         this.birthDate = birthDate;
         this.status = status;
+
+        if (!HttpsUtil.isSSLInitialized()) {
+            HttpsUtil.setupSSL();
+        }
     }
 
     // Getters and Setters
@@ -92,6 +103,10 @@ public class Patient {
         BufferedReader reader = null;
 
         try {
+
+            if (!HttpsUtil.isSSLInitialized()) {
+                HttpsUtil.setupSSL();
+            }
             // Set up the connection
             URL url = new URL(GET_PATIENTS_URL);
             connection = (HttpURLConnection) url.openConnection();
@@ -122,13 +137,13 @@ public class Patient {
                 JSONObject patientJson = (JSONObject) obj;
 
                 // Extract patient data with type conversion
-                Long idLong = (Long) patientJson.get("patientId");
+                Long idLong = (Long) patientJson.get("id");
                 Integer id = (idLong != null) ? idLong.intValue() : null;
 
-                String name = (String) patientJson.get("name");
-                String surname = (String) patientJson.get("surname");
+                String name = (String) patientJson.get("firstName");
+                String surname = (String) patientJson.get("lastName");
                 String email = (String) patientJson.get("email");
-                String phone = (String) patientJson.get("phone");
+                String phone = (String) patientJson.get("phoneNumber");
                 String address = (String) patientJson.get("address");
 
                 Long ageLong = (Long) patientJson.get("age");
@@ -139,7 +154,7 @@ public class Patient {
 
                 // Parse birth date
                 LocalDate birthDate = null;
-                String birthDateStr = (String) patientJson.get("birthDate");
+                String birthDateStr = (String) patientJson.get("dateOfBirth");
                 if (birthDateStr != null && !birthDateStr.isEmpty()) {
                     birthDate = LocalDate.parse(birthDateStr);
                 }
@@ -179,6 +194,10 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+
+            if (!HttpsUtil.isSSLInitialized()) {
+                HttpsUtil.setupSSL();
+            }
             // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -187,14 +206,14 @@ public class Patient {
 
             // Create JSON payload
             JSONObject patientData = new JSONObject();
-            patientData.put("name", this.name);
-            patientData.put("surname", this.surname);
+            patientData.put("firstName", this.name);
+            patientData.put("lastName", this.surname);
             patientData.put("email", this.email);
-            patientData.put("phone", this.phone);
+            patientData.put("phoneNumber", this.phone);
             patientData.put("address", this.address);
             patientData.put("age", this.age);
             patientData.put("gender", this.gender);
-            patientData.put("birthDate", this.birthDate != null ? this.birthDate.toString() : null);
+            patientData.put("dateOfBirth", this.birthDate != null ? this.birthDate.toString() : null);
             patientData.put("status", this.status);
 
             // Convert JSON to string and get bytes
@@ -223,6 +242,9 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            if (!HttpsUtil.isSSLInitialized()) {
+                HttpsUtil.setupSSL();
+            }
             // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
@@ -231,15 +253,15 @@ public class Patient {
 
             // Create JSON payload with patient ID
             JSONObject patientData = new JSONObject();
-            patientData.put("patientId", this.patientId);
-            patientData.put("name", this.name);
-            patientData.put("surname", this.surname);
+            patientData.put("id", this.patientId);
+            patientData.put("firstName", this.name);
+            patientData.put("lastName", this.surname);
             patientData.put("email", this.email);
-            patientData.put("phone", this.phone);
+            patientData.put("phoneNumber", this.phone);
             patientData.put("address", this.address);
             patientData.put("age", this.age);
             patientData.put("gender", this.gender);
-            patientData.put("birthDate", this.birthDate != null ? this.birthDate.toString() : null);
+            patientData.put("dateOfBirth", this.birthDate != null ? this.birthDate.toString() : null);
             patientData.put("status", this.status);
 
             // Convert JSON to string and get bytes
@@ -268,6 +290,9 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            if (!HttpsUtil.isSSLInitialized()) {
+                HttpsUtil.setupSSL();
+            }
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
 

@@ -1,0 +1,58 @@
+/* Login panel styling with a light blue tint */
+#login_panel {
+    -fx-background-color: #f0f8ff; /* Alice blue - very light blue background */
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Title styling */
+#login_area_title {
+    -fx-text-fill: #1e67a8; /* Medium-dark blue */
+    -fx-font-weight: bold;
+    -fx-font-size:20px;
+}
+
+/* Labels (username and password) */
+#username_label, #password_label {
+    -fx-text-fill: #2c7bb6; /* Medium blue */
+}
+
+/* Text fields */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: #a9d6e5; /* Light blue border */
+    -fx-border-radius: 5;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2986cc; /* Brighter blue when focused */
+    -fx-border-width: 2;
+}
+
+/* Login button */
+#login_button {
+    -fx-background-color: #1e67a8; /* Medium-dark blue */
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+}
+
+
+
+#login_button:hover {
+    -fx-background-color: #0953a0; /* Slightly darker when hovered */
+    -fx-cursor:hand;
+}
+
+#login_button:pressed {
+    -fx-background-color: #084086; /* Even darker when pressed */
+}
+
+/* Hyperlinks */
+#forgot_password_hyper, #register_hyper {
+    -fx-text-fill: #2986cc; /* Bright blue for hyperlinks */
+}
+
+#forgot_password_hyper:hover, #register_hyper:hover {
+    -fx-text-fill: #0953a0; /* Darker blue when hovered */
+    -fx-underline: true;
+}

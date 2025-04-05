@@ -1,0 +1,221 @@
+/* Dialog Styling for InteliMedExpress with higher contrast */
+
+/* Base dialog styling */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);
+    -fx-padding: 20;
+}
+
+/* Dialog header */
+.dialog-pane .header-panel {
+    -fx-background-color: white;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 10 15 15 15;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: #0d4c82;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+/* Dialog content */
+.dialog-pane > .content.label {
+    -fx-text-fill: #0d4c82;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 15 5;
+}
+
+/* Form field labels */
+.dialog-pane .label {
+    -fx-text-fill: #0d4c82;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Text fields and combo boxes inside dialogs */
+.dialog-pane .text-field,
+.dialog-pane .combo-box-base,
+.dialog-pane .date-picker,
+.dialog-pane .date-picker .text-field {
+    -fx-background-color: white;
+    -fx-border-color: #1e67a8;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-pref-height: 32;
+    -fx-font-size: 14px;
+    -fx-text-fill: #0d4c82;
+}
+
+.dialog-pane .text-field:focused,
+.dialog-pane .combo-box-base:focused,
+.dialog-pane .date-picker:focused,
+.dialog-pane .date-picker .text-field:focused {
+    -fx-border-color: #0d4c82;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.25), 4, 0, 0, 0);
+}
+
+/* Combo box styling */
+.dialog-pane .combo-box .cell {
+    -fx-text-fill: #0d4c82;
+    -fx-padding: 5 10;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .combo-box .list-cell {
+    -fx-text-fill: #0d4c82;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .combo-box .list-cell:hover,
+.dialog-pane .combo-box .list-cell:selected {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #0d4c82;
+}
+
+.dialog-pane .combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane .combo-box .arrow {
+    -fx-background-color: #0d4c82;
+}
+
+/* Date picker styling */
+.dialog-pane .date-picker .arrow-button {
+    -fx-background-color: #e6f2ff;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 0 1;
+}
+
+.dialog-pane .date-picker .arrow-button:hover {
+    -fx-background-color: #d0e6f5;
+}
+
+.dialog-pane .date-picker .arrow-button .arrow {
+    -fx-background-color: #0d4c82;
+}
+
+.dialog-pane .date-picker-popup {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 2);
+}
+
+.dialog-pane .date-picker-popup .month-year-pane {
+    -fx-background-color: #1e67a8;
+}
+
+.dialog-pane .date-picker-popup .month-year-pane .label {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .date-picker-popup .week-number-cell {
+    -fx-text-fill: #6495ed;
+}
+
+.dialog-pane .date-picker-popup .day-cell {
+    -fx-background: white;
+    -fx-text-fill: #0d4c82;
+    -fx-cell-size: 30px;
+}
+
+.dialog-pane .date-picker-popup .day-cell:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+.dialog-pane .date-picker-popup .selected,
+.dialog-pane .date-picker-popup .day-cell:selected {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+}
+
+/* Dialog buttons */
+.dialog-pane .button-bar .button {
+    -fx-background-color: white;
+    -fx-text-fill: #0d4c82;
+    -fx-border-color: #0d4c82;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+.dialog-pane .button-bar .button:pressed {
+    -fx-background-color: #d0e6f5;
+}
+
+/* OK/Save button styling */
+.dialog-pane .button-bar .button.default-button {
+    -fx-background-color: #0d4c82;
+    -fx-text-fill: white;
+    -fx-border-color: #0d4c82;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .button-bar .button.default-button:hover {
+    -fx-background-color: #083d69;
+    -fx-border-color: #083d69;
+}
+
+.dialog-pane .button-bar .button.default-button:pressed {
+    -fx-background-color: #052c4d;
+    -fx-border-color: #052c4d;
+}
+
+/* Alert confirmation dialog special styling */
+.alert.confirmation .dialog-pane .header-panel {
+    -fx-border-color: #0d4c82 transparent transparent transparent;
+    -fx-border-width: 2 0 0 0;
+}
+
+/* Delete confirmation special styling */
+.alert.confirmation .graphic-container {
+    -fx-padding: 0 10 0 0;
+}
+
+/* Delete button in confirmation alert */
+.dialog-pane .button-bar .button.yes-button {
+    -fx-background-color: white;
+    -fx-text-fill: #bb2020;
+    -fx-border-color: #bb2020;
+    -fx-border-width: 1.5;
+}
+
+.dialog-pane .button-bar .button.yes-button:hover {
+    -fx-background-color: #bb2020;
+    -fx-text-fill: white;
+}
+
+/* Grid pane for form layout */
+.dialog-pane .grid-pane {
+    -fx-hgap: 12;
+    -fx-vgap: 16;
+    -fx-padding: 15 10;
+}
+
+/* Prompt text (placeholder text) in fields */
+.dialog-pane .text-field .prompt-text,
+.dialog-pane .combo-box .prompt-text,
+.dialog-pane .date-picker .prompt-text {
+    -fx-text-fill: #7a9cc4;
+}
+
+/* Fix for combobox prompt text visibility */
+.dialog-pane .combo-box > .list-cell {
+    -fx-text-fill: #0d4c82;
+}
+
+.dialog-pane .combo-box > .list-cell .text {
+    -fx-fill: #0d4c82;
+}

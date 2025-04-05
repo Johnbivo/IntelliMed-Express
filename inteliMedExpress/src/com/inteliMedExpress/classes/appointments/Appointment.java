@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Appointment {
     // Server URLs
-    private static final String SERVER_BASE_URL = "http://localhost:8080/api";
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
     private static final String GET_APPOINTMENTS_URL = SERVER_BASE_URL + "/appointments";
     private static final String ADD_APPOINTMENT_URL = SERVER_BASE_URL + "/appointments/add";
     private static final String UPDATE_APPOINTMENT_URL = SERVER_BASE_URL + "/appointments/update";

@@ -1,0 +1,516 @@
+/* Enhanced Dashboard styling with premium minimalistic look */
+
+/* Main panel background */
+#main_panel {
+    -fx-background-color: white;
+}
+
+/* Dashboard panels styling - refined shadows and radius */
+.dashboard-panel {
+    -fx-background-color: #f0f8ff; /* Alice blue - very light blue background */
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 4);
+    -fx-padding: 18;
+}
+
+/* Header/Title styling - more refined */
+.dashboard-title {
+    -fx-text-fill: #1e67a8; /* Medium-dark blue */
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+    -fx-font-family: "System";
+    -fx-padding: 0 0 8 0; /* Add bottom spacing */
+}
+
+/* Enhanced General Medicine title styling - with !important flag */
+#general_medicine_title {
+    -fx-text-fill: #3498db !important; /* Bright blue color with !important flag */
+    -fx-font-weight: bold !important;
+    -fx-font-size: 28px !important;
+    -fx-font-family: "System" !important;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 4, 0, 1, 1) !important;
+    -fx-padding: 8 15 12 15 !important;
+    -fx-background-color: rgba(240, 248, 255, 0.5) !important;
+    -fx-background-radius: 6 !important;
+    -fx-border-color: #3498db transparent transparent transparent !important;
+    -fx-border-width: 2 0 0 0 !important; /* Top border only */
+    -fx-alignment: center-left !important;
+    -fx-letter-spacing: 0.5 !important;
+}
+
+/* Section titles - more refined */
+.section-title {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 5 0 5 0; /* Add spacing */
+}
+
+/* Regular labels - cleaner */
+.label {
+    -fx-text-fill: #2c7bb6;
+    -fx-font-smoothing-type: lcd; /* Smoother text rendering */
+}
+
+/* Welcome text styling */
+#doctorName {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 1, 0, 0, 1);
+}
+
+/* Text fields - cleaner look */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5; /* Lighter border for subtlety */
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5; /* Thinner border for minimalism */
+}
+
+/* Table view styling - more premium */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #d0e6f5; /* Lighter border */
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 2);
+}
+
+.table-view .column-header {
+    -fx-background-color: #1e67a8;
+    -fx-padding: 8 5 8 5; /* More vertical padding */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.table-view .table-row-cell {
+    -fx-border-color: transparent; /* Remove cell borders */
+    -fx-padding: 1 0 1 0; /* Tighter rows */
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f8fbff; /* Even lighter blue */
+}
+
+/* Original selection style that will be overridden */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #d0e6f5; /* Lighter selection */
+    -fx-text-fill: #1e67a8;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #e6f2ff; /* Subtle hover effect */
+}
+
+/* Button styling - more refined */
+.button {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: #0953a0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2, 0, 0, 1);
+}
+
+.button:pressed {
+    -fx-background-color: #084086;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 1, 0, 0, 1);
+}
+
+/* Toolbar styling */
+.tool-bar {
+    -fx-background-color: #f5faff; /* Even lighter background */
+    -fx-padding: 10; /* Add padding */
+    -fx-spacing: 12; /* More space between toolbar items */
+    -fx-border-color: #d0e6f5; /* Lighter border */
+    -fx-border-width: 0 1 0 0; /* Only right border */
+    -fx-border-radius: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);
+}
+
+/* Default style for all toolbar buttons */
+.tool-bar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: transparent;
+    -fx-padding: 10 15;
+    -fx-font-weight: normal;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: none;
+}
+
+/* Hover state for toolbar buttons */
+.tool-bar .button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-background-radius: 4;
+}
+
+.tool-bar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: transparent;
+    -fx-padding: 10 15;
+    -fx-font-weight: normal;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: none;
+}
+
+.tool-bar .button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-background-radius: 4;
+}
+
+.tool-bar .button:pressed {
+    -fx-background-color: #d0e6f5;
+}
+
+/* Selected button in toolbar */
+.tool-bar .button:focused,
+.tool-bar .button.selected {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+}
+
+/* Logout button - distinct styling */
+#logout_button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+#logout_button:hover {
+    -fx-background-color: #f0f8ff;
+}
+
+/* Action buttons with fill animation */
+#add_patient_button, #update_patient_button, #delete_patient_button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s; /* Add transition for smooth animation */
+    -fx-cursor: hand;
+}
+
+#add_patient_button:hover, #update_patient_button:hover {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+#delete_patient_button {
+    -fx-border-color: #d32f2f; /* Red border */
+    -fx-text-fill: #d32f2f; /* Red text */
+}
+
+#delete_patient_button:hover {
+    -fx-background-color: #d32f2f; /* Red fill */
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Alert dialog styling */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-padding: 15;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10 10 10 10;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #2c7bb6;
+    -fx-font-size: 14px;
+    -fx-padding: 15 5;
+}
+
+.dialog-pane .button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #f0f8ff;
+}
+
+/* Refresh Button Styling for GIF version */
+#refresh_button {
+    -fx-background-color: white;
+    -fx-text-fill: #2986cc;
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+/* Hover effect */
+#refresh_button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
+}
+
+/* Pressed effect */
+#refresh_button:pressed {
+    -fx-background-color: #d0e6f5;
+    -fx-border-color: #0953a0;
+    -fx-text-fill: #0953a0;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Disabled state - used during animation */
+#refresh_button:disabled {
+    -fx-opacity: 0.9;
+    -fx-background-color: #f0f8ff;
+}
+
+/* ======= NEW TABLE SELECTION STYLES (THESE OVERRIDE THE PROBLEMATIC STYLES ABOVE) ======= */
+
+/* Modified table selection styles */
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(30, 103, 168, 0.3); /* Darker blue with 30% opacity */
+    -fx-text-fill: #000000; /* Black text for better contrast */
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #000000; /* Ensure text inside selected cells is black */
+}
+
+.table-view .table-row-cell:selected > .table-cell {
+    -fx-text-fill: #000000; /* Ensure text in all selected cells is black */
+    -fx-opacity: 1.0; /* Ensure full opacity */
+}
+
+/* Optional: Add a subtle border to selected rows for better visibility */
+.table-view .table-row-cell:selected {
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 1 0; /* Just bottom border */
+}
+
+
+#MedicalRecordsTable {
+    -fx-background-color: transparent;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 2);
+}
+
+#MedicalRecordsTable .column-header {
+    -fx-background-color: #1e67a8;
+    -fx-padding: 8 5 8 5;
+}
+
+#MedicalRecordsTable .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Medical Record Button Styling - matching your existing button patterns */
+#add_record_button, #modify_record_button, #view_medical_history_button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#add_record_button:hover, #modify_record_button:hover, #view_medical_history_button:hover {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Delete record button - special styling for destructive action */
+#delete_record_button {
+    -fx-border-color: #d32f2f;
+    -fx-text-fill: #d32f2f;
+    -fx-background-color: white;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#delete_record_button:hover {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Refresh Records Button Styling */
+#refresh_records_button {
+    -fx-background-color: white;
+    -fx-text-fill: #2986cc;
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+#refresh_records_button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
+}
+
+#refresh_records_button:pressed {
+    -fx-background-color: #d0e6f5;
+    -fx-border-color: #0953a0;
+    -fx-text-fill: #0953a0;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+#refresh_records_button:disabled {
+    -fx-opacity: 0.9;
+    -fx-background-color: #f0f8ff;
+}
+
+/* Medical Record table row styling - ensuring consistency with other tables */
+#MedicalRecordsTable .table-row-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 1 0 1 0;
+}
+
+#MedicalRecordsTable .table-row-cell:odd {
+    -fx-background-color: #f8fbff;
+}
+
+#MedicalRecordsTable .table-row-cell:selected {
+    -fx-background-color: rgba(30, 103, 168, 0.3);
+    -fx-text-fill: #000000;
+    -fx-table-cell-border-color: transparent;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 1 0;
+}
+
+#MedicalRecordsTable .table-row-cell:selected .text {
+    -fx-fill: #000000;
+}
+
+#MedicalRecordsTable .table-row-cell:selected > .table-cell {
+    -fx-text-fill: #000000;
+    -fx-opacity: 1.0;
+}
+
+#MedicalRecordsTable .table-row-cell:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+/* Medical Record dialog styling enhancements */
+.medical-record-dialog {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);
+}
+
+.medical-record-dialog .header-panel {
+    -fx-background-color: #f5faff;
+    -fx-border-color: #d0e6f5;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15;
+}
+
+.medical-record-dialog .header-panel .label {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.medical-record-dialog .grid-pane {
+    -fx-padding: 20;
+    -fx-hgap: 15;
+    -fx-vgap: 12;
+}
+
+.medical-record-dialog .default-button {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.medical-record-dialog .default-button:hover {
+    -fx-background-color: #0953a0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2, 0, 0, 1);
+}
+
+/* Ensuring text areas for medical records have proper styling */
+.medical-record-dialog .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.medical-record-dialog .text-area:focused {
+    -fx-border-color: #2986cc;
+}

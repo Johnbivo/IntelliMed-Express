@@ -1,0 +1,8 @@
+2025-04-04 16:28:54.992 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-04.log
+2025-04-04 16:28:54.995 [INFO] LoginController: LoginController initialized
+2025-04-04 16:29:05.581 [INFO] LoginController: Login attempt for user: ad
+2025-04-04 16:29:05.584 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-04 16:32:13.007 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-04.log
+2025-04-04 16:32:13.010 [INFO] LoginController: LoginController initialized
+2025-04-04 16:32:28.734 [INFO] LoginController: Login attempt for user: admin
+2025-04-04 16:32:28.736 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login

@@ -336,3 +336,181 @@
     -fx-border-color: #1e67a8;
     -fx-border-width: 0 0 1 0; /* Just bottom border */
 }
+
+
+#MedicalRecordsTable {
+    -fx-background-color: transparent;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 2);
+}
+
+#MedicalRecordsTable .column-header {
+    -fx-background-color: #1e67a8;
+    -fx-padding: 8 5 8 5;
+}
+
+#MedicalRecordsTable .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Medical Record Button Styling - matching your existing button patterns */
+#add_record_button, #modify_record_button, #view_medical_history_button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#add_record_button:hover, #modify_record_button:hover, #view_medical_history_button:hover {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Delete record button - special styling for destructive action */
+#delete_record_button {
+    -fx-border-color: #d32f2f;
+    -fx-text-fill: #d32f2f;
+    -fx-background-color: white;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#delete_record_button:hover {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Refresh Records Button Styling */
+#refresh_records_button {
+    -fx-background-color: white;
+    -fx-text-fill: #2986cc;
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+#refresh_records_button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
+}
+
+#refresh_records_button:pressed {
+    -fx-background-color: #d0e6f5;
+    -fx-border-color: #0953a0;
+    -fx-text-fill: #0953a0;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+#refresh_records_button:disabled {
+    -fx-opacity: 0.9;
+    -fx-background-color: #f0f8ff;
+}
+
+/* Medical Record table row styling - ensuring consistency with other tables */
+#MedicalRecordsTable .table-row-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 1 0 1 0;
+}
+
+#MedicalRecordsTable .table-row-cell:odd {
+    -fx-background-color: #f8fbff;
+}
+
+#MedicalRecordsTable .table-row-cell:selected {
+    -fx-background-color: rgba(30, 103, 168, 0.3);
+    -fx-text-fill: #000000;
+    -fx-table-cell-border-color: transparent;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 1 0;
+}
+
+#MedicalRecordsTable .table-row-cell:selected .text {
+    -fx-fill: #000000;
+}
+
+#MedicalRecordsTable .table-row-cell:selected > .table-cell {
+    -fx-text-fill: #000000;
+    -fx-opacity: 1.0;
+}
+
+#MedicalRecordsTable .table-row-cell:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+/* Medical Record dialog styling enhancements */
+.medical-record-dialog {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);
+}
+
+.medical-record-dialog .header-panel {
+    -fx-background-color: #f5faff;
+    -fx-border-color: #d0e6f5;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15;
+}
+
+.medical-record-dialog .header-panel .label {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.medical-record-dialog .grid-pane {
+    -fx-padding: 20;
+    -fx-hgap: 15;
+    -fx-vgap: 12;
+}
+
+.medical-record-dialog .default-button {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.medical-record-dialog .default-button:hover {
+    -fx-background-color: #0953a0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2, 0, 0, 1);
+}
+
+/* Ensuring text areas for medical records have proper styling */
+.medical-record-dialog .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.medical-record-dialog .text-area:focused {
+    -fx-border-color: #2986cc;
+}

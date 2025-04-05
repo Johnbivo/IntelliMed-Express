@@ -45,9 +45,9 @@
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
            </columnResizePolicy>
        </TableView>
-      <Button fx:id="add_patient_button" layoutX="1065.0" layoutY="144.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Add New Patient" visible="false" />
-      <Button fx:id="update_patient_button" layoutX="1065.0" layoutY="209.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Update Patient's Info" visible="false" />
-      <Button fx:id="delete_patient_button" layoutX="1065.0" layoutY="275.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Patient" visible="false" />
+      <Button fx:id="add_patient_button" layoutX="1075.0" layoutY="154.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Add New Patient" visible="false" />
+      <Button fx:id="update_patient_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Update Patient's Info" visible="false" />
+      <Button fx:id="delete_patient_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Patient" visible="false" />
       <Label fx:id="doctorName" layoutX="234.0" layoutY="44.0" text="Welcome doc">
          <font>
             <Font size="18.0" />
@@ -74,7 +74,7 @@
       <Button fx:id="modify_appointment_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Appointment" visible="false" />
       <Button fx:id="delete_appointment_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Appointment" visible="false" />
       <Button fx:id="refresh_appointment_button" layoutX="1135.0" layoutY="597.0" mnemonicParsing="false" visible="false" />
-      <TableView fx:id="MedicalRecordsTable" layoutX="188.0" layoutY="129.0" prefHeight="581.0" prefWidth="875.0">
+      <TableView fx:id="MedicalRecordsTable" layoutX="179.0" layoutY="120.0" prefHeight="581.0" prefWidth="875.0" visible="false">
          <columns>
             <TableColumn fx:id="MedicalRecordID" prefWidth="73.33334350585938" text="RecordID" />
             <TableColumn fx:id="medical_record_name" prefWidth="88.88882446289062" text="PatientName" />
@@ -90,10 +90,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="add_record_button" layoutX="1085.0" layoutY="164.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Add Record" />
-      <Button fx:id="modify_record_button" layoutX="1085.0" layoutY="229.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Record" />
-      <Button fx:id="delete_record_button" layoutX="1085.0" layoutY="295.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Record" />
-      <Button fx:id="refresh_records_button" layoutX="1145.0" layoutY="607.0" mnemonicParsing="false" />
-      <Button fx:id="view_medical_history_button" layoutX="1086.0" layoutY="367.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="View Medical History" />
+      <Button fx:id="add_record_button" layoutX="1075.0" layoutY="154.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Add Record" visible="false" />
+      <Button fx:id="modify_record_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Record" visible="false" />
+      <Button fx:id="delete_record_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Record" visible="false" />
+      <Button fx:id="refresh_records_button" layoutX="1138.0" layoutY="605.0" mnemonicParsing="false" visible="false" />
+      <Button fx:id="view_medical_history_button" layoutX="1076.0" layoutY="357.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="View Medical History" visible="false" />
    </children>
 </AnchorPane>

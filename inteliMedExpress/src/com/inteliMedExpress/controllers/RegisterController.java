@@ -49,6 +49,14 @@ public class RegisterController implements Initializable {
     private TextField address_textfield;
     @FXML
     private TextField age_textfield;
+
+    @FXML
+    private TextField firstName;
+
+    @FXML
+    private TextField lastName;
+
+
     @FXML
     private Hyperlink back_to_login_hype;
 
@@ -115,6 +123,8 @@ public class RegisterController implements Initializable {
         String gender = gender_dropdown.getValue();
         String profession = profession_dropdown.getValue();
         String department = department_specialty.getValue();
+        String firstname = firstName.getText();
+        String lastname = lastName.getText();
 
 
 
@@ -140,7 +150,7 @@ public class RegisterController implements Initializable {
 
 
         try {
-            boolean registerSuccess = sendRegisterRequest(username, password, email, phone, address,
+            boolean registerSuccess = sendRegisterRequest(username, password,firstname, lastname, email, phone, address,
                     ageNumber, gender, profession, department);
             if(registerSuccess) {
                 UIHelper.showAlert("Success", "Registration successful.");
@@ -163,7 +173,7 @@ public class RegisterController implements Initializable {
 
 
 
-    private boolean sendRegisterRequest(String username, String password,
+    private boolean sendRegisterRequest(String username, String password, String firstname,String lastName,
                                      String email, String phone, String address,
                                      int ageNumber, String gender, String profession,
                                      String department) throws IOException {
@@ -192,12 +202,15 @@ public class RegisterController implements Initializable {
         JSONObject registerData = new JSONObject();
         registerData.put("username", username);
         registerData.put("password", password);
+        registerData.put("firstname", firstname);
+        registerData.put("lastname", lastName);
         registerData.put("email", email);
         registerData.put("phone", phone);
         registerData.put("address", address);
         registerData.put("age", ageNumber);
         registerData.put("gender", gender);
         registerData.put("profession", profession);
+        registerData.put("department", department);
 
 
         // Convert JSON to string and get bytes

@@ -46,7 +46,7 @@
                     </font>
                 </Label>
                 <PasswordField fx:id="password_textfield" layoutX="16.0" layoutY="259.0" promptText="Password" />
-                <Button fx:id="register_button" layoutX="29.0" layoutY="394.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="123.0" text="Register" />
+                <Button fx:id="register_button" layoutX="29.0" layoutY="394.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="123.0" text="Register" />
                 <Hyperlink fx:id="back_to_login_hype" layoutX="546.0" layoutY="397.0" onAction="#back_to_login" text="Already have an account?" />
             <Label fx:id="email_label" alignment="CENTER" layoutX="173.0" layoutY="182.0" prefHeight="20.0" prefWidth="151.0" text="Email" textAlignment="CENTER">
                <font>
@@ -75,6 +75,18 @@
             <ChoiceBox fx:id="gender_dropdown" layoutX="16.0" layoutY="312.0" prefHeight="25.0" prefWidth="149.0" />
             <ChoiceBox fx:id="profession_dropdown" layoutX="512.0" layoutY="202.0" prefWidth="150.0" />
             <ChoiceBox fx:id="department_specialty" layoutX="512.0" layoutY="259.0" prefWidth="150.0" />
+            <TextField fx:id="firstName" layoutX="176.0" layoutY="312.0" promptText="First Name" />
+            <Label fx:id="address_label1" alignment="CENTER" layoutX="175.0" layoutY="292.0" prefHeight="20.0" prefWidth="151.0" text="First Name" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lastName" layoutX="333.0" layoutY="313.0" promptText="Last Name" />
+            <Label fx:id="address_label11" alignment="CENTER" layoutX="332.0" layoutY="293.0" prefHeight="20.0" prefWidth="151.0" text="Last Name" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

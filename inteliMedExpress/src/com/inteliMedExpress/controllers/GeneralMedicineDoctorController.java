@@ -1356,7 +1356,7 @@ public class GeneralMedicineDoctorController {
     }
 
 
-**/
+*/
 
 
 

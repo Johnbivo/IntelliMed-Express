@@ -55,7 +55,7 @@ public class LoginController {
     @FXML
     private Hyperlink credits;
 
-    private static final String LOGIN_API_URL = "https://127.0.0.1:8080/api/auth/login";
+    private static final String LOGIN_API_URL = "http://127.0.0.1:8080/api/auth/login";
 
 
 
@@ -67,7 +67,7 @@ public class LoginController {
 
 
         //Setting up the certificate verification
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
 
@@ -128,17 +128,17 @@ public class LoginController {
 
 
     private boolean sendLoginRequest(String username, String password) throws IOException {
-
+/*
         if (!HttpsUtil.isSSLInitialized()){
             HttpsUtil.setupSSL();
         }
-
+*/
 
         URL url = new URL(LOGIN_API_URL);
 
         AppLogger.info(CLASS_NAME, "Sending login request to " + url.toString());
         // Cast to HttpsURLConnection for HTTPS
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         // Sets request method
         connection.setRequestMethod("POST");

@@ -1,0 +1,124 @@
+2025-04-09 20:14:06.017 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:14:06.020 [INFO] LoginController: LoginController initialized
+2025-04-09 20:37:30.869 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:37:30.872 [INFO] LoginController: LoginController initialized
+2025-04-09 20:37:31.016 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-09 20:40:46.996 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:40:47.003 [INFO] LoginController: LoginController initialized
+2025-04-09 20:43:33.467 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:43:33.472 [INFO] LoginController: LoginController initialized
+2025-04-09 20:44:24.650 [INFO] LoginController: Login attempt for user: sdf
+2025-04-09 20:44:24.653 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:47:28.462 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:47:28.465 [INFO] LoginController: LoginController initialized
+2025-04-09 20:47:31.002 [INFO] LoginController: Login attempt for user: dfs
+2025-04-09 20:47:31.004 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:50:07.002 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:50:07.009 [INFO] LoginController: LoginController initialized
+2025-04-09 20:50:09.846 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 20:50:09.848 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:52:08.375 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:52:08.379 [INFO] LoginController: LoginController initialized
+2025-04-09 20:52:11.174 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 20:52:11.176 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:52:57.439 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:52:57.444 [INFO] LoginController: LoginController initialized
+2025-04-09 20:52:59.738 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 20:52:59.740 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:53:01.178 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 20:54:20.723 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:54:20.726 [INFO] LoginController: LoginController initialized
+2025-04-09 20:54:27.403 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:54:27.411 [INFO] LoginController: LoginController initialized
+2025-04-09 20:54:33.247 [INFO] LoginController: Login attempt for user: adf
+2025-04-09 20:54:33.249 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:54:34.238 [INFO] LoginController: adf successfully logged in.
+2025-04-09 20:55:55.005 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 20:55:55.008 [INFO] LoginController: LoginController initialized
+2025-04-09 20:55:57.767 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 20:55:57.769 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 20:55:58.512 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:14:33.138 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:14:33.142 [INFO] LoginController: LoginController initialized
+2025-04-09 21:14:58.969 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 21:14:58.971 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:15:00.132 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:15:43.168 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:15:43.175 [INFO] LoginController: LoginController initialized
+2025-04-09 21:15:48.833 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 21:15:48.835 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:15:49.733 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:19:49.132 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:19:49.135 [INFO] LoginController: LoginController initialized
+2025-04-09 21:19:51.380 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:19:51.383 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:19:52.859 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:20:30.169 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:20:30.175 [INFO] LoginController: LoginController initialized
+2025-04-09 21:20:33.141 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:20:33.143 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:20:34.065 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:22:53.627 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:22:53.630 [INFO] LoginController: LoginController initialized
+2025-04-09 21:22:55.916 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:22:55.918 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:22:56.771 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:25:05.615 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:25:05.619 [INFO] LoginController: LoginController initialized
+2025-04-09 21:25:07.519 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:25:07.522 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:25:08.366 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:26:41.927 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:26:41.930 [INFO] LoginController: LoginController initialized
+2025-04-09 21:26:45.605 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 21:26:45.608 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:26:46.475 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:27:53.554 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:27:53.557 [INFO] LoginController: LoginController initialized
+2025-04-09 21:27:56.670 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:27:56.672 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:27:57.729 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:29:55.717 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:29:55.723 [INFO] LoginController: LoginController initialized
+2025-04-09 21:29:59.112 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:29:59.115 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:30:00.018 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:33:18.892 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:33:18.896 [INFO] LoginController: LoginController initialized
+2025-04-09 21:33:39.933 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:33:39.935 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:33:40.905 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:35:49.730 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:35:49.734 [INFO] LoginController: LoginController initialized
+2025-04-09 21:35:52.606 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 21:35:52.608 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:35:53.392 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:38:54.494 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:38:54.500 [INFO] LoginController: LoginController initialized
+2025-04-09 21:38:57.028 [INFO] LoginController: Login attempt for user: asdf
+2025-04-09 21:38:57.030 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:38:57.848 [INFO] LoginController: asdf successfully logged in.
+2025-04-09 21:42:06.057 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:42:06.063 [INFO] LoginController: LoginController initialized
+2025-04-09 21:42:08.374 [INFO] LoginController: Login attempt for user: sa
+2025-04-09 21:42:08.377 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:42:09.298 [INFO] LoginController: sa successfully logged in.
+2025-04-09 21:46:32.688 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:46:32.694 [INFO] LoginController: LoginController initialized
+2025-04-09 21:46:36.903 [INFO] LoginController: Login attempt for user: asd
+2025-04-09 21:46:36.905 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:46:37.913 [INFO] LoginController: asd successfully logged in.
+2025-04-09 21:47:01.549 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:47:01.555 [INFO] LoginController: LoginController initialized
+2025-04-09 21:47:04.420 [INFO] LoginController: Login attempt for user: ASD
+2025-04-09 21:47:04.423 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:47:05.339 [INFO] LoginController: ASD successfully logged in.
+2025-04-09 21:50:21.416 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-09.log
+2025-04-09 21:50:21.421 [INFO] LoginController: LoginController initialized
+2025-04-09 21:50:25.873 [INFO] LoginController: Login attempt for user: sad
+2025-04-09 21:50:25.875 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:50:26.876 [INFO] LoginController: sad successfully logged in.
+2025-04-09 21:51:07.770 [INFO] LoginController: LoginController initialized
+2025-04-09 21:51:09.978 [INFO] LoginController: Login attempt for user: sdf
+2025-04-09 21:51:09.978 [INFO] LoginController: Sending login request to http://127.0.0.1:8080/api/auth/login
+2025-04-09 21:51:10.933 [INFO] LoginController: sdf successfully logged in.

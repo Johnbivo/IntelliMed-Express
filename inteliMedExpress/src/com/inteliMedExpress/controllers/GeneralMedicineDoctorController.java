@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -200,16 +201,54 @@ public class GeneralMedicineDoctorController {
 
 
 
+    @FXML
+    private Button view_appointment_details_button;
 
 
 
+    // Method to show details of the selected appointment
+    @FXML
+    private void showAppointmentDetails(ActionEvent event ) {
+        Appointment selectedAppointment = appointmentsViewTable.getSelectionModel().getSelectedItem();
 
+        if (selectedAppointment == null) {
+            UIHelper.showAlert("Selection Required", "Please select an appointment to view details.");
+            return;
+        }
 
+        // Show dialog with formatted details
+        showAppointmentDetailsDialog(selectedAppointment);
+    }
 
+    // Method to display the appointment details dialog
+    private void showAppointmentDetailsDialog(Appointment appointment) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Appointment Details");
+        dialog.setHeaderText("Appointment ID: " + appointment.getAppointmentId());
 
+        // Format the appointment details
+        StringBuilder contentBuilder = new StringBuilder();
+        contentBuilder.append("Patient: ").append(appointment.getPatientName()).append(" ")
+                .append(appointment.getPatientSurname()).append("\n\n");
+        contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorSurname()).append("\n\n");
+        contentBuilder.append("Nurse: ").append(appointment.getNurseSurname()).append("\n\n");
+        contentBuilder.append("Date: ").append(appointment.getAppointmentDate()).append("\n\n");
+        contentBuilder.append("Status: ").append(appointment.getStatus()).append("\n\n");
+        contentBuilder.append("Notes:\n").append(appointment.getNotes());
 
+        // Create a text area to show the details
+        TextArea textArea = new TextArea(contentBuilder.toString());
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setPrefWidth(500);
+        textArea.setPrefHeight(400);
 
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.setContent(textArea);
+        dialogPane.getButtonTypes().add(ButtonType.CLOSE);
 
+        dialog.showAndWait();
+    }
 
 
 
@@ -247,6 +286,7 @@ public class GeneralMedicineDoctorController {
 
             // Initially show appointments view
             handleNavigation(appointments_button);
+
         } catch (Exception e) {
             System.err.println("Initialization error: " + e.getMessage());
             e.printStackTrace();
@@ -393,6 +433,14 @@ public class GeneralMedicineDoctorController {
         patientsTableView.setEditable(false);
         TableView.TableViewSelectionModel<Patient> selectionModel = patientsTableView.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        patientsTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        patientsTableView.setPrefHeight(581.0); // Match the height in your FXML
+        patientsTableView.setFixedCellSize(25); // Set fixed cell height for better scrolling
+        patientsTableView.setMinHeight(581.0); // Ensure minimum height
+        VirtualFlow<?> flow = (VirtualFlow<?>) patientsTableView.lookup(".virtual-flow");
+        if (flow != null) {
+            flow.setVertical(true);
+        }
 
         // Configure patient table columns
         patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("PatientID"));
@@ -439,6 +487,15 @@ public class GeneralMedicineDoctorController {
         // Configure appointment table
         TableView.TableViewSelectionModel<Appointment> selectionModel = appointmentsViewTable.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        // In setupAppointmentTable()
+        appointmentsViewTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        appointmentsViewTable.setPrefHeight(581.0); // Match the height in your FXML
+        appointmentsViewTable.setFixedCellSize(25); // Set fixed cell height for better scrolling
+        appointmentsViewTable.setMinHeight(581.0); // Ensure minimum height
+        VirtualFlow<?> flowAppointments = (VirtualFlow<?>) appointmentsViewTable.lookup(".virtual-flow");
+        if (flowAppointments != null) {
+            flowAppointments.setVertical(true);
+        }
 
         // Configure appointment table columns
         appointmentID_column.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
@@ -456,6 +513,14 @@ public class GeneralMedicineDoctorController {
         create_appointment_button.setOnAction(event -> handleCreateAppointment());
         modify_appointment_button.setOnAction(event -> handleModifyAppointment());
         delete_appointment_button.setOnAction(event -> handleDeleteAppointment());
+
+
+
+
+
+
+
+
     }
 
 
@@ -465,7 +530,14 @@ public class GeneralMedicineDoctorController {
         // Configure MedicalRecord table
         TableView.TableViewSelectionModel<MedicalRecord> selectionModel = MedicalRecordsTable.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
-
+        MedicalRecordsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        MedicalRecordsTable.setPrefHeight(581.0); // Match the height in your FXML
+        MedicalRecordsTable.setFixedCellSize(25); // Set fixed cell height for better scrolling
+        MedicalRecordsTable.setMinHeight(581.0); // Ensure minimum height
+        VirtualFlow<?> flowRecords = (VirtualFlow<?>) MedicalRecordsTable.lookup(".virtual-flow");
+        if (flowRecords != null) {
+            flowRecords.setVertical(true);
+        }
 
         //Configure medicalRecords table columns
         MedicalRecordID.setCellValueFactory(new PropertyValueFactory<>("RecordID"));
@@ -633,6 +705,8 @@ public class GeneralMedicineDoctorController {
         modify_appointment_button.setVisible(false);
         delete_appointment_button.setVisible(false);
         refresh_appointment_button.setVisible(false);
+        view_appointment_details_button.setVisible(false);
+
     }
 
     private void enableAppointmentComponents(){
@@ -641,6 +715,7 @@ public class GeneralMedicineDoctorController {
         modify_appointment_button.setVisible(true);
         delete_appointment_button.setVisible(true);
         refresh_appointment_button.setVisible(true);
+        view_appointment_details_button.setVisible(true);
     }
 
 

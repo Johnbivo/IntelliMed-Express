@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MedicalRecord {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/auth";
+    private static final String SERVER_BASE_URL = "http://127.0.0.1:8080/api/auth";
     private static final String GET_MEDICAL_RECORDS_URL = SERVER_BASE_URL + "/medical-records";
     private static final String ADD_MEDICAL_RECORD_URL = SERVER_BASE_URL + "/medical-records/add";
     private static final String UPDATE_MEDICAL_RECORD_URL = SERVER_BASE_URL + "/medical-records/update";
@@ -40,9 +40,12 @@ public class MedicalRecord {
 
     // Constructors
     public MedicalRecord() {
+        /*
         if (!HttpsUtil.isSSLInitialized()) {
             HttpsUtil.setupSSL();
         }
+
+         */
     }
 
     public MedicalRecord(Integer recordId, String patientName, String patientSurname,
@@ -57,10 +60,12 @@ public class MedicalRecord {
         this.prescription = prescription;
         this.status = status;
         this.recordDate = recordDate;
-
+/*
         if (!HttpsUtil.isSSLInitialized()) {
             HttpsUtil.setupSSL();
         }
+
+ */
     }
 
     // Getters and Setters
@@ -98,9 +103,12 @@ public class MedicalRecord {
         BufferedReader reader = null;
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+             */
             // Set up the connection
             URL url = new URL(GET_MEDICAL_RECORDS_URL);
             connection = (HttpURLConnection) url.openConnection();
@@ -184,9 +192,12 @@ public class MedicalRecord {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+             */
             // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -230,9 +241,12 @@ public class MedicalRecord {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+             */
             // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
@@ -277,9 +291,12 @@ public class MedicalRecord {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+             */
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
 

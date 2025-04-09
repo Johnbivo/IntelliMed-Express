@@ -72,13 +72,13 @@ public class RegisterController implements Initializable {
 
 
 
-    private static final String REGISTER_API_URL = "https://127.0.0.1:8080/api/auth/register";
+    private static final String REGISTER_API_URL = "http://127.0.0.1:8080/api/auth/register";
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        HttpsUtil.setupSSL();
+       // HttpsUtil.setupSSL();
 
         ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female");
         gender_dropdown.setItems(genders);
@@ -178,17 +178,17 @@ public class RegisterController implements Initializable {
                                      int ageNumber, String gender, String profession,
                                      String department) throws IOException {
 
-
+/*
         if (!HttpsUtil.isSSLInitialized()){
             HttpsUtil.setupSSL();
         }
-
+*/
 
         URL url = new URL(REGISTER_API_URL);
 
         AppLogger.info(CLASS_NAME, "Sending register request to " + url.toString());
         // Cast to HttpsURLConnection for HTTPS
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         // Sets request method
         connection.setRequestMethod("POST");

@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Patient {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
+    private static final String SERVER_BASE_URL = "http://127.0.0.1:8080/api/General";
     private static final String GET_PATIENTS_URL = SERVER_BASE_URL + "/patients";
     private static final String ADD_PATIENT_URL = SERVER_BASE_URL + "/patients/add";
     private static final String UPDATE_PATIENT_URL = SERVER_BASE_URL + "/patients/update";
@@ -41,9 +41,11 @@ public class Patient {
 
     // Constructors
     public Patient() {
-        if (!HttpsUtil.isSSLInitialized()) {
+       /* if (!HttpsUtil.isSSLInitialized()) {
             HttpsUtil.setupSSL();
         }
+
+        */
     }
 
     public Patient(Integer patientId, String name, String surname, String email,
@@ -59,10 +61,12 @@ public class Patient {
         this.gender = gender;
         this.birthDate = birthDate;
         this.status = status;
-
+/*
         if (!HttpsUtil.isSSLInitialized()) {
             HttpsUtil.setupSSL();
         }
+        */
+
     }
 
     // Getters and Setters
@@ -103,10 +107,12 @@ public class Patient {
         BufferedReader reader = null;
 
         try {
-
+/*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+            /*
+ */
             // Set up the connection
             URL url = new URL(GET_PATIENTS_URL);
             connection = (HttpURLConnection) url.openConnection();
@@ -194,10 +200,12 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
-
+    /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+     */
             // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -242,9 +250,12 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+ */
             // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
@@ -290,9 +301,12 @@ public class Patient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         try {
+            /*
             if (!HttpsUtil.isSSLInitialized()) {
                 HttpsUtil.setupSSL();
             }
+
+             */
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
 

@@ -72,20 +72,20 @@ public class RegisterController implements Initializable {
 
 
 
-    private static final String REGISTER_API_URL = "http://127.0.0.1:8080/api/auth/register";
+    private static final String REGISTER_API_URL = "https://127.0.0.1:8080/api/auth/register";
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-       // HttpsUtil.setupSSL();
+        HttpsUtil.setupSSL();
 
-        ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female");
+        ObservableList<String> genders = FXCollections.observableArrayList("male", "female");
         gender_dropdown.setItems(genders);
         gender_dropdown.setValue("Select Gender");
 
 
-        ObservableList<String> professions = FXCollections.observableArrayList("Doctor", "Nurse");
+        ObservableList<String> professions = FXCollections.observableArrayList("DOCTOR", "NURSE");
         profession_dropdown.setItems(professions);
         profession_dropdown.setValue("Select Profession");
 
@@ -188,7 +188,7 @@ public class RegisterController implements Initializable {
 
         AppLogger.info(CLASS_NAME, "Sending register request to " + url.toString());
         // Cast to HttpsURLConnection for HTTPS
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         // Sets request method
         connection.setRequestMethod("POST");
@@ -210,7 +210,8 @@ public class RegisterController implements Initializable {
         registerData.put("age", ageNumber);
         registerData.put("gender", gender);
         registerData.put("profession", profession);
-        registerData.put("department", department);
+        Integer departmentId = mapDepartmentNameToId(department);
+        registerData.put("department", departmentId);
 
 
         // Convert JSON to string and get bytes
@@ -227,7 +228,7 @@ public class RegisterController implements Initializable {
 
         // Get response code
         int responseCode = connection.getResponseCode();
-        return responseCode == HttpURLConnection.HTTP_OK;
+        return responseCode == HttpsURLConnection.HTTP_CREATED;
 
 
     }
@@ -265,9 +266,39 @@ public class RegisterController implements Initializable {
 
     }
 
+    private Integer mapDepartmentNameToId(String departmentName) {
+        if (departmentName == null || departmentName.equals("Select Department")) {
+            return null;
+        }
+
+        switch (departmentName) {
+            case "Cardiology":
+                return 1;
+            case "Pediatrics":
+                return 2;
+            case "General Medicine":
+                return 3;
+            case "Microbiology":
+                return 4;
+            case "Pharmacology":
+                return 5;
+            case "Radiology":
+                return 6;
+            default:
+                return null;
+        }
+    }
 
 
 
+/*Cardiology - ID: 1
+Pediatrics - ID: 2
+General - ID: 3
+Microbiology - ID: 4
+Pharmacy - ID: 5 (the name in the database is "Pharmacy" but the specialty type is "Pharmacology")
+Radiology - ID: 6
+
+ */
 
 
 }

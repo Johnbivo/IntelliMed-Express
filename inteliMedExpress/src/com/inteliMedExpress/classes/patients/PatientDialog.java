@@ -92,11 +92,11 @@ public class PatientDialog {
         TextField addressField = new TextField();
         TextField ageField = new TextField();
         ComboBox<String> genderComboBox = new ComboBox<>();
-        genderComboBox.getItems().addAll("Male", "Female");
+        genderComboBox.getItems().addAll("male", "female");
         genderComboBox.setPromptText("Select Gender");
         DatePicker birthDatePicker = new DatePicker();
         ComboBox<String> statusComboBox = new ComboBox<>();
-        statusComboBox.getItems().addAll("Active", "Inactive", "Pending");
+        statusComboBox.getItems().addAll("Active", "Inactive", "Deceased");
         statusComboBox.setPromptText("Select Status");
 
         // Set preferred width for consistent form field sizes

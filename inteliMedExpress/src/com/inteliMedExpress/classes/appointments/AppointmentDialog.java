@@ -4,10 +4,14 @@ import com.inteliMedExpress.classes.UIHelper;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class AppointmentDialog {
 
@@ -25,9 +29,15 @@ public class AppointmentDialog {
         alert.initOwner(parentStage);
         alert.setTitle("Confirm Deletion");
         alert.setHeaderText("Delete Appointment Record");
+
+        // Format the date-time for display
+        String formattedDateTime = appointment.getAppointmentDate() != null ?
+                appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) :
+                "unknown date";
+
         alert.setContentText("Are you sure you want to delete appointment for: " +
                 appointment.getPatientName() + " " + appointment.getPatientSurname() +
-                " on " + appointment.getAppointmentDate() + " (ID: " + appointment.getAppointmentId() + ")?");
+                " on " + formattedDateTime + " (ID: " + appointment.getAppointmentId() + ")?");
 
         // Apply custom styling to the alert
         DialogPane dialogPane = alert.getDialogPane();
@@ -89,7 +99,22 @@ public class AppointmentDialog {
         TextField patientSurnameField = new TextField();
         TextField doctorSurnameField = new TextField();
         TextField nurseSurnameField = new TextField();
+
+        // Date picker for appointment date
         DatePicker appointmentDatePicker = new DatePicker();
+
+        // Time picker components (hours and minutes)
+        ComboBox<String> hourPicker = new ComboBox<>();
+        for (int i = 0; i < 24; i++) {
+            hourPicker.getItems().add(String.format("%02d", i));
+        }
+
+        ComboBox<String> minutePicker = new ComboBox<>();
+        for (int i = 0; i < 60; i += 15) { // 15-minute intervals
+            minutePicker.getItems().add(String.format("%02d", i));
+        }
+
+        // Appointment status
         ComboBox<String> statusComboBox = new ComboBox<>();
         statusComboBox.getItems().addAll("Scheduled", "Confirmed", "Completed", "Canceled", "No-Show");
         statusComboBox.setPromptText("Select Status");
@@ -102,6 +127,8 @@ public class AppointmentDialog {
         doctorSurnameField.setPrefWidth(250);
         nurseSurnameField.setPrefWidth(250);
         appointmentDatePicker.setPrefWidth(250);
+        hourPicker.setPrefWidth(60);
+        minutePicker.setPrefWidth(60);
         statusComboBox.setPrefWidth(250);
         notesArea.setPrefWidth(250);
 
@@ -111,10 +138,35 @@ public class AppointmentDialog {
             patientSurnameField.setText(existingAppointment.getPatientSurname());
             doctorSurnameField.setText(existingAppointment.getDoctorSurname());
             nurseSurnameField.setText(existingAppointment.getNurseSurname());
-            appointmentDatePicker.setValue(existingAppointment.getAppointmentDate());
+
+            // Handle the date and time
+            if (existingAppointment.getAppointmentDate() != null) {
+                // Set the date
+                appointmentDatePicker.setValue(existingAppointment.getAppointmentDate().toLocalDate());
+
+                // Set the time
+                LocalTime time = existingAppointment.getAppointmentDate().toLocalTime();
+                hourPicker.setValue(String.format("%02d", time.getHour()));
+                minutePicker.setValue(String.format("%02d", (time.getMinute() / 15) * 15)); // Round to nearest 15 min
+            } else {
+                // Default values
+                appointmentDatePicker.setValue(LocalDate.now());
+                hourPicker.setValue("09"); // 9 AM default
+                minutePicker.setValue("00"); // 0 minutes default
+            }
+
             statusComboBox.setValue(existingAppointment.getStatus());
             notesArea.setText(existingAppointment.getNotes());
+        } else {
+            // Default values for new appointment
+            appointmentDatePicker.setValue(LocalDate.now());
+            hourPicker.setValue("09"); // 9 AM default
+            minutePicker.setValue("00"); // 0 minutes default
         }
+
+        // Create time picker layout
+        HBox timeBox = new HBox(10);
+        timeBox.getChildren().addAll(hourPicker, new Label(":"), minutePicker);
 
         // Add labels and fields to the grid
         grid.add(new Label("Patient Name:"), 0, 0);
@@ -127,16 +179,18 @@ public class AppointmentDialog {
         grid.add(nurseSurnameField, 1, 3);
         grid.add(new Label("Appointment Date:"), 0, 4);
         grid.add(appointmentDatePicker, 1, 4);
-        grid.add(new Label("Status:"), 0, 5);
-        grid.add(statusComboBox, 1, 5);
-        grid.add(new Label("Notes:"), 0, 6);
-        grid.add(notesArea, 1, 6);
+        grid.add(new Label("Appointment Time:"), 0, 5);
+        grid.add(timeBox, 1, 5);
+        grid.add(new Label("Status:"), 0, 6);
+        grid.add(statusComboBox, 1, 6);
+        grid.add(new Label("Notes:"), 0, 7);
+        grid.add(notesArea, 1, 7);
 
         dialog.getDialogPane().setContent(grid);
 
         // Add some spacing to improve layout
         dialogPane.setPrefWidth(450);
-        dialogPane.setPrefHeight(550);
+        dialogPane.setPrefHeight(600); // Increased height to accommodate the time picker
 
         // Request focus on the patient name field by default
         patientNameField.requestFocus();
@@ -150,6 +204,17 @@ public class AppointmentDialog {
                     String doctorSurname = doctorSurnameField.getText().trim();
                     String nurseSurname = nurseSurnameField.getText().trim();
                     LocalDate appointmentDate = appointmentDatePicker.getValue();
+
+                    // Get time values
+                    int hour = Integer.parseInt(hourPicker.getValue());
+                    int minute = Integer.parseInt(minutePicker.getValue());
+
+                    // Combine date and time
+                    LocalDateTime appointmentDateTime = LocalDateTime.of(
+                            appointmentDate,
+                            LocalTime.of(hour, minute)
+                    );
+
                     String status = statusComboBox.getValue();
                     String notes = notesArea.getText().trim();
 
@@ -168,12 +233,12 @@ public class AppointmentDialog {
                         appointment.setPatientSurname(patientSurname);
                         appointment.setDoctorSurname(doctorSurname);
                         appointment.setNurseSurname(nurseSurname);
-                        appointment.setAppointmentDate(appointmentDate);
+                        appointment.setAppointmentDate(appointmentDateTime);
                         appointment.setStatus(status);
                         appointment.setNotes(notes);
                     } else {
                         appointment = new Appointment(null, patientName, patientSurname,
-                                doctorSurname, nurseSurname, appointmentDate, status, notes);
+                                doctorSurname, nurseSurname, appointmentDateTime, status, notes);
                     }
 
                     return appointment;

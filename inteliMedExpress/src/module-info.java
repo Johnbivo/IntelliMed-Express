@@ -8,6 +8,7 @@ module com.inteliMedExpress {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires javafx.base;
 
     // Web functionality
     requires java.net.http;
@@ -17,14 +18,14 @@ module com.inteliMedExpress {
     exports com.inteliMedExpress;  // Export the root package where Main is located
     exports com.inteliMedExpress.controllers;
     exports com.inteliMedExpress.classes;
-
-
+    exports com.inteliMedExpress.classes.medicalRecords;
+    exports com.inteliMedExpress.classes.appointments;
+    exports com.inteliMedExpress.classes.patients;
     // Open packages for FXML and reflection
     opens com.inteliMedExpress to javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.controllers to javafx.fxml;
     opens com.inteliMedExpress.classes to java.base, javafx.fxml, javafx.graphics;
-    exports com.inteliMedExpress.classes.patients;
     opens com.inteliMedExpress.classes.patients to java.base, javafx.fxml, javafx.graphics;
-    exports com.inteliMedExpress.classes.appointments;
     opens com.inteliMedExpress.classes.appointments to java.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.medicalRecords to javafx.base, javafx.fxml, javafx.graphics;
 }

@@ -39,6 +39,7 @@ import javafx.animation.KeyFrame;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -125,7 +126,7 @@ public class GeneralMedicineDoctorController {
     @FXML
     private TableColumn<Appointment, String> nurse_surname_column;
     @FXML
-    private TableColumn<Appointment, LocalDate> appointment_date_column;
+    private TableColumn<Appointment, LocalDateTime> appointment_date_column;
     @FXML
     private TableColumn<Appointment, String> appointment_status_column;
     @FXML
@@ -170,7 +171,7 @@ public class GeneralMedicineDoctorController {
     @FXML
     private TableColumn<MedicalRecord, String> record_status;
     @FXML
-    private TableColumn<MedicalRecord, LocalDate> record_date;
+    private TableColumn<MedicalRecord, LocalDateTime> record_date;
 
     private ObservableList<MedicalRecord> medicalRecordsList = FXCollections.observableArrayList();
 
@@ -232,7 +233,10 @@ public class GeneralMedicineDoctorController {
                 .append(appointment.getPatientSurname()).append("\n\n");
         contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorSurname()).append("\n\n");
         contentBuilder.append("Nurse: ").append(appointment.getNurseSurname()).append("\n\n");
-        contentBuilder.append("Date: ").append(appointment.getAppointmentDate()).append("\n\n");
+        contentBuilder.append("Date: ").append(
+                appointment.getAppointmentDate() != null ?
+                        appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) :
+                        "N/A").append("\n\n");
         contentBuilder.append("Status: ").append(appointment.getStatus()).append("\n\n");
         contentBuilder.append("Notes:\n").append(appointment.getNotes());
 
@@ -443,16 +447,16 @@ public class GeneralMedicineDoctorController {
         }
 
         // Configure patient table columns
-        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("PatientID"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
-        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("PatientEmail"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("PatientPhone"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("PatientAddress"));
-        ageColumn.setCellValueFactory(new PropertyValueFactory<>("PatientAge"));
-        genderColumn.setCellValueFactory(new PropertyValueFactory<>("Gender"));
-        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("DateOfBirth"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("PatientStatus"));
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         // Date Formatter
         birthDateColumn.setCellFactory(column -> {
@@ -498,14 +502,33 @@ public class GeneralMedicineDoctorController {
         }
 
         // Configure appointment table columns
-        appointmentID_column.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
-        patient_name_column.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
-        patient_surname_column.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
-        doctor_surname_column.setCellValueFactory(new PropertyValueFactory<>("DoctorSurname"));
-        nurse_surname_column.setCellValueFactory(new PropertyValueFactory<>("NurseSurname"));
-        appointment_date_column.setCellValueFactory(new PropertyValueFactory<>("AppointmentDate"));
-        appointment_status_column.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        appointment_notes_column.setCellValueFactory(new PropertyValueFactory<>("Notes"));
+        appointmentID_column.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        patient_name_column.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        patient_surname_column.setCellValueFactory(new PropertyValueFactory<>("patientSurname"));
+        doctor_surname_column.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
+        nurse_surname_column.setCellValueFactory(new PropertyValueFactory<>("nurseSurname"));
+        appointment_date_column.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
+
+        // Add this new cell factory to format the date-time properly
+        appointment_date_column.setCellFactory(column -> {
+            return new TableCell<Appointment, LocalDateTime>() {
+                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                @Override
+                protected void updateItem(LocalDateTime dateTime, boolean empty) {
+                    super.updateItem(dateTime, empty);
+
+                    if (empty || dateTime == null) {
+                        setText(null);
+                    } else {
+                        setText(formatter.format(dateTime));
+                    }
+                }
+            };
+        });
+
+        appointment_status_column.setCellValueFactory(new PropertyValueFactory<>("status"));
+        appointment_notes_column.setCellValueFactory(new PropertyValueFactory<>("notes"));
 
         appointmentsViewTable.setItems(appointmentList);
 
@@ -513,14 +536,6 @@ public class GeneralMedicineDoctorController {
         create_appointment_button.setOnAction(event -> handleCreateAppointment());
         modify_appointment_button.setOnAction(event -> handleModifyAppointment());
         delete_appointment_button.setOnAction(event -> handleDeleteAppointment());
-
-
-
-
-
-
-
-
     }
 
 
@@ -540,15 +555,27 @@ public class GeneralMedicineDoctorController {
         }
 
         //Configure medicalRecords table columns
-        MedicalRecordID.setCellValueFactory(new PropertyValueFactory<>("RecordID"));
-        medical_record_name.setCellValueFactory(new PropertyValueFactory<>("PatientName"));
-        medical_record_surname.setCellValueFactory(new PropertyValueFactory<>("PatientSurname"));
-        medical_record_doc_surname.setCellValueFactory(new PropertyValueFactory<>("DoctorSurname"));
-        record_diagnosis.setCellValueFactory(new PropertyValueFactory<>("Diagnosis"));
-        record_treatment.setCellValueFactory(new PropertyValueFactory<>("Treatment"));
-        record_prescription.setCellValueFactory(new PropertyValueFactory<>("Prescription"));
-        record_status.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        record_date.setCellValueFactory(new PropertyValueFactory<>("RecordDate"));
+        MedicalRecordID.setCellValueFactory(new PropertyValueFactory<>("recordId"));
+        medical_record_name.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        medical_record_surname.setCellValueFactory(new PropertyValueFactory<>("patientSurname"));
+        medical_record_doc_surname.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
+        record_diagnosis.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+        record_treatment.setCellValueFactory(new PropertyValueFactory<>("treatment"));
+        record_prescription.setCellValueFactory(new PropertyValueFactory<>("prescription"));
+        record_status.setCellValueFactory(new PropertyValueFactory<>("recordStatus"));
+        record_date.setCellValueFactory(new PropertyValueFactory<>("recordDate"));
+
+        record_date.setCellFactory(column -> new TableCell<MedicalRecord, LocalDateTime>() {
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            @Override
+            protected void updateItem(LocalDateTime dateTime, boolean empty) {
+                super.updateItem(dateTime, empty);
+                setText(empty || dateTime == null ? null : formatter.format(dateTime));
+            }
+        });
+
+
+
 
         MedicalRecordsTable.setItems(medicalRecordsList);
 
@@ -1127,8 +1154,8 @@ public class GeneralMedicineDoctorController {
             }
 
             // Get the min and max dates for timeline bounds
-            LocalDate minDate = patientHistory.get(0).getRecordDate();
-            LocalDate maxDate = patientHistory.get(patientHistory.size() - 1).getRecordDate();
+            LocalDateTime minDate = patientHistory.get(0).getRecordDate();
+            LocalDateTime maxDate = patientHistory.get(patientHistory.size() - 1).getRecordDate();
 
             // Create a sorted list of year-months for our timeline
             List<YearMonth> timelineMonths = new ArrayList<>();
@@ -1300,9 +1327,9 @@ public class GeneralMedicineDoctorController {
         Label statusLabel = new Label("Status:");
         statusLabel.setStyle("-fx-font-weight: bold;");
 
-        Label statusValue = new Label(record.getStatus());
+        Label statusValue = new Label(record.getRecordStatus());
         String statusColor;
-        switch (record.getStatus().toLowerCase()) {
+        switch (record.getRecordStatus().toLowerCase()) {
             case "active":
                 statusColor = "forestgreen";
                 break;

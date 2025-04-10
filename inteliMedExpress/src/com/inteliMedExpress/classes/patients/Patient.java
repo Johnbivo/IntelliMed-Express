@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Patient {
     // Server URLs
-    private static final String SERVER_BASE_URL = "http://127.0.0.1:8080/api/General";
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
     private static final String GET_PATIENTS_URL = SERVER_BASE_URL + "/patients";
     private static final String ADD_PATIENT_URL = SERVER_BASE_URL + "/patients/add";
     private static final String UPDATE_PATIENT_URL = SERVER_BASE_URL + "/patients/update";
@@ -41,11 +41,9 @@ public class Patient {
 
     // Constructors
     public Patient() {
-       /* if (!HttpsUtil.isSSLInitialized()) {
-            HttpsUtil.setupSSL();
-        }
+       HttpsUtil.setupSSL();
 
-        */
+
     }
 
     public Patient(Integer patientId, String name, String surname, String email,
@@ -61,6 +59,8 @@ public class Patient {
         this.gender = gender;
         this.birthDate = birthDate;
         this.status = status;
+
+        HttpsUtil.setupSSL();
 /*
         if (!HttpsUtil.isSSLInitialized()) {
             HttpsUtil.setupSSL();
@@ -103,7 +103,7 @@ public class Patient {
     // Get all patients
     public static List<Patient> getAllPatients() throws IOException {
         List<Patient> patients = new ArrayList<>();
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
@@ -115,13 +115,13 @@ public class Patient {
  */
             // Set up the connection
             URL url = new URL(GET_PATIENTS_URL);
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
 
             // Check if the request was successful
             int responseCode = connection.getResponseCode();
-            if (responseCode != HttpURLConnection.HTTP_OK) {
+            if (responseCode != HttpsURLConnection.HTTP_OK) {
                 throw new IOException("HTTP error code: " + responseCode);
             }
 
@@ -197,7 +197,7 @@ public class Patient {
     // Add a new patient
     public boolean addToServer() throws IOException {
         URL url = new URL(ADD_PATIENT_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
     /*
@@ -238,7 +238,7 @@ public class Patient {
 
             // Get response code
             int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK;
+            return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpsURLConnection.HTTP_CREATED;
         } finally {
             connection.disconnect();
         }
@@ -247,7 +247,7 @@ public class Patient {
     // Update an existing patient
     public boolean updateOnServer() throws IOException {
         URL url = new URL(UPDATE_PATIENT_URL + "/" + this.patientId);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
             /*
@@ -289,7 +289,7 @@ public class Patient {
 
             // Get response code
             int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK;
+            return responseCode == HttpsURLConnection.HTTP_OK;
         } finally {
             connection.disconnect();
         }
@@ -298,7 +298,7 @@ public class Patient {
     // Delete a patient
     public static boolean deletePatient(Integer patientId) throws IOException {
         URL url = new URL(DELETE_PATIENT_URL + "/" + patientId);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
             /*

@@ -46,7 +46,7 @@
     -fx-border-color: #1e67a8;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
-    -fx-pref-height: 32;
+    -fx-pref-height: 36px;  /* Increased from 32px */
     -fx-font-size: 14px;
     -fx-text-fill: #0d4c82;
 }
@@ -60,16 +60,23 @@
     -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.25), 4, 0, 0, 0);
 }
 
-/* Combo box styling */
+/* Combo box styling - Enhanced for better visibility */
+.dialog-pane .combo-box {
+    -fx-background-color: white;
+    -fx-pref-height: 36px;  /* Explicit height for combo boxes */
+}
+
 .dialog-pane .combo-box .cell {
     -fx-text-fill: #0d4c82;
-    -fx-padding: 5 10;
+    -fx-padding: 8px 10px;  /* Increased vertical padding */
     -fx-font-size: 14px;
 }
 
 .dialog-pane .combo-box .list-cell {
     -fx-text-fill: #0d4c82;
     -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-pref-height: 30px;  /* Taller dropdown items */
 }
 
 .dialog-pane .combo-box .list-cell:hover,
@@ -80,10 +87,34 @@
 
 .dialog-pane .combo-box .arrow-button {
     -fx-background-color: transparent;
+    -fx-padding: 0 5px 0 0;  /* Better arrow positioning */
 }
 
 .dialog-pane .combo-box .arrow {
     -fx-background-color: #0d4c82;
+}
+
+/* ComboBox selected value visibility fix */
+.dialog-pane .combo-box .list-cell:filled:selected .text {
+    -fx-fill: #0d4c82;
+}
+
+.dialog-pane .combo-box .text-field {
+    -fx-text-fill: #0d4c82 !important;
+}
+
+/* Time picker specific styling */
+.time-picker-box {
+    -fx-spacing: 5px;
+    -fx-alignment: center-left;
+    -fx-padding: 2px 0;  /* Better vertical alignment */
+}
+
+.time-separator-label {
+    -fx-text-fill: #0d4c82;
+    -fx-font-size: 16px;  /* Slightly larger */
+    -fx-font-weight: bold;
+    -fx-padding: 0 5px 3px 5px;  /* Better vertical centering */
 }
 
 /* Date picker styling */
@@ -211,11 +242,56 @@
     -fx-text-fill: #7a9cc4;
 }
 
-/* Fix for combobox prompt text visibility */
-.dialog-pane .combo-box > .list-cell {
+/* ComboBox dropdown list styling */
+.dialog-pane .combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #1e67a8;
+    -fx-pref-height: 200px;  /* Taller dropdown */
+}
+
+.dialog-pane .combo-box-popup .list-cell {
+    -fx-text-fill: #0d4c82;
+    -fx-padding: 8px 10px;  /* More vertical padding */
+    -fx-background-color: white;
+    -fx-cell-size: 30px;    /* Explicit cell height */
+}
+
+.dialog-pane .combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+.dialog-pane .combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #e6f2ff;
     -fx-text-fill: #0d4c82;
 }
 
-.dialog-pane .combo-box > .list-cell .text {
-    -fx-fill: #0d4c82;
+
+
+/* Appointment Details Dialog - Matches look of the others */
+.dialog-pane.appointment-details-dialog {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);
+    -fx-padding: 20;
+    -fx-pref-width: 550;
+    -fx-pref-height: 500;
+}
+
+.dialog-pane.appointment-details-dialog .header-panel .label {
+    -fx-text-fill: #0d4c82;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+/* Match the text area style with readable formatting */
+.dialog-pane.appointment-details-dialog .text-area {
+    -fx-control-inner-background: #f9f9f9;
+    -fx-text-fill: #0d4c82;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-border-color: #1e67a8;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10;
+    -fx-wrap-text: true;
 }

@@ -4,10 +4,13 @@ import com.inteliMedExpress.classes.UIHelper;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class MedicalRecordsDialog {
 
@@ -97,8 +100,20 @@ public class MedicalRecordsDialog {
         ComboBox<String> statusComboBox = new ComboBox<>();
         statusComboBox.getItems().addAll("Active", "Completed", "Pending", "Canceled");
         statusComboBox.setPromptText("Select Status");
+
+        // Date picker for record date
         DatePicker recordDatePicker = new DatePicker();
-        recordDatePicker.setValue(LocalDate.now()); // Default to today
+
+        // Time picker components (hours and minutes)
+        ComboBox<String> hourPicker = new ComboBox<>();
+        for (int i = 0; i < 24; i++) {
+            hourPicker.getItems().add(String.format("%02d", i));
+        }
+
+        ComboBox<String> minutePicker = new ComboBox<>();
+        for (int i = 0; i < 60; i += 15) { // 15-minute intervals
+            minutePicker.getItems().add(String.format("%02d", i));
+        }
 
         // Set preferred width for consistent form field sizes
         patientNameField.setPrefWidth(250);
@@ -109,6 +124,8 @@ public class MedicalRecordsDialog {
         prescriptionArea.setPrefWidth(250);
         statusComboBox.setPrefWidth(250);
         recordDatePicker.setPrefWidth(250);
+        hourPicker.setPrefWidth(80);
+        minutePicker.setPrefWidth(80);
 
         // Populate fields if updating
         if (existingRecord != null) {
@@ -118,9 +135,31 @@ public class MedicalRecordsDialog {
             diagnosisArea.setText(existingRecord.getDiagnosis());
             treatmentArea.setText(existingRecord.getTreatment());
             prescriptionArea.setText(existingRecord.getPrescription());
-            statusComboBox.setValue(existingRecord.getStatus());
-            recordDatePicker.setValue(existingRecord.getRecordDate());
+            statusComboBox.setValue(existingRecord.getRecordStatus());
+
+            // Handle the date and time
+            if (existingRecord.getRecordDate() != null) {
+                recordDatePicker.setValue(existingRecord.getRecordDate().toLocalDate());
+                LocalTime time = existingRecord.getRecordDate().toLocalTime();
+                hourPicker.setValue(String.format("%02d", time.getHour()));
+                minutePicker.setValue(String.format("%02d", (time.getMinute() / 15) * 15)); // Round to nearest 15 min
+            } else {
+                recordDatePicker.setValue(LocalDate.now());
+                hourPicker.setValue("09"); // 9 AM default
+                minutePicker.setValue("00"); // 0 minutes default
+            }
+        } else {
+            // Default values for new record
+            recordDatePicker.setValue(LocalDate.now());
+            hourPicker.setValue("09"); // 9 AM default
+            minutePicker.setValue("00"); // 0 minutes default
         }
+
+        // Create time picker layout
+        HBox timeBox = new HBox(10);
+        Label timeSeparator = new Label(":");
+        timeSeparator.getStyleClass().add("time-separator-label");
+        timeBox.getChildren().addAll(hourPicker, timeSeparator, minutePicker);
 
         // Add labels and fields to the grid
         grid.add(new Label("Patient Name:"), 0, 0);
@@ -139,12 +178,14 @@ public class MedicalRecordsDialog {
         grid.add(statusComboBox, 1, 6);
         grid.add(new Label("Record Date:"), 0, 7);
         grid.add(recordDatePicker, 1, 7);
+        grid.add(new Label("Record Time:"), 0, 8);
+        grid.add(timeBox, 1, 8);
 
         dialog.getDialogPane().setContent(grid);
 
         // Add some spacing to improve layout
-        dialogPane.setPrefWidth(500);
-        dialogPane.setPrefHeight(650);
+        dialogPane.setPrefWidth(450);
+        dialogPane.setPrefHeight(650); // Increased height to accommodate the time picker
 
         // Request focus on the patient name field by default
         patientNameField.requestFocus();
@@ -159,12 +200,19 @@ public class MedicalRecordsDialog {
                     String diagnosis = diagnosisArea.getText().trim();
                     String treatment = treatmentArea.getText().trim();
                     String prescription = prescriptionArea.getText().trim();
-                    String status = statusComboBox.getValue();
+                    String recordStatus = statusComboBox.getValue();
                     LocalDate recordDate = recordDatePicker.getValue();
+
+                    // Get time values
+                    int hour = Integer.parseInt(hourPicker.getValue());
+                    int minute = Integer.parseInt(minutePicker.getValue());
+
+                    // Combine date and time
+                    LocalDateTime recordDateTime = LocalDateTime.of(recordDate, LocalTime.of(hour, minute));
 
                     // Validate required fields
                     if (patientName.isEmpty() || patientSurname.isEmpty() || doctorSurname.isEmpty() ||
-                            diagnosis.isEmpty() || status == null || recordDate == null) {
+                            diagnosis.isEmpty() || recordStatus == null || recordDate == null) {
                         UIHelper.showAlert("Validation Error",
                                 "Patient name, patient surname, doctor surname, diagnosis, status, and record date are required.");
                         return null;
@@ -180,11 +228,11 @@ public class MedicalRecordsDialog {
                         medicalRecord.setDiagnosis(diagnosis);
                         medicalRecord.setTreatment(treatment);
                         medicalRecord.setPrescription(prescription);
-                        medicalRecord.setStatus(status);
-                        medicalRecord.setRecordDate(recordDate);
+                        medicalRecord.setRecordStatus(recordStatus);
+                        medicalRecord.setRecordDate(recordDateTime);
                     } else {
                         medicalRecord = new MedicalRecord(null, patientName, patientSurname,
-                                doctorSurname, diagnosis, treatment, prescription, status, recordDate);
+                                doctorSurname, diagnosis, treatment, prescription, recordStatus, recordDateTime);
                     }
 
                     return medicalRecord;

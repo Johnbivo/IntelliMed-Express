@@ -60,7 +60,7 @@
       </Label>
       <Label fx:id="general_medicine_title" layoutX="965.0" layoutY="32.0" prefHeight="50.0" prefWidth="267.0" text="General Medicine" textAlignment="CENTER" />
       <Button fx:id="refresh_button" layoutX="1125.0" layoutY="587.0" mnemonicParsing="false" visible="false" />
-      <TableView fx:id="appointmentsViewTable" layoutX="178.0" layoutY="119.0" prefHeight="581.0" prefWidth="875.0">
+      <TableView fx:id="appointmentsViewTable" layoutX="178.0" layoutY="119.0" prefHeight="581.0" prefWidth="875.0" visible="false">
          <columns>
             <TableColumn fx:id="appointmentID_column" prefWidth="102.85716247558594" text="AppointmentID" />
             <TableColumn fx:id="patient_name_column" prefWidth="92.0" text="PatientName" />
@@ -78,6 +78,11 @@
       <Button fx:id="create_appointment_button" layoutX="1075.0" layoutY="154.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Create Appointment" visible="false" />
       <Button fx:id="modify_appointment_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Appointment" visible="false" />
       <Button fx:id="delete_appointment_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Appointment" visible="false" />
+
+
+
+
+       <Button fx:id="view_appointment_details_button" layoutX="1075.0" layoutY="350.0" mnemonicParsing="false" onAction="#showAppointmentDetails" prefHeight="50.0" prefWidth="154.0" text="View Full Details" visible="false" />
       <Button fx:id="refresh_appointment_button" layoutX="1135.0" layoutY="597.0" mnemonicParsing="false" visible="false" />
       <TableView fx:id="MedicalRecordsTable" layoutX="179.0" layoutY="120.0" prefHeight="581.0" prefWidth="875.0" visible="false">
          <columns>
@@ -630,11 +635,6 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-
-
-
-
-       <Button fx:id="view_appointment_details_button" layoutX="1075.0" layoutY="350.0" mnemonicParsing="false" onAction="#showAppointmentDetails" prefHeight="50.0" prefWidth="154.0" text="View Full Details" visible="false" />
 
 
 

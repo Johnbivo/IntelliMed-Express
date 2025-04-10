@@ -252,4 +252,52 @@ public class AppointmentDialog {
 
         return dialog.showAndWait().orElse(null);
     }
+
+
+
+
+
+    // Method to display the appointment details dialog
+    public static void showAppointmentDetailsDialog(Appointment appointment) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Appointment Details");
+        dialog.setHeaderText("Appointment ID: " + appointment.getAppointmentId());
+
+        // Format the appointment details
+        StringBuilder contentBuilder = new StringBuilder();
+        contentBuilder.append("Patient: ").append(appointment.getPatientName()).append(" ")
+                .append(appointment.getPatientSurname()).append("\n\n");
+        contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorSurname()).append("\n\n");
+        contentBuilder.append("Nurse: ").append(appointment.getNurseSurname()).append("\n\n");
+        contentBuilder.append("Date: ").append(
+                appointment.getAppointmentDate() != null ?
+                        appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) :
+                        "N/A").append("\n\n");
+        contentBuilder.append("Status: ").append(appointment.getStatus()).append("\n\n");
+        contentBuilder.append("Notes:\n").append(appointment.getNotes());
+
+        // Create a text area to show the details
+        TextArea textArea = new TextArea(contentBuilder.toString());
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setPrefWidth(500);
+        textArea.setPrefHeight(400);
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStyleClass().add("appointment-details-dialog");
+        dialogPane.getStylesheets().add(
+                AppointmentDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm()
+        );
+
+        dialogPane.setContent(textArea);
+        dialogPane.getButtonTypes().add(ButtonType.CLOSE);
+
+        // Add app icon
+        Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(new javafx.scene.image.Image(AppointmentDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+
+        dialog.showAndWait();
+    }
+
+
 }

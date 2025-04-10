@@ -152,3 +152,123 @@
 2025-04-10 19:05:01.476 [INFO] LoginController: Login attempt for user: johnb
 2025-04-10 19:05:01.477 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
 2025-04-10 19:05:03.132 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:08:53.998 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:08:54.001 [INFO] LoginController: LoginController initialized
+2025-04-10 19:08:54.161 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:08:58.864 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:08:58.865 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:09:00.059 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:21:08.564 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:21:08.569 [INFO] LoginController: LoginController initialized
+2025-04-10 19:21:08.717 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:21:15.828 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:21:15.829 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:21:17.010 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:26:05.631 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:26:05.636 [INFO] LoginController: LoginController initialized
+2025-04-10 19:26:05.897 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:26:11.251 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:26:11.252 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:26:12.810 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:29:44.601 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:29:44.607 [INFO] LoginController: LoginController initialized
+2025-04-10 19:29:44.867 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:29:51.033 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:29:51.034 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:29:52.104 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:32:35.424 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:32:35.427 [INFO] LoginController: LoginController initialized
+2025-04-10 19:32:35.581 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:32:42.328 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:32:42.329 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:32:43.551 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:33:20.280 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:33:20.283 [INFO] LoginController: LoginController initialized
+2025-04-10 19:33:20.425 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:33:26.756 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:33:26.757 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:33:28.856 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:34:00.164 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:34:00.170 [INFO] LoginController: LoginController initialized
+2025-04-10 19:34:00.441 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:34:06.426 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:34:06.427 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:34:08.015 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:39:34.804 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:39:34.810 [INFO] LoginController: LoginController initialized
+2025-04-10 19:39:34.993 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:39:42.021 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:39:42.022 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:39:43.186 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:45:44.946 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:45:44.951 [INFO] LoginController: LoginController initialized
+2025-04-10 19:45:45.207 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:45:49.431 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:45:49.432 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:45:50.267 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:47:29.935 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:47:29.938 [INFO] LoginController: LoginController initialized
+2025-04-10 19:47:30.100 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:47:34.750 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:47:34.751 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:47:35.614 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:50:38.401 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:50:38.406 [INFO] LoginController: LoginController initialized
+2025-04-10 19:50:38.660 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:50:42.686 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:50:42.687 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:50:43.487 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:52:46.345 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:52:46.349 [INFO] LoginController: LoginController initialized
+2025-04-10 19:52:46.510 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:52:52.373 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:52:52.374 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:52:53.494 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:54:42.509 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:54:42.514 [INFO] LoginController: LoginController initialized
+2025-04-10 19:54:42.765 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:54:47.521 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:54:47.521 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:54:49.611 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 19:55:17.008 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 19:55:17.011 [INFO] LoginController: LoginController initialized
+2025-04-10 19:55:17.168 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 19:55:21.293 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 19:55:21.294 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 19:55:22.262 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:01:09.126 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:01:09.129 [INFO] LoginController: LoginController initialized
+2025-04-10 20:01:09.286 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:01:13.957 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:01:13.958 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:01:14.932 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:04:36.373 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:04:36.377 [INFO] LoginController: LoginController initialized
+2025-04-10 20:04:36.534 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:04:40.750 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:04:40.751 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:04:41.904 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:05:43.621 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:05:43.627 [INFO] LoginController: LoginController initialized
+2025-04-10 20:05:43.877 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:05:49.723 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:05:49.724 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:05:50.876 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:09:04.313 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:09:04.317 [INFO] LoginController: LoginController initialized
+2025-04-10 20:09:04.470 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:09:10.315 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:09:10.315 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:09:11.545 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:11:15.537 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:11:15.541 [INFO] LoginController: LoginController initialized
+2025-04-10 20:11:15.686 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:11:19.960 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:11:19.961 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:11:21.628 [INFO] LoginController: johnb successfully logged in.
+2025-04-10 20:27:46.198 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-10.log
+2025-04-10 20:27:46.200 [INFO] LoginController: LoginController initialized
+2025-04-10 20:27:46.343 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-10 20:27:56.699 [INFO] LoginController: Login attempt for user: johnb
+2025-04-10 20:27:56.699 [INFO] LoginController: Sending login request to https://127.0.0.1:8080/api/auth/login
+2025-04-10 20:27:57.718 [INFO] LoginController: johnb successfully logged in.

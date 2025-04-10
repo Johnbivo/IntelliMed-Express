@@ -124,8 +124,8 @@ public class MedicalRecordsDialog {
         prescriptionArea.setPrefWidth(250);
         statusComboBox.setPrefWidth(250);
         recordDatePicker.setPrefWidth(250);
-        hourPicker.setPrefWidth(60);
-        minutePicker.setPrefWidth(60);
+        hourPicker.setPrefWidth(80);
+        minutePicker.setPrefWidth(80);
 
         // Populate fields if updating
         if (existingRecord != null) {
@@ -157,7 +157,9 @@ public class MedicalRecordsDialog {
 
         // Create time picker layout
         HBox timeBox = new HBox(10);
-        timeBox.getChildren().addAll(hourPicker, new Label(":"), minutePicker);
+        Label timeSeparator = new Label(":");
+        timeSeparator.getStyleClass().add("time-separator-label");
+        timeBox.getChildren().addAll(hourPicker, timeSeparator, minutePicker);
 
         // Add labels and fields to the grid
         grid.add(new Label("Patient Name:"), 0, 0);

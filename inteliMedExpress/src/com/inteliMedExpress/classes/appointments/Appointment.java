@@ -267,7 +267,7 @@ public class Appointment {
             appointmentData.put("nurseSurname", this.nurseSurname);
             // Format the LocalDateTime properly for the server
             appointmentData.put("appointmentDate", this.appointmentDate != null ?
-                    this.appointmentDate.format(DateTimeFormatter.ISO_DATE_TIME) : null);
+                    this.appointmentDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null);
             appointmentData.put("status", this.status);
             appointmentData.put("notes", this.notes);
 
@@ -285,7 +285,7 @@ public class Appointment {
 
             // Get response code
             int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK;
+            return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED;
         } finally {
             connection.disconnect();
         }
@@ -312,7 +312,7 @@ public class Appointment {
             appointmentData.put("nurseSurname", this.nurseSurname);
             // Format the LocalDateTime properly for the server
             appointmentData.put("appointmentDate", this.appointmentDate != null ?
-                    this.appointmentDate.format(DateTimeFormatter.ISO_DATE_TIME) : null);
+                    this.appointmentDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null);
             appointmentData.put("status", this.status);
             appointmentData.put("notes", this.notes);
 
@@ -330,7 +330,7 @@ public class Appointment {
 
             // Get response code
             int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK;
+            return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED;
         } finally {
             connection.disconnect();
         }

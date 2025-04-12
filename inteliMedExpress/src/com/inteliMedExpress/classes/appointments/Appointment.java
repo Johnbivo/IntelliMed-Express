@@ -22,11 +22,34 @@ import java.util.List;
 
 public class Appointment {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
-    private static final String GET_APPOINTMENTS_URL = SERVER_BASE_URL + "/appointments";
-    private static final String ADD_APPOINTMENT_URL = SERVER_BASE_URL + "/appointments/add";
-    private static final String UPDATE_APPOINTMENT_URL = SERVER_BASE_URL + "/appointments/update";
-    private static final String DELETE_APPOINTMENT_URL = SERVER_BASE_URL + "/appointments/delete";
+    // Base URL - make this configurable
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+
+    // Department-specific URLs
+    private static String department = "General_Medicine"; // Default department
+
+    // Dynamic URL getters that use the current department
+    private static String getAppointmentsUrl() {
+        return SERVER_BASE_URL + department + "/appointments";
+    }
+
+    private static String getAddAppointmentUrl() {
+        return SERVER_BASE_URL + department + "/appointments/add";
+    }
+
+    private static String getUpdateAppointmentUrl() {
+        return SERVER_BASE_URL + department + "/appointments/update";
+    }
+
+    private static String getDeleteAppointmentUrl() {
+        return SERVER_BASE_URL + department + "/appointments/delete";
+    }
+
+    // Set the department for all appointments
+    public static void setDepartment(String dept) {
+        department = dept != null ? dept.replaceAll("\\s", "_") : "General_Medicine";
+        System.out.println("Appointment department set to: " + department);
+    }
 
     // Appointment Attributes
     private Integer appointmentId;
@@ -156,8 +179,8 @@ public class Appointment {
         BufferedReader reader = null;
 
         try {
-            // Set up the connection
-            URL url = new URL(GET_APPOINTMENTS_URL);
+            // Set up the connection using the dynamic URL
+            URL url = new URL(getAppointmentsUrl());
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -249,7 +272,7 @@ public class Appointment {
 
     // Add a new appointment
     public boolean addToServer() throws IOException {
-        URL url = new URL(ADD_APPOINTMENT_URL);
+        URL url = new URL(getAddAppointmentUrl());
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
@@ -293,7 +316,7 @@ public class Appointment {
 
     // Update an existing appointment
     public boolean updateOnServer() throws IOException {
-        URL url = new URL(UPDATE_APPOINTMENT_URL + "/" + this.appointmentId);
+        URL url = new URL(getUpdateAppointmentUrl() + "/" + this.appointmentId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
@@ -338,7 +361,7 @@ public class Appointment {
 
     // Delete an appointment
     public static boolean deleteAppointment(Integer appointmentId) throws IOException {
-        URL url = new URL(DELETE_APPOINTMENT_URL + "/" + appointmentId);
+        URL url = new URL(getDeleteAppointmentUrl() + "/" + appointmentId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {

@@ -1,6 +1,8 @@
 package com.inteliMedExpress.classes.medicalRecords;
 
 import com.inteliMedExpress.classes.UIHelper;
+import com.inteliMedExpress.classes.patients.Patient;
+import com.inteliMedExpress.classes.patients.PatientService;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -8,9 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicalRecordsDialog {
 
@@ -87,9 +92,32 @@ public class MedicalRecordsDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
         grid.getStyleClass().add("grid-pane");
 
-        // Create text fields for medical record information
-        TextField patientNameField = new TextField();
-        TextField patientSurnameField = new TextField();
+        // Create dropdown for patients
+        ComboBox<String> patientComboBox = new ComboBox<>();
+        patientComboBox.setPrefWidth(250);
+        patientComboBox.setPromptText("Select Patient");
+
+        // Initialize a list for patients outside the try-catch so it's accessible to the result converter
+        final List<Patient> patientsList = new ArrayList<>();
+
+        // Load patients
+        PatientService patientService = new PatientService();
+        try {
+            List<Patient> patients = patientService.getAllPatients();
+            // Store the patients in our accessible list
+            patientsList.addAll(patients);
+
+            // Add patients to the combo box
+            for (Patient patient : patients) {
+                patientComboBox.getItems().add(patient.getPatientId() + ": " +
+                        patient.getName() + " " +
+                        patient.getSurname());
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Could not load patients: " + e.getMessage());
+        }
+
+        // Create other form fields
         TextField doctorSurnameField = new TextField();
         TextArea diagnosisArea = new TextArea();
         diagnosisArea.setPrefRowCount(3);
@@ -116,8 +144,7 @@ public class MedicalRecordsDialog {
         }
 
         // Set preferred width for consistent form field sizes
-        patientNameField.setPrefWidth(250);
-        patientSurnameField.setPrefWidth(250);
+        patientComboBox.setPrefWidth(250);
         doctorSurnameField.setPrefWidth(250);
         diagnosisArea.setPrefWidth(250);
         treatmentArea.setPrefWidth(250);
@@ -129,8 +156,19 @@ public class MedicalRecordsDialog {
 
         // Populate fields if updating
         if (existingRecord != null) {
-            patientNameField.setText(existingRecord.getPatientName());
-            patientSurnameField.setText(existingRecord.getPatientSurname());
+            // For patient selection, find the matching patient in the dropdown
+            if (existingRecord.getPatientName() != null && existingRecord.getPatientSurname() != null) {
+                for (Patient patient : patientsList) {
+                    if (patient.getName().equals(existingRecord.getPatientName()) &&
+                            patient.getSurname().equals(existingRecord.getPatientSurname())) {
+                        patientComboBox.setValue(patient.getPatientId() + ": " +
+                                patient.getName() + " " +
+                                patient.getSurname());
+                        break;
+                    }
+                }
+            }
+
             doctorSurnameField.setText(existingRecord.getDoctorSurname());
             diagnosisArea.setText(existingRecord.getDiagnosis());
             treatmentArea.setText(existingRecord.getTreatment());
@@ -162,24 +200,22 @@ public class MedicalRecordsDialog {
         timeBox.getChildren().addAll(hourPicker, timeSeparator, minutePicker);
 
         // Add labels and fields to the grid
-        grid.add(new Label("Patient Name:"), 0, 0);
-        grid.add(patientNameField, 1, 0);
-        grid.add(new Label("Patient Surname:"), 0, 1);
-        grid.add(patientSurnameField, 1, 1);
-        grid.add(new Label("Doctor Surname:"), 0, 2);
-        grid.add(doctorSurnameField, 1, 2);
-        grid.add(new Label("Diagnosis:"), 0, 3);
-        grid.add(diagnosisArea, 1, 3);
-        grid.add(new Label("Treatment:"), 0, 4);
-        grid.add(treatmentArea, 1, 4);
-        grid.add(new Label("Prescription:"), 0, 5);
-        grid.add(prescriptionArea, 1, 5);
-        grid.add(new Label("Status:"), 0, 6);
-        grid.add(statusComboBox, 1, 6);
-        grid.add(new Label("Record Date:"), 0, 7);
-        grid.add(recordDatePicker, 1, 7);
-        grid.add(new Label("Record Time:"), 0, 8);
-        grid.add(timeBox, 1, 8);
+        grid.add(new Label("Patient:"), 0, 0);
+        grid.add(patientComboBox, 1, 0);
+        grid.add(new Label("Doctor Surname:"), 0, 1);
+        grid.add(doctorSurnameField, 1, 1);
+        grid.add(new Label("Diagnosis:"), 0, 2);
+        grid.add(diagnosisArea, 1, 2);
+        grid.add(new Label("Treatment:"), 0, 3);
+        grid.add(treatmentArea, 1, 3);
+        grid.add(new Label("Prescription:"), 0, 4);
+        grid.add(prescriptionArea, 1, 4);
+        grid.add(new Label("Status:"), 0, 5);
+        grid.add(statusComboBox, 1, 5);
+        grid.add(new Label("Record Date:"), 0, 6);
+        grid.add(recordDatePicker, 1, 6);
+        grid.add(new Label("Record Time:"), 0, 7);
+        grid.add(timeBox, 1, 7);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -187,15 +223,35 @@ public class MedicalRecordsDialog {
         dialogPane.setPrefWidth(450);
         dialogPane.setPrefHeight(650); // Increased height to accommodate the time picker
 
-        // Request focus on the patient name field by default
-        patientNameField.requestFocus();
+        // Request focus on the patient selector by default
+        patientComboBox.requestFocus();
 
         // Convert the result to a MedicalRecord object when the save button is clicked
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    String patientName = patientNameField.getText().trim();
-                    String patientSurname = patientSurnameField.getText().trim();
+                    String selectedPatient = patientComboBox.getValue();
+                    if (selectedPatient == null || selectedPatient.isEmpty()) {
+                        UIHelper.showAlert("Validation Error", "Please select a patient.");
+                        return null;
+                    }
+
+                    // Extract patient ID from selection (format: "ID: Name Surname")
+                    int patientId = Integer.parseInt(selectedPatient.split(":")[0].trim());
+
+                    // Find the patient in our list
+                    Patient patient = patientsList.stream()
+                            .filter(p -> p.getPatientId() == patientId)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (patient == null) {
+                        UIHelper.showAlert("Error", "Selected patient not found.");
+                        return null;
+                    }
+
+                    String patientName = patient.getName();
+                    String patientSurname = patient.getSurname();
                     String doctorSurname = doctorSurnameField.getText().trim();
                     String diagnosis = diagnosisArea.getText().trim();
                     String treatment = treatmentArea.getText().trim();
@@ -211,10 +267,10 @@ public class MedicalRecordsDialog {
                     LocalDateTime recordDateTime = LocalDateTime.of(recordDate, LocalTime.of(hour, minute));
 
                     // Validate required fields
-                    if (patientName.isEmpty() || patientSurname.isEmpty() || doctorSurname.isEmpty() ||
-                            diagnosis.isEmpty() || recordStatus == null || recordDate == null) {
+                    if (doctorSurname.isEmpty() || diagnosis.isEmpty() ||
+                            recordStatus == null || recordDate == null) {
                         UIHelper.showAlert("Validation Error",
-                                "Patient name, patient surname, doctor surname, diagnosis, status, and record date are required.");
+                                "Doctor surname, diagnosis, status, and record date are required.");
                         return null;
                     }
 

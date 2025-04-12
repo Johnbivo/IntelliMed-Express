@@ -69,7 +69,7 @@
             <TableColumn fx:id="nurse_surname_column" prefWidth="107.4285888671875" text="NurseSurname" />
             <TableColumn fx:id="appointment_date_column" prefWidth="93.142822265625" text="Date" />
             <TableColumn fx:id="appointment_status_column" minWidth="0.0" prefWidth="66.28564453125" text="Status" />
-            <TableColumn fx:id="appointment_notes_column" prefWidth="209.71435546875" text="Notes" />
+            <TableColumn fx:id="appointment_notes_column" maxWidth="8000.0" prefWidth="206.85716029575894" text="Notes" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -78,6 +78,11 @@
       <Button fx:id="create_appointment_button" layoutX="1075.0" layoutY="154.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Create Appointment" visible="false" />
       <Button fx:id="modify_appointment_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Appointment" visible="false" />
       <Button fx:id="delete_appointment_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Appointment" visible="false" />
+
+
+
+
+       <Button fx:id="view_appointment_details_button" layoutX="1075.0" layoutY="350.0" mnemonicParsing="false" onAction="#showAppointmentDetails" prefHeight="50.0" prefWidth="154.0" text="View Full Details" visible="false" />
       <Button fx:id="refresh_appointment_button" layoutX="1135.0" layoutY="597.0" mnemonicParsing="false" visible="false" />
       <TableView fx:id="MedicalRecordsTable" layoutX="179.0" layoutY="120.0" prefHeight="581.0" prefWidth="875.0" visible="false">
          <columns>
@@ -104,7 +109,7 @@
 
        <!-- Enhanced realistic hospital bed with 3D effect -->
        <!-- Enhanced realistic hospital bed with 3D effect -->
-       <StackPane fx:id="bedPane" layoutX="230.0" layoutY="116.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane" layoutX="230.0" layoutY="116.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <!-- Bed shadow (for 3D effect) - Reduced offset to keep it closer -->
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
@@ -157,7 +162,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane1" layoutX="229.0" layoutY="278.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane1" layoutX="229.0" layoutY="278.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic1" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -200,7 +205,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane2" layoutX="441.0" layoutY="117.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane2" layoutX="441.0" layoutY="117.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic2" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -243,7 +248,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane11" layoutX="440.0" layoutY="279.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane11" layoutX="440.0" layoutY="279.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic11" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -286,7 +291,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane3" layoutX="650.0" layoutY="117.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane3" layoutX="650.0" layoutY="117.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic3" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -329,7 +334,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane12" layoutX="649.0" layoutY="279.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane12" layoutX="649.0" layoutY="279.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic12" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -372,7 +377,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane21" layoutX="861.0" layoutY="118.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane21" layoutX="861.0" layoutY="118.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic21" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -415,7 +420,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane111" layoutX="860.0" layoutY="280.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane111" layoutX="860.0" layoutY="280.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic111" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -458,7 +463,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane13" layoutX="228.0" layoutY="444.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane13" layoutX="228.0" layoutY="444.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic13" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -501,7 +506,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane112" layoutX="439.0" layoutY="445.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane112" layoutX="439.0" layoutY="445.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic112" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -544,7 +549,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane121" layoutX="648.0" layoutY="445.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane121" layoutX="648.0" layoutY="445.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic121" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -587,7 +592,7 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-       <StackPane fx:id="bedPane1111" layoutX="859.0" layoutY="446.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container">
+       <StackPane fx:id="bedPane1111" layoutX="859.0" layoutY="446.0" prefHeight="140.0" prefWidth="170.0" styleClass="bed-container" visible="false">
            <children>
                <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#00000015" height="130.0" stroke="TRANSPARENT" strokeWidth="0" translateX="2.0" translateY="2.0" width="160.0" />
                <Rectangle fx:id="bedGraphic1111" arcHeight="15.0" arcWidth="15.0" fill="#e8f5ff" height="130.0" stroke="#4080c0" strokeType="INSIDE" strokeWidth="2.0" width="160.0" />
@@ -630,11 +635,6 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-
-
-
-
-
 
 
 

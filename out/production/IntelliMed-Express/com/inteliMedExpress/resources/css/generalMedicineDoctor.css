@@ -313,7 +313,7 @@
     -fx-background-color: #f0f8ff;
 }
 
-/* ======= NEW TABLE SELECTION STYLES (THESE OVERRIDE THE PROBLEMATIC STYLES ABOVE) ======= */
+
 
 /* Modified table selection styles */
 .table-view .table-row-cell:selected {
@@ -359,7 +359,7 @@
 }
 
 /* Medical Record Button Styling - matching your existing button patterns */
-#add_record_button, #modify_record_button, #view_medical_history_button {
+#add_record_button, #modify_record_button, #view_medical_history_button, #create_appointment_button, #modify_appointment_button, #view_appointment_details_button{
     -fx-background-color: white;
     -fx-text-fill: #1e67a8;
     -fx-border-color: #1e67a8;
@@ -371,14 +371,15 @@
     -fx-cursor: hand;
 }
 
-#add_record_button:hover, #modify_record_button:hover, #view_medical_history_button:hover {
+#add_record_button:hover, #modify_record_button:hover, #view_medical_history_button:hover, #create_appointment_button:hover,
+#modify_appointment_button:hover,#view_appointment_details_button:hover {
     -fx-background-color: #1e67a8;
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
 }
 
 /* Delete record button - special styling for destructive action */
-#delete_record_button {
+#delete_record_button, #delete_appointment_button {
     -fx-border-color: #d32f2f;
     -fx-text-fill: #d32f2f;
     -fx-background-color: white;
@@ -390,7 +391,7 @@
     -fx-cursor: hand;
 }
 
-#delete_record_button:hover {
+#delete_record_button:hover, #delete_appointment_button:hover {
     -fx-background-color: #d32f2f;
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
@@ -540,10 +541,8 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 10, 0.05, 0, 0); /* More prominent shadow on hover */
 }
 
-/* Removed bed-container:active due to JavaFX incompatibility */
 
-/* Ripple effect (requires JavaFX code to create the ripple element on click)
-    This CSS would style the ripple */
+
 .ripple {
     -fx-background-color: rgba(0, 118, 255, 0.3); /* Semi-transparent blue */
     -fx-background-radius: 50%;
@@ -595,3 +594,85 @@
     to { -fx-opacity: 0.5; }
 }
 
+
+/* Add these styles to your generalMedicineDoctor.css file */
+
+/* Bed container styling */
+.bed-container {
+    -fx-cursor: hand;
+    transition: all 0.3s ease;
+}
+
+.bed-container:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,100,255,0.5), 10, 0, 0, 0);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Selected bed styling */
+.bed-selected {
+    -fx-border-color: #4080c0;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,100,255,0.7), 15, 0, 0, 0);
+}
+
+/* Bed action buttons */
+.action-button {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+.action-button:hover {
+    -fx-background-color: #2e77b8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 0);
+}
+
+.action-button:pressed {
+    -fx-background-color: #185a9a;
+}
+
+.action-button:disabled {
+    -fx-background-color: #a0a0a0;
+    -fx-opacity: 0.7;
+}
+
+/* Occupied bed styling */
+.status-label-occupied {
+    -fx-background-color: #f8d7da;
+    -fx-text-fill: #721c24;
+    -fx-padding: 3 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #f5c6cb;
+    -fx-border-radius: 10;
+}
+
+/* Available bed styling */
+.status-label-available {
+    -fx-background-color: #d4edda;
+    -fx-text-fill: #155724;
+    -fx-padding: 3 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #c3e6cb;
+    -fx-border-radius: 10;
+}
+
+/* Patient name label styling */
+.patient-name-label {
+    -fx-background-color: white;
+    -fx-padding: 3 8;
+    -fx-background-radius: 3;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 3;
+}
+
+.patient-name-label-empty {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 3 8;
+    -fx-background-radius: 3;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 3;
+    -fx-font-style: italic;
+    -fx-text-fill: #6c757d;
+}

@@ -21,11 +21,33 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Patient {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
-    private static final String GET_PATIENTS_URL = SERVER_BASE_URL + "/patients";
-    private static final String ADD_PATIENT_URL = SERVER_BASE_URL + "/patients/add";
-    private static final String UPDATE_PATIENT_URL = SERVER_BASE_URL + "/patients/update";
-    private static final String DELETE_PATIENT_URL = SERVER_BASE_URL + "/patients/delete";
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+
+    // Department-specific URLs
+    private static String department = "General"; // Default department
+
+    // Dynamic URL getters that use the current department
+    private static String getPatientsUrl() {
+        return SERVER_BASE_URL + department + "/patients";
+    }
+
+    private static String getAddPatientUrl() {
+        return SERVER_BASE_URL + department + "/patients/add";
+    }
+
+    private static String getUpdatePatientUrl() {
+        return SERVER_BASE_URL + department + "/patients/update";
+    }
+
+    private static String getDeletePatientUrl() {
+        return SERVER_BASE_URL + department + "/patients/delete";
+    }
+
+    // Set the department for all patients
+    public static void setDepartment(String dept) {
+        department = dept != null ? dept.replaceAll("\\s", "_") : "General";
+        System.out.println("Patient department set to: " + department);
+    }
 
     // Patient Attributes
     private Integer patientId;
@@ -41,9 +63,7 @@ public class Patient {
 
     // Constructors
     public Patient() {
-       HttpsUtil.setupSSL();
-
-
+        HttpsUtil.setupSSL();
     }
 
     public Patient(Integer patientId, String name, String surname, String email,
@@ -61,12 +81,6 @@ public class Patient {
         this.status = status;
 
         HttpsUtil.setupSSL();
-/*
-        if (!HttpsUtil.isSSLInitialized()) {
-            HttpsUtil.setupSSL();
-        }
-        */
-
     }
 
     // Getters and Setters
@@ -107,14 +121,8 @@ public class Patient {
         BufferedReader reader = null;
 
         try {
-/*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-            /*
- */
             // Set up the connection
-            URL url = new URL(GET_PATIENTS_URL);
+            URL url = new URL(getPatientsUrl());
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -196,16 +204,10 @@ public class Patient {
 
     // Add a new patient
     public boolean addToServer() throws IOException {
-        URL url = new URL(ADD_PATIENT_URL);
+        URL url = new URL(getAddPatientUrl());
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-    /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-     */
             // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -246,16 +248,10 @@ public class Patient {
 
     // Update an existing patient
     public boolean updateOnServer() throws IOException {
-        URL url = new URL(UPDATE_PATIENT_URL + "/" + this.patientId);
+        URL url = new URL(getUpdatePatientUrl() + "/" + this.patientId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
- */
             // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
@@ -297,16 +293,10 @@ public class Patient {
 
     // Delete a patient
     public static boolean deletePatient(Integer patientId) throws IOException {
-        URL url = new URL(DELETE_PATIENT_URL + "/" + patientId);
+        URL url = new URL(getDeletePatientUrl() + "/" + patientId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-             */
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
 

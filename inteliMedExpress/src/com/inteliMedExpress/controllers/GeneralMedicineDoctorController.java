@@ -1,6 +1,9 @@
 package com.inteliMedExpress.controllers;
 
 import com.inteliMedExpress.classes.*;
+import com.inteliMedExpress.classes.Beds.Bed;
+import com.inteliMedExpress.classes.Beds.BedDialog;
+import com.inteliMedExpress.classes.Beds.BedService;
 import com.inteliMedExpress.classes.appointments.Appointment;
 import com.inteliMedExpress.classes.appointments.AppointmentDialog;
 import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
@@ -23,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -45,6 +49,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class GeneralMedicineDoctorController {
 
@@ -224,6 +229,42 @@ public class GeneralMedicineDoctorController {
 
 
 
+    // Beds
+
+
+
+    // Hospital Bed components
+    @FXML
+    private StackPane bedPane, bedPane1, bedPane2, bedPane3, bedPane11, bedPane12, bedPane21,
+            bedPane111, bedPane13, bedPane112, bedPane121, bedPane1111;
+    @FXML
+    private Label bedIdLabel, bedIdLabel1, bedIdLabel2, bedIdLabel3, bedIdLabel11, bedIdLabel12,
+            bedIdLabel21, bedIdLabel111, bedIdLabel13, bedIdLabel112, bedIdLabel121, bedIdLabel1111;
+    @FXML
+    private Label patientNameLabel, patientNameLabel1, patientNameLabel2, patientNameLabel3,
+            patientNameLabel11, patientNameLabel12, patientNameLabel21, patientNameLabel111,
+            patientNameLabel13, patientNameLabel112, patientNameLabel121, patientNameLabel1111;
+    @FXML
+    private Label statusLabel, statusLabel1, statusLabel2, statusLabel3, statusLabel11, statusLabel12,
+            statusLabel21, statusLabel111, statusLabel13, statusLabel112, statusLabel121, statusLabel1111;
+
+    @FXML
+    private Button assign_patient_button;
+    @FXML
+    private Button discharge_patient_button;
+
+
+
+
+    private BedService bedService;
+    private Map<Integer, StackPane> bedPaneMap = new HashMap<>();
+    private Map<Integer, Bed> bedsMap = new HashMap<>();
+    private Bed selectedBed = null;
+
+
+
+
+
 
     @FXML
     public void initialize() {
@@ -255,6 +296,8 @@ public class GeneralMedicineDoctorController {
 
             //Setup medical records table
             setupMedicalRecordTable();
+
+            setupBeds();
 
             // Initially show appointments view
             handleNavigation(appointments_button);
@@ -374,7 +417,8 @@ public class GeneralMedicineDoctorController {
             // Hide all components first
             disablePatientComponents();
             disableAppointmentComponents();
-            disableMedicalRecordComponents(); // Make sure to add this line
+            disableMedicalRecordComponents();
+            disableBedComponents();// Make sure to add this line
 
             // Show the appropriate view based on button
             if (selectedButton == patients_button) {
@@ -386,6 +430,9 @@ public class GeneralMedicineDoctorController {
             } else if (selectedButton == medical_records_button) {
                 enableMedicalRecordComponents();
                 loadAllMedicalRecords();
+            }else if (selectedButton == hospital_beds_button) {
+                enableBedComponents();
+                loadAndDisplayBeds();
             }
             // Other navigation options would be handled here
         } catch (Exception e) {
@@ -557,6 +604,48 @@ public class GeneralMedicineDoctorController {
 
 
     }
+
+
+
+    // Method to initialize the bed service and set up bed interaction
+    private void setupBeds() {
+        // Initialize bed service
+        bedService = new BedService();
+
+        // Map all bed components for easier access
+        mapBedComponents();
+
+        // Add buttons for assigning and discharging patients
+        if (assign_patient_button == null) {
+            assign_patient_button = new Button("Assign Patient");
+            assign_patient_button.getStyleClass().add("action-button");
+            assign_patient_button.setPrefWidth(154.0);
+            assign_patient_button.setPrefHeight(50.0);
+            assign_patient_button.setLayoutX(1075.0);
+            assign_patient_button.setLayoutY(154.0);
+            assign_patient_button.setOnAction(event -> handleAssignPatient());
+        }
+        assign_patient_button.setVisible(false);
+        assign_patient_button.setDisable(true); // Initially disabled
+
+        if (discharge_patient_button == null) {
+            discharge_patient_button = new Button("Discharge Patient");
+            discharge_patient_button.getStyleClass().add("action-button");
+            discharge_patient_button.setPrefWidth(154.0);
+            discharge_patient_button.setPrefHeight(50.0);
+            discharge_patient_button.setLayoutX(1075.0);
+            discharge_patient_button.setLayoutY(219.0);
+            discharge_patient_button.setOnAction(event -> handleDischargePatient());
+        }
+        discharge_patient_button.setVisible(false);
+        discharge_patient_button.setDisable(true); // Initially disabled
+
+        // Add buttons to the parent container if they don't exist yet
+        if (!((AnchorPane)bedPane.getParent()).getChildren().contains(assign_patient_button)) {
+            ((AnchorPane)bedPane.getParent()).getChildren().addAll(assign_patient_button, discharge_patient_button);
+        }
+    }
+
 
 
     //refresh buttons
@@ -732,11 +821,65 @@ public class GeneralMedicineDoctorController {
         delete_record_button.setVisible(true);
         view_medical_history_button.setVisible(true);
         refresh_records_button.setVisible(true);
+
+
+
     }
 
 
 
 
+    //Beds hide/unhide
+
+    // Hospital Beds dashboard
+    private void disableBedComponents() {
+        bedPane.setVisible(false);
+        bedPane1.setVisible(false);
+        bedPane2.setVisible(false);
+        bedPane3.setVisible(false);
+        bedPane11.setVisible(false);
+        bedPane12.setVisible(false);
+        bedPane21.setVisible(false);
+        bedPane111.setVisible(false);
+        bedPane13.setVisible(false);
+        bedPane112.setVisible(false);
+        bedPane121.setVisible(false);
+        bedPane1111.setVisible(false);
+    }
+
+    private void enableBedComponents() {
+        System.out.println("Enabling bed components");
+        bedPane.setVisible(true);
+        bedPane1.setVisible(true);
+        bedPane2.setVisible(true);
+        bedPane3.setVisible(true);
+        bedPane11.setVisible(true);
+        bedPane12.setVisible(true);
+        bedPane21.setVisible(true);
+        bedPane111.setVisible(true);
+        bedPane13.setVisible(true);
+        bedPane112.setVisible(true);
+        bedPane121.setVisible(true);
+        bedPane1111.setVisible(true);
+
+        // Make sure the buttons are visible
+        if (assign_patient_button != null) {
+            assign_patient_button.setVisible(true);
+            System.out.println("Assign patient button made visible");
+        } else {
+            System.out.println("Warning: Assign patient button is null");
+        }
+
+        if (discharge_patient_button != null) {
+            discharge_patient_button.setVisible(true);
+            System.out.println("Discharge patient button made visible");
+        } else {
+            System.out.println("Warning: Discharge patient button is null");
+        }
+
+        // Load bed data
+        loadAndDisplayBeds();
+    }
 
 
 
@@ -1338,96 +1481,265 @@ public class GeneralMedicineDoctorController {
 
 
 
-    /*
+    // Map all bed components for easier access
+    private void mapBedComponents() {
+        bedPaneMap.put(1, bedPane);
+        bedPaneMap.put(2, bedPane1);
+        bedPaneMap.put(3, bedPane2);
+        bedPaneMap.put(4, bedPane3);
+        bedPaneMap.put(5, bedPane11);
+        bedPaneMap.put(6, bedPane12);
+        bedPaneMap.put(7, bedPane21);
+        bedPaneMap.put(8, bedPane111);
+        bedPaneMap.put(9, bedPane13);
+        bedPaneMap.put(10, bedPane112);
+        bedPaneMap.put(11, bedPane121);
+        bedPaneMap.put(12, bedPane1111);
+
+        // Add click handlers to all bed panes
+        for (Map.Entry<Integer, StackPane> entry : bedPaneMap.entrySet()) {
+            final Integer bedIndex = entry.getKey();
+            StackPane bedPane = entry.getValue();
+
+            // Explicitly set these properties
+            bedPane.setCursor(Cursor.HAND);
+            bedPane.setPickOnBounds(true); // Ensures clicks register within bounds
+
+            // Debug output for clicks
+            bedPane.setOnMouseClicked(e -> {
+                // Get the bedId from the bedPane's bedIdLabel, not from the map index
+                Label bedIdLabel = (Label) bedPane.lookup(".bed-id-label");
+                String bedIdText = bedIdLabel.getText();
+
+                // Extract just the number from "Bed X"
+                int bedId = -1;
+                try {
+                    if (bedIdText.startsWith("Bed ")) {
+                        bedId = Integer.parseInt(bedIdText.substring(4).trim());
+                    }
+                } catch (NumberFormatException ex) {
+                    System.err.println("Could not parse bed ID from label: " + bedIdText);
+                }
+
+                System.out.println("Clicked on bed with ID: " + bedId);
+
+                // Now look up the bed by its actual ID
+                if (bedId > 0 && bedsMap.containsKey(bedId)) {
+                    // Reset previous selection styling
+                    if (selectedBed != null) {
+                        int prevBedId = selectedBed.getBedId();
+                        if (bedPaneMap.containsKey(prevBedId)) {
+                            bedPaneMap.get(prevBedId).setEffect(new DropShadow(5, Color.rgb(0, 0, 0, 0.3)));
+                            bedPaneMap.get(prevBedId).setStyle("");
+                        }
+                    }
+
+                    // Set current selection
+                    selectedBed = bedsMap.get(bedId);
+                    if (selectedBed != null) {
+                        System.out.println("Selected bed: " + selectedBed.getBedId() + ", Status: " + selectedBed.getStatus());
+                        bedPane.setEffect(new DropShadow(15, Color.DODGERBLUE));
+                        bedPane.setStyle("-fx-border-color: #4080c0; -fx-border-width: 3;");
+
+                        // Force button visibility again to be sure
+                        assign_patient_button.setVisible(true);
+                        discharge_patient_button.setVisible(true);
+
+                        // Ensure buttons are updated based on bed status
+                        updateBedActionButtons();
+                    }
+                } else {
+                    System.out.println("No bed data found for ID " + bedId);
+                }
+            });
+        }
+    }
+
+    // Update assign/discharge buttons based on selected bed status
+    private void updateBedActionButtons() {
+        System.out.println("Updating bed action buttons");
+        if (selectedBed != null) {
+            System.out.println("Selected bed status: " + selectedBed.getStatus());
+
+            if ("Available".equalsIgnoreCase(selectedBed.getStatus()) || "Vacant".equalsIgnoreCase(selectedBed.getStatus())) {
+                System.out.println("Enabling assign button, disabling discharge button");
+                assign_patient_button.setDisable(false);
+                discharge_patient_button.setDisable(true);
+            } else if ("Occupied".equalsIgnoreCase(selectedBed.getStatus())) {
+                System.out.println("Disabling assign button, enabling discharge button");
+                assign_patient_button.setDisable(true);
+                discharge_patient_button.setDisable(false);
+            } else {
+                System.out.println("Unknown status, disabling both buttons");
+                assign_patient_button.setDisable(true);
+                discharge_patient_button.setDisable(true);
+            }
+        } else {
+            System.out.println("No bed selected, disabling both buttons");
+            assign_patient_button.setDisable(true);
+            discharge_patient_button.setDisable(true);
+        }
+    }
+
+    // Load beds from server and update UI
+    private void loadAndDisplayBeds() {
+        System.out.println("Starting to load bed data...");
+        new Thread(() -> {
+            try {
+                // Set the department to "General" for general medicine
+                Bed.setDepartment("General");
+                System.out.println("Fetching beds from server...");
+
+                // Get all beds
+                List<Bed> beds = bedService.getAllBeds();
+                System.out.println("Received " + beds.size() + " beds from server");
+
+                // Log each bed received
+                for (Bed bed : beds) {
+                    System.out.println("Server bed: " + bed.getBedId() + ", Status: " + bed.getStatus());
+                }
+
+                // Update UI on JavaFX thread
+                Platform.runLater(() -> {
+                    updateBedDisplay(beds);
+                });
+            } catch (IOException e) {
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Error", "Failed to load hospital beds: " + e.getMessage());
+                    e.printStackTrace();
+                });
+            }
+        }).start();
+    }
+
+    // Update bed display with data from server
+    private void updateBedDisplay(List<Bed> beds) {
+        System.out.println("Updating bed display with " + beds.size() + " beds");
+
+        // Clear previous mappings
+        bedsMap.clear();
+
+        // Reset all bed visuals to a default "no data" state first
+        for (Map.Entry<Integer, StackPane> entry : bedPaneMap.entrySet()) {
+            StackPane pane = entry.getValue();
+
+            // Find the labels within the bed pane
+            Label bedIdLabel = (Label) pane.lookup(".bed-id-label");
+            Label patientNameLabel = (Label) pane.lookup(".patient-name-label");
+            Label statusLabel = (Label) pane.lookup(".status-label-available");
+
+            if (bedIdLabel != null) bedIdLabel.setText("Bed (No Data)");
+            if (patientNameLabel != null) patientNameLabel.setText("No Data");
+            if (statusLabel != null) {
+                statusLabel.setText("UNKNOWN");
+                statusLabel.setStyle("-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d;");
+            }
+        }
+
+        // Now map beds by their actual bedId, not by index in the list
+        for (Bed bed : beds) {
+            // Store bed in map by its actual ID
+            bedsMap.put(bed.getBedId(), bed);
+            System.out.println("Stored bed " + bed.getBedId() + " in bedsMap");
+
+            // Find the corresponding UI pane for this bed ID if it exists
+            if (bedPaneMap.containsKey(bed.getBedId())) {
+                StackPane bedPane = bedPaneMap.get(bed.getBedId());
+
+                // Update the visual elements
+                Label bedIdLabel = (Label) bedPane.lookup(".bed-id-label");
+                Label patientNameLabel = (Label) bedPane.lookup(".patient-name-label");
+                Label statusLabel = (Label) bedPane.lookup(".status-label-available");
+
+                if (bedIdLabel != null) {
+                    bedIdLabel.setText("Bed " + bed.getBedId());
+                }
+
+                if (patientNameLabel != null) {
+                    if (bed.getPatientFullName() != null && !bed.getPatientFullName().isEmpty()) {
+                        patientNameLabel.setText(bed.getPatientFullName());
+                        patientNameLabel.setStyle("-fx-background-color: white; -fx-padding: 3 8;");
+                    } else {
+                        patientNameLabel.setText("No Patient");
+                        patientNameLabel.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 3 8;");
+                    }
+                }
+
+                if (statusLabel != null) {
+                    if ("Occupied".equalsIgnoreCase(bed.getStatus())) {
+                        statusLabel.setText("OCCUPIED");
+                        statusLabel.setStyle("-fx-background-color: #f8d7da; -fx-text-fill: #721c24;");
+                    } else {
+                        statusLabel.setText("AVAILABLE");
+                        statusLabel.setStyle("-fx-background-color: #d4edda; -fx-text-fill: #155724;");
+                    }
+                }
+            } else {
+                System.out.println("Warning: No UI component found for bed " + bed.getBedId());
+            }
+        }
+
+        System.out.println("bedsMap now contains " + bedsMap.size() + " beds");
+        for (Map.Entry<Integer, Bed> entry : bedsMap.entrySet()) {
+            System.out.println("bedsMap entry: Key=" + entry.getKey() + ", Value=" + entry.getValue());
+        }
+
+        // Reset selection
+        selectedBed = null;
+        updateBedActionButtons();
+    }
 
 
-    private void handleViewMedicalHistory() {
-        MedicalRecord selectedRecord = MedicalRecordsTable.getSelectionModel().getSelectedItem();
-
-        if (selectedRecord == null) {
-            UIHelper.showAlert("Selection Required", "Please select a patient's medical record to view history.");
+    private void handleAssignPatient() {
+        if (selectedBed == null) {
+            UIHelper.showAlert("Selection Required", "Please select a bed first.");
             return;
         }
 
         try {
-            // Filter medical records by patient name and surname
-            List<MedicalRecord> patientHistory = medicalRecordsList.stream()
-                    .filter(record -> record.getPatientName().equals(selectedRecord.getPatientName()) &&
-                            record.getPatientSurname().equals(selectedRecord.getPatientSurname()))
-                    .collect(Collectors.toList());
+            Stage stage = (Stage) assign_patient_button.getScene().getWindow();
+            Bed updatedBed = BedDialog.showAssignPatientDialog(stage, selectedBed);
 
-            if (patientHistory.isEmpty()) {
-                UIHelper.showAlert("No Records", "No medical history found for this patient.");
-                return;
+            if (updatedBed != null) {
+                boolean success = bedService.assignPatientToBed(updatedBed);
+                if (success) {
+                    UIHelper.showAlert("Success", "Patient assigned to bed successfully!");
+                    loadAndDisplayBeds(); // Refresh all beds
+                } else {
+                    UIHelper.showAlert("Error", "Failed to assign patient to bed on the server.");
+                }
             }
-
-            // Create a simple dialog to display patient history
-            Stage stage = (Stage) view_medical_history_button.getScene().getWindow();
-            Dialog<Void> dialog = new Dialog<>();
-            dialog.initModality(Modality.WINDOW_MODAL);
-            dialog.initOwner(stage);
-            dialog.setTitle("Patient Medical History");
-            dialog.setHeaderText("Medical History for " + selectedRecord.getPatientName() + " " + selectedRecord.getPatientSurname());
-
-            // Apply custom styling to the dialog
-            DialogPane dialogPane = dialog.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    MedicalRecordsDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
-
-            // Create a TableView to display the history
-            TableView<MedicalRecord> historyTable = new TableView<>();
-            historyTable.setPrefWidth(800);
-            historyTable.setPrefHeight(400);
-
-            // Define columns
-            TableColumn<MedicalRecord, LocalDate> dateColumn = new TableColumn<>("Date");
-            dateColumn.setCellValueFactory(new PropertyValueFactory<>("recordDate"));
-            dateColumn.setPrefWidth(100);
-
-            TableColumn<MedicalRecord, String> diagnosisColumn = new TableColumn<>("Diagnosis");
-            diagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
-            diagnosisColumn.setPrefWidth(150);
-
-            TableColumn<MedicalRecord, String> treatmentColumn = new TableColumn<>("Treatment");
-            treatmentColumn.setCellValueFactory(new PropertyValueFactory<>("treatment"));
-            treatmentColumn.setPrefWidth(150);
-
-            TableColumn<MedicalRecord, String> prescriptionColumn = new TableColumn<>("Prescription");
-            prescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("prescription"));
-            prescriptionColumn.setPrefWidth(150);
-
-            TableColumn<MedicalRecord, String> doctorColumn = new TableColumn<>("Doctor");
-            doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
-            doctorColumn.setPrefWidth(100);
-
-            TableColumn<MedicalRecord, String> statusColumn = new TableColumn<>("Status");
-            statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-            statusColumn.setPrefWidth(100);
-
-            historyTable.getColumns().addAll(dateColumn, diagnosisColumn, treatmentColumn,
-                    prescriptionColumn, doctorColumn, statusColumn);
-
-            // Sort by date descending (newest first)
-            historyTable.getSortOrder().add(dateColumn);
-            dateColumn.setSortType(TableColumn.SortType.DESCENDING);
-
-            // Add all records to the table
-            historyTable.getItems().addAll(patientHistory);
-            historyTable.sort();
-
-            dialogPane.setContent(historyTable);
-            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-
-            dialog.showAndWait();
-        } catch (Exception e) {
-            UIHelper.showAlert("Error", "Error viewing medical history: " + e.getMessage());
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error assigning patient to bed: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    // Handle discharge patient action
+    private void handleDischargePatient() {
+        if (selectedBed == null) {
+            UIHelper.showAlert("Selection Required", "Please select a bed first.");
+            return;
+        }
 
-*/
+        try {
+            Stage stage = (Stage) discharge_patient_button.getScene().getWindow();
+            boolean confirmed = BedDialog.showDischargeConfirmationDialog(stage, selectedBed);
 
+            if (confirmed) {
+                boolean success = bedService.dischargePatientFromBed(selectedBed);
+                if (success) {
+                    UIHelper.showAlert("Success", "Patient discharged from bed successfully!");
+                    loadAndDisplayBeds(); // Refresh all beds
+                } else {
+                    UIHelper.showAlert("Error", "Failed to discharge patient from bed on the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error discharging patient from bed: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 
 }

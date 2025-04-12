@@ -22,11 +22,33 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MedicalRecord {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/General";
-    private static final String GET_MEDICAL_RECORDS_URL = SERVER_BASE_URL + "/medical-records";
-    private static final String ADD_MEDICAL_RECORD_URL = SERVER_BASE_URL + "/medical-records/add";
-    private static final String UPDATE_MEDICAL_RECORD_URL = SERVER_BASE_URL + "/medical-records/update";
-    private static final String DELETE_MEDICAL_RECORD_URL = SERVER_BASE_URL + "/medical-records/delete";
+    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+
+    // Department-specific URLs
+    private static String department = "General"; // Default department
+
+    // Dynamic URL getters that use the current department
+    private static String getMedicalRecordsUrl() {
+        return SERVER_BASE_URL + department + "/medical-records";
+    }
+
+    private static String getAddMedicalRecordUrl() {
+        return SERVER_BASE_URL + department + "/medical-records/add";
+    }
+
+    private static String getUpdateMedicalRecordUrl() {
+        return SERVER_BASE_URL + department + "/medical-records/update";
+    }
+
+    private static String getDeleteMedicalRecordUrl() {
+        return SERVER_BASE_URL + department + "/medical-records/delete";
+    }
+
+    // Set the department for all medical records
+    public static void setDepartment(String dept) {
+        department = dept != null ? dept.replaceAll("\\s", "_") : "General";
+        System.out.println("MedicalRecord department set to: " + department);
+    }
 
     // Medical Record Attributes
     private Integer recordId;
@@ -41,11 +63,7 @@ public class MedicalRecord {
 
     // Constructors
     public MedicalRecord() {
-
         HttpsUtil.setupSSL();
-
-
-
     }
 
     public MedicalRecord(Integer recordId, String patientName, String patientSurname,
@@ -62,12 +80,6 @@ public class MedicalRecord {
         this.recordDate = recordDate;
 
         HttpsUtil.setupSSL();
-/*
-        if (!HttpsUtil.isSSLInitialized()) {
-            HttpsUtil.setupSSL();
-        }
-
- */
     }
 
     // Getters and Setters
@@ -105,14 +117,8 @@ public class MedicalRecord {
         BufferedReader reader = null;
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-             */
             // Set up the connection
-            URL url = new URL(GET_MEDICAL_RECORDS_URL);
+            URL url = new URL(getMedicalRecordsUrl());
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -190,16 +196,10 @@ public class MedicalRecord {
 
     // Add a new medical record
     public boolean addToServer() throws IOException {
-        URL url = new URL(ADD_MEDICAL_RECORD_URL);
+        URL url = new URL(getAddMedicalRecordUrl());
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-             */
             // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -239,16 +239,10 @@ public class MedicalRecord {
 
     // Update an existing medical record
     public boolean updateOnServer() throws IOException {
-        URL url = new URL(UPDATE_MEDICAL_RECORD_URL + "/" + this.recordId);
+        URL url = new URL(getUpdateMedicalRecordUrl() + "/" + this.recordId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-             */
             // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
@@ -289,16 +283,10 @@ public class MedicalRecord {
 
     // Delete a medical record
     public static boolean deleteMedicalRecord(Integer recordId) throws IOException {
-        URL url = new URL(DELETE_MEDICAL_RECORD_URL + "/" + recordId);
+        URL url = new URL(getDeleteMedicalRecordUrl() + "/" + recordId);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            /*
-            if (!HttpsUtil.isSSLInitialized()) {
-                HttpsUtil.setupSSL();
-            }
-
-             */
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
 

@@ -1,42 +1,65 @@
 package com.inteliMedExpress.controllers;
 
-
+import com.inteliMedExpress.classes.appointments.Appointment;
+import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
+import com.inteliMedExpress.classes.patients.Patient;
+import com.inteliMedExpress.classes.UIHelper;
 import com.inteliMedExpress.utils.AppLogger;
 import com.inteliMedExpress.utils.HttpsUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
-
-import com.inteliMedExpress.classes.UIHelper;
+import org.json.simple.parser.JSONParser;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-
 
 public class LoginController {
     private static final String CLASS_NAME = LoginController.class.getSimpleName();
+
+    // Enum for available departments
+    public enum Department {
+        CARDIOLOGY("Cardiology"),
+        PEDIATRICS("Pediatrics"),
+        GENERAL_MEDICINE("General"),
+        MICROBIOLOGY("Microbiology"),
+        PHARMACOLOGY("Pharmacology"),
+        RADIOLOGY("Radiology");
+
+        private final String displayName;
+
+        Department(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        // Convert from string representation to enum
+        public static Department fromString(String department) {
+            if (department == null) return GENERAL_MEDICINE;
+
+            // Remove spaces and convert to uppercase for comparison
+            String normalizedDept = department.replaceAll("\\s", "_").toUpperCase();
+
+            try {
+                return valueOf(normalizedDept);
+            } catch (IllegalArgumentException e) {
+                // Default to General Medicine if not found
+                return GENERAL_MEDICINE;
+            }
+        }
+    }
+
     @FXML
     private TextField username_textfield;
 
@@ -57,19 +80,13 @@ public class LoginController {
 
     private static final String LOGIN_API_URL = "https://127.0.0.1:8080/api/auth/login";
 
-
-
-
-    public void initialize(){
+    public void initialize() {
         AppLogger.initialize();
         AppLogger.info(CLASS_NAME, "LoginController initialized");
-
-
 
         //Setting up the certificate verification
         HttpsUtil.setupSSL();
     }
-
 
     // function that gets triggered by the login button
     public void login(ActionEvent event) {
@@ -82,61 +99,86 @@ public class LoginController {
         }
         AppLogger.info(CLASS_NAME, "Login attempt for user: " + username);
 
-        try{
-            boolean loginSuccess = sendLoginRequest(username,password);
-                if(loginSuccess){
-                    UIHelper.showAlert("Success", "Login successful.");
-                    AppLogger.info(CLASS_NAME, username + " successfully logged in.");
+        try {
+            JSONObject response = sendLoginRequest(username, password);
+            if (response != null) {
+                UIHelper.showAlert("Success", "Login successful.");
+                AppLogger.info(CLASS_NAME, username + " successfully logged in.");
 
-                    String doctorName = getDoctorName(username);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml"));
-                    Parent dashboardRoot = loader.load();
+                // Extract data from response
+                String name = (String) response.get("name");
+                String surname = (String) response.get("surname");
+                String department = (String) response.get("department");
+                String profession = (String) response.get("profession");
 
+                // Set the department for all API calls
+                Department dept = Department.fromString(department);
 
-                    GeneralMedicineDoctorController controller = loader.getController();
-                    controller.setDoctorName(doctorName);
+                // Update department settings in all relevant classes
+                Appointment.setDepartment(dept.getDisplayName());
 
-                    // Create new scene
-                    Scene dashboardScene = new Scene(dashboardRoot);
-
-                    // Get current stage and set new scene
-                    Stage currentStage = (Stage) login_button.getScene().getWindow();
-                    currentStage.setScene(dashboardScene);
-                    currentStage.setTitle("InteliMedExpress - General Medicine Doctor");
-                    currentStage.centerOnScreen();
-                }
-                else{
-                    UIHelper.showAlert("Error", "Login failed");
-
+                // Only set these if you have implemented these methods
+                try {
+                    MedicalRecord.setDepartment(dept.getDisplayName());
+                    Patient.setDepartment(dept.getDisplayName());
+                } catch (Exception e) {
+                    AppLogger.warning(CLASS_NAME, "Could not set department for all classes: " + e.getMessage());
                 }
 
+                AppLogger.info(CLASS_NAME, "Department set to: " + dept.getDisplayName());
 
+                // Navigate to appropriate page based on department and profession
+                navigateBasedOnDepartment(name, surname, dept.getDisplayName(), profession);
+            } else {
+                UIHelper.showAlert("Error", "Login failed");
+            }
         } catch (IOException e) {
             UIHelper.showAlert("Login Error", e.getMessage());
             System.out.println("Login Error" + e);
         }
-
-
     }
 
-    private String getDoctorName(String username) {
+    private void navigateBasedOnDepartment(String name, String surname, String department, String profession) throws IOException {
+        // FXML path - currently we only have GeneralMedicineDoctor.fxml
+        String fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
 
-        return username;
-    }
+        // Set the window title based on department and role
+        String title = "InteliMedExpress";
+        boolean isDoctorRole = "DOCTOR".equalsIgnoreCase(profession);
 
+        // Format department for display (replace underscores with spaces)
+        String displayDepartment = department.replace("_", " ");
+        title += " - " + displayDepartment + " " + (isDoctorRole ? "Doctor" : "Nurse");
 
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent dashboardRoot = loader.load();
 
+            // Get the controller and set the user name
+            GeneralMedicineDoctorController controller = loader.getController();
+            controller.setDoctorName(name + " " + surname);
 
-    private boolean sendLoginRequest(String username, String password) throws IOException {
-/*
-        if (!HttpsUtil.isSSLInitialized()){
-            HttpsUtil.setupSSL();
+            // Log which department was loaded
+            AppLogger.info(CLASS_NAME, "Loaded view for " + displayDepartment + " with role " + profession);
+
+            // Create and set the scene
+            Scene dashboardScene = new Scene(dashboardRoot);
+            Stage currentStage = (Stage) login_button.getScene().getWindow();
+            currentStage.setScene(dashboardScene);
+            currentStage.setTitle(title);
+            currentStage.centerOnScreen();
+
+        } catch (IOException e) {
+            AppLogger.error(CLASS_NAME, "Error loading FXML: " + e.getMessage());
+            UIHelper.showAlert("Navigation Error", "Could not load department view: " + e.getMessage());
+            throw e; // Rethrow to handle in calling method
         }
-*/
+    }
 
+    private JSONObject sendLoginRequest(String username, String password) throws IOException {
         URL url = new URL(LOGIN_API_URL);
 
-        AppLogger.info(CLASS_NAME, "Sending login request to " + url.toString());
         // Cast to HttpsURLConnection for HTTPS
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -167,21 +209,36 @@ public class LoginController {
 
         // Get response code
         int responseCode = connection.getResponseCode();
-        return responseCode == HttpURLConnection.HTTP_OK;
 
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            // Read the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            // Parse the JSON response
+            JSONParser parser = new JSONParser();
+            try {
+                return (JSONObject) parser.parse(response.toString());
+            } catch (org.json.simple.parser.ParseException e) {
+                throw new IOException("Error parsing response: " + e.getMessage());
+            }
+        } else {
+            return null;
+        }
     }
 
-
-
     public void register(ActionEvent event) {
-
         try {
             // Load the register.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/register.fxml"));
             Parent registerRoot = loader.load();
             Scene registerScene = new Scene(registerRoot);
             Stage currentStage = (Stage) register_hyper.getScene().getWindow();
-
 
             currentStage.setScene(registerScene);
             currentStage.setTitle("InteliMedExpress - Registration");
@@ -193,19 +250,9 @@ public class LoginController {
             System.err.println("Error navigating to registration form: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
-
-
 
     public void showCredits(ActionEvent event) {
         UIHelper.showAlert("Credits", "Icons by icons8.com - https:/icon8.com");
-
     }
-
-
-
-
-
-
 }

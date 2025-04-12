@@ -69,7 +69,7 @@
             <TableColumn fx:id="nurse_surname_column" prefWidth="107.4285888671875" text="NurseSurname" />
             <TableColumn fx:id="appointment_date_column" prefWidth="93.142822265625" text="Date" />
             <TableColumn fx:id="appointment_status_column" minWidth="0.0" prefWidth="66.28564453125" text="Status" />
-            <TableColumn fx:id="appointment_notes_column" prefWidth="209.71435546875" text="Notes" />
+            <TableColumn fx:id="appointment_notes_column" maxWidth="8000.0" prefWidth="206.85716029575894" text="Notes" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -78,6 +78,11 @@
       <Button fx:id="create_appointment_button" layoutX="1075.0" layoutY="154.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Create Appointment" visible="false" />
       <Button fx:id="modify_appointment_button" layoutX="1075.0" layoutY="219.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Modify Appointment" visible="false" />
       <Button fx:id="delete_appointment_button" layoutX="1075.0" layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="154.0" text="Delete Appointment" visible="false" />
+
+
+
+
+       <Button fx:id="view_appointment_details_button" layoutX="1075.0" layoutY="350.0" mnemonicParsing="false" onAction="#showAppointmentDetails" prefHeight="50.0" prefWidth="154.0" text="View Full Details" visible="false" />
       <Button fx:id="refresh_appointment_button" layoutX="1135.0" layoutY="597.0" mnemonicParsing="false" visible="false" />
       <TableView fx:id="MedicalRecordsTable" layoutX="179.0" layoutY="120.0" prefHeight="581.0" prefWidth="875.0" visible="false">
          <columns>
@@ -630,11 +635,6 @@
                <Insets />
            </opaqueInsets>
        </StackPane>
-
-
-
-
-
 
 
 

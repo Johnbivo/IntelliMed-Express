@@ -1,6 +1,8 @@
 package com.inteliMedExpress.classes.appointments;
 
 import com.inteliMedExpress.classes.UIHelper;
+import com.inteliMedExpress.classes.patients.Patient;
+import com.inteliMedExpress.classes.patients.PatientService;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -8,10 +10,13 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppointmentDialog {
 
@@ -94,9 +99,32 @@ public class AppointmentDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
         grid.getStyleClass().add("grid-pane");
 
-        // Create text fields for appointment information
-        TextField patientNameField = new TextField();
-        TextField patientSurnameField = new TextField();
+        // Create dropdown for patients
+        ComboBox<String> patientComboBox = new ComboBox<>();
+        patientComboBox.setPrefWidth(250);
+        patientComboBox.setPromptText("Select Patient");
+
+        // Initialize a list for patients outside the try-catch so it's accessible to the result converter
+        final List<Patient> patientsList = new ArrayList<>();
+
+        // Load patients
+        PatientService patientService = new PatientService();
+        try {
+            List<Patient> patients = patientService.getAllPatients();
+            // Store the patients in our accessible list
+            patientsList.addAll(patients);
+
+            // Add patients to the combo box
+            for (Patient patient : patients) {
+                patientComboBox.getItems().add(patient.getPatientId() + ": " +
+                        patient.getName() + " " +
+                        patient.getSurname());
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Could not load patients: " + e.getMessage());
+        }
+
+        // Rest of the fields
         TextField doctorSurnameField = new TextField();
         TextField nurseSurnameField = new TextField();
 
@@ -122,8 +150,7 @@ public class AppointmentDialog {
         notesArea.setPrefRowCount(3);
 
         // Set preferred width for consistent form field sizes
-        patientNameField.setPrefWidth(250);
-        patientSurnameField.setPrefWidth(250);
+        patientComboBox.setPrefWidth(250);
         doctorSurnameField.setPrefWidth(250);
         nurseSurnameField.setPrefWidth(250);
         appointmentDatePicker.setPrefWidth(250);
@@ -134,8 +161,19 @@ public class AppointmentDialog {
 
         // Populate fields if updating
         if (existingAppointment != null) {
-            patientNameField.setText(existingAppointment.getPatientName());
-            patientSurnameField.setText(existingAppointment.getPatientSurname());
+            // For patient selection, find the matching patient in the dropdown
+            if (existingAppointment.getPatientName() != null && existingAppointment.getPatientSurname() != null) {
+                for (Patient patient : patientsList) {
+                    if (patient.getName().equals(existingAppointment.getPatientName()) &&
+                            patient.getSurname().equals(existingAppointment.getPatientSurname())) {
+                        patientComboBox.setValue(patient.getPatientId() + ": " +
+                                patient.getName() + " " +
+                                patient.getSurname());
+                        break;
+                    }
+                }
+            }
+
             doctorSurnameField.setText(existingAppointment.getDoctorSurname());
             nurseSurnameField.setText(existingAppointment.getNurseSurname());
 
@@ -169,22 +207,20 @@ public class AppointmentDialog {
         timeBox.getChildren().addAll(hourPicker, new Label(":"), minutePicker);
 
         // Add labels and fields to the grid
-        grid.add(new Label("Patient Name:"), 0, 0);
-        grid.add(patientNameField, 1, 0);
-        grid.add(new Label("Patient Surname:"), 0, 1);
-        grid.add(patientSurnameField, 1, 1);
-        grid.add(new Label("Doctor Surname:"), 0, 2);
-        grid.add(doctorSurnameField, 1, 2);
-        grid.add(new Label("Nurse Surname:"), 0, 3);
-        grid.add(nurseSurnameField, 1, 3);
-        grid.add(new Label("Appointment Date:"), 0, 4);
-        grid.add(appointmentDatePicker, 1, 4);
-        grid.add(new Label("Appointment Time:"), 0, 5);
-        grid.add(timeBox, 1, 5);
-        grid.add(new Label("Status:"), 0, 6);
-        grid.add(statusComboBox, 1, 6);
-        grid.add(new Label("Notes:"), 0, 7);
-        grid.add(notesArea, 1, 7);
+        grid.add(new Label("Patient:"), 0, 0);
+        grid.add(patientComboBox, 1, 0);
+        grid.add(new Label("Doctor Surname:"), 0, 1);
+        grid.add(doctorSurnameField, 1, 1);
+        grid.add(new Label("Nurse Surname:"), 0, 2);
+        grid.add(nurseSurnameField, 1, 2);
+        grid.add(new Label("Appointment Date:"), 0, 3);
+        grid.add(appointmentDatePicker, 1, 3);
+        grid.add(new Label("Appointment Time:"), 0, 4);
+        grid.add(timeBox, 1, 4);
+        grid.add(new Label("Status:"), 0, 5);
+        grid.add(statusComboBox, 1, 5);
+        grid.add(new Label("Notes:"), 0, 6);
+        grid.add(notesArea, 1, 6);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -192,15 +228,35 @@ public class AppointmentDialog {
         dialogPane.setPrefWidth(450);
         dialogPane.setPrefHeight(600); // Increased height to accommodate the time picker
 
-        // Request focus on the patient name field by default
-        patientNameField.requestFocus();
+        // Request focus on the patient selector by default
+        patientComboBox.requestFocus();
 
         // Convert the result to an Appointment object when the save button is clicked
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    String patientName = patientNameField.getText().trim();
-                    String patientSurname = patientSurnameField.getText().trim();
+                    String selectedPatient = patientComboBox.getValue();
+                    if (selectedPatient == null || selectedPatient.isEmpty()) {
+                        UIHelper.showAlert("Validation Error", "Please select a patient.");
+                        return null;
+                    }
+
+                    // Extract patient ID from selection (format: "ID: Name Surname")
+                    int patientId = Integer.parseInt(selectedPatient.split(":")[0].trim());
+
+                    // Find the patient in our list
+                    Patient patient = patientsList.stream()
+                            .filter(p -> p.getPatientId() == patientId)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (patient == null) {
+                        UIHelper.showAlert("Error", "Selected patient not found.");
+                        return null;
+                    }
+
+                    String patientName = patient.getName();
+                    String patientSurname = patient.getSurname();
                     String doctorSurname = doctorSurnameField.getText().trim();
                     String nurseSurname = nurseSurnameField.getText().trim();
                     LocalDate appointmentDate = appointmentDatePicker.getValue();
@@ -219,9 +275,8 @@ public class AppointmentDialog {
                     String notes = notesArea.getText().trim();
 
                     // Validate required fields
-                    if (patientName.isEmpty() || patientSurname.isEmpty() || doctorSurname.isEmpty() ||
-                            appointmentDate == null || status == null) {
-                        UIHelper.showAlert("Validation Error", "Patient name, patient surname, doctor surname, appointment date, and status are required.");
+                    if (doctorSurname.isEmpty() || appointmentDate == null || status == null) {
+                        UIHelper.showAlert("Validation Error", "Doctor surname, appointment date, and status are required.");
                         return null;
                     }
 
@@ -252,10 +307,6 @@ public class AppointmentDialog {
 
         return dialog.showAndWait().orElse(null);
     }
-
-
-
-
 
     // Method to display the appointment details dialog
     public static void showAppointmentDetailsDialog(Appointment appointment) {
@@ -298,6 +349,4 @@ public class AppointmentDialog {
 
         dialog.showAndWait();
     }
-
-
 }

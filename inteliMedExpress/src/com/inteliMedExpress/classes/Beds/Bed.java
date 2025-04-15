@@ -48,8 +48,8 @@ public class Bed {
     private Integer roomNumber;
     private String status; // OCCUPIED, AVAILABLE
     private Integer patientId;
-    private String patientName;
-    private String patientSurname;
+    private String patientFirstName;
+    private String patientLastName;
 
     // Constructors
     public Bed() {
@@ -57,13 +57,13 @@ public class Bed {
     }
 
     public Bed(Integer bedId, Integer roomNumber, String status, Integer patientId,
-               String patientName, String patientSurname) {
+               String patientFirstName, String patientLastName) {
         this.bedId = bedId;
         this.roomNumber = roomNumber;
         this.status = status;
         this.patientId = patientId;
-        this.patientName = patientName;
-        this.patientSurname = patientSurname;
+        this.patientFirstName = patientFirstName;
+        this.patientLastName = patientLastName;
 
         HttpsUtil.setupSSL();
     }
@@ -81,18 +81,18 @@ public class Bed {
     public Integer getPatientId() { return patientId; }
     public void setPatientId(Integer patientId) { this.patientId = patientId; }
 
-    public String getPatientName() { return patientName; }
-    public void setPatientName(String patientName) { this.patientName = patientName; }
+    public String getPatientFirstName() { return patientFirstName; }
+    public void setPatientFirstName(String patientFirstName) { this.patientFirstName = patientFirstName; }
 
-    public String getPatientSurname() { return patientSurname; }
-    public void setPatientSurname(String patientSurname) { this.patientSurname = patientSurname; }
+    public String getPatientLastName() { return patientLastName; }
+    public void setPatientLastName(String patientLastName) { this.patientLastName = patientLastName; }
 
     // Get patient's full name or empty string if no patient
     public String getPatientFullName() {
-        if (patientName == null || patientName.isEmpty()) {
+        if (patientFirstName == null || patientFirstName.isEmpty()) {
             return "";
         }
-        return patientName + " " + patientSurname;
+        return patientFirstName + " " + patientLastName;
     }
 
     // Get all beds
@@ -128,7 +128,6 @@ public class Bed {
             JSONArray jsonArray = (JSONArray) parser.parse(response.toString());
 
             // Process each bed in the array
-            // Process each bed in the array
             for (Object obj : jsonArray) {
                 JSONObject bedJson = (JSONObject) obj;
 
@@ -163,11 +162,11 @@ public class Bed {
                 Integer patientId = (patientIdLong != null) ? patientIdLong.intValue() : null;
 
                 // These fields might need to be fetched from patient data
-                String patientName = (String) bedJson.get("patientName");
-                String patientSurname = (String) bedJson.get("patientSurname");
+                String patientFirstName = (String) bedJson.get("patientFirstName");
+                String patientLastName = (String) bedJson.get("patientLastName");
 
                 // Create and add the bed to our list
-                Bed bed = new Bed(bedId, roomNumber, status, patientId, patientName, patientSurname);
+                Bed bed = new Bed(bedId, roomNumber, status, patientId, patientFirstName, patientLastName);
                 beds.add(bed);
             }
 

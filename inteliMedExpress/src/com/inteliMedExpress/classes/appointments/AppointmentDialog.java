@@ -1,6 +1,8 @@
 package com.inteliMedExpress.classes.appointments;
 
 import com.inteliMedExpress.classes.UIHelper;
+import com.inteliMedExpress.classes.Employees.Nurse;
+import com.inteliMedExpress.classes.Employees.NurseService;
 import com.inteliMedExpress.classes.patients.Patient;
 import com.inteliMedExpress.classes.patients.PatientService;
 import javafx.geometry.Insets;
@@ -41,7 +43,7 @@ public class AppointmentDialog {
                 "unknown date";
 
         alert.setContentText("Are you sure you want to delete appointment for: " +
-                appointment.getPatientName() + " " + appointment.getPatientSurname() +
+                appointment.getPatientFirstName() + " " + appointment.getPatientLastName() +
                 " on " + formattedDateTime + " (ID: " + appointment.getAppointmentId() + ")?");
 
         // Apply custom styling to the alert
@@ -104,8 +106,9 @@ public class AppointmentDialog {
         patientComboBox.setPrefWidth(250);
         patientComboBox.setPromptText("Select Patient");
 
-        // Initialize a list for patients outside the try-catch so it's accessible to the result converter
+        // Initialize lists for data outside the try-catch so they're accessible to the result converter
         final List<Patient> patientsList = new ArrayList<>();
+        final List<Nurse> nursesList = new ArrayList<>();
 
         // Load patients
         PatientService patientService = new PatientService();
@@ -124,9 +127,31 @@ public class AppointmentDialog {
             UIHelper.showAlert("Error", "Could not load patients: " + e.getMessage());
         }
 
-        // Rest of the fields
+        // Create dropdown for nurses
+        ComboBox<String> nurseComboBox = new ComboBox<>();
+        nurseComboBox.setPrefWidth(250);
+        nurseComboBox.setPromptText("Select Nurse");
+
+        // Load nurses
+        NurseService nurseService = new NurseService();
+        try {
+            List<Nurse> nurses = nurseService.getAllNurses();
+            // Store the nurses in our accessible list
+            nursesList.addAll(nurses);
+
+            // Add nurses to the combo box
+            for (Nurse nurse : nurses) {
+                nurseComboBox.getItems().add(nurse.getNurseId() + ": " +
+                        nurse.getNurseName() + " " +
+                        nurse.getNurseSurname());
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Could not load nurses: " + e.getMessage());
+        }
+
+        // Doctor fields - Just using text fields for now since the backend for doctors isn't ready
+        TextField doctorNameField = new TextField();
         TextField doctorSurnameField = new TextField();
-        TextField nurseSurnameField = new TextField();
 
         // Date picker for appointment date
         DatePicker appointmentDatePicker = new DatePicker();
@@ -151,8 +176,9 @@ public class AppointmentDialog {
 
         // Set preferred width for consistent form field sizes
         patientComboBox.setPrefWidth(250);
+        doctorNameField.setPrefWidth(250);
         doctorSurnameField.setPrefWidth(250);
-        nurseSurnameField.setPrefWidth(250);
+        nurseComboBox.setPrefWidth(250);
         appointmentDatePicker.setPrefWidth(250);
         hourPicker.setPrefWidth(60);
         minutePicker.setPrefWidth(60);
@@ -162,10 +188,10 @@ public class AppointmentDialog {
         // Populate fields if updating
         if (existingAppointment != null) {
             // For patient selection, find the matching patient in the dropdown
-            if (existingAppointment.getPatientName() != null && existingAppointment.getPatientSurname() != null) {
+            if (existingAppointment.getPatientFirstName() != null && existingAppointment.getPatientLastName() != null) {
                 for (Patient patient : patientsList) {
-                    if (patient.getName().equals(existingAppointment.getPatientName()) &&
-                            patient.getSurname().equals(existingAppointment.getPatientSurname())) {
+                    if (patient.getName().equals(existingAppointment.getPatientFirstName()) &&
+                            patient.getSurname().equals(existingAppointment.getPatientLastName())) {
                         patientComboBox.setValue(patient.getPatientId() + ": " +
                                 patient.getName() + " " +
                                 patient.getSurname());
@@ -174,8 +200,21 @@ public class AppointmentDialog {
                 }
             }
 
+            // For nurse selection, find the matching nurse in the dropdown
+            if (existingAppointment.getNurseName() != null && existingAppointment.getNurseSurname() != null) {
+                for (Nurse nurse : nursesList) {
+                    if (nurse.getNurseName().equals(existingAppointment.getNurseName()) &&
+                            nurse.getNurseSurname().equals(existingAppointment.getNurseSurname())) {
+                        nurseComboBox.setValue(nurse.getNurseId() + ": " +
+                                nurse.getNurseName() + " " +
+                                nurse.getNurseSurname());
+                        break;
+                    }
+                }
+            }
+
+            doctorNameField.setText(existingAppointment.getDoctorName());
             doctorSurnameField.setText(existingAppointment.getDoctorSurname());
-            nurseSurnameField.setText(existingAppointment.getNurseSurname());
 
             // Handle the date and time
             if (existingAppointment.getAppointmentDate() != null) {
@@ -209,24 +248,33 @@ public class AppointmentDialog {
         // Add labels and fields to the grid
         grid.add(new Label("Patient:"), 0, 0);
         grid.add(patientComboBox, 1, 0);
-        grid.add(new Label("Doctor Surname:"), 0, 1);
-        grid.add(doctorSurnameField, 1, 1);
-        grid.add(new Label("Nurse Surname:"), 0, 2);
-        grid.add(nurseSurnameField, 1, 2);
-        grid.add(new Label("Appointment Date:"), 0, 3);
-        grid.add(appointmentDatePicker, 1, 3);
-        grid.add(new Label("Appointment Time:"), 0, 4);
-        grid.add(timeBox, 1, 4);
-        grid.add(new Label("Status:"), 0, 5);
-        grid.add(statusComboBox, 1, 5);
-        grid.add(new Label("Notes:"), 0, 6);
-        grid.add(notesArea, 1, 6);
+
+        grid.add(new Label("Doctor Name:"), 0, 1);
+        grid.add(doctorNameField, 1, 1);
+
+        grid.add(new Label("Doctor Surname:"), 0, 2);
+        grid.add(doctorSurnameField, 1, 2);
+
+        grid.add(new Label("Nurse:"), 0, 3);
+        grid.add(nurseComboBox, 1, 3);
+
+        grid.add(new Label("Appointment Date:"), 0, 4);
+        grid.add(appointmentDatePicker, 1, 4);
+
+        grid.add(new Label("Appointment Time:"), 0, 5);
+        grid.add(timeBox, 1, 5);
+
+        grid.add(new Label("Status:"), 0, 6);
+        grid.add(statusComboBox, 1, 6);
+
+        grid.add(new Label("Notes:"), 0, 7);
+        grid.add(notesArea, 1, 7);
 
         dialog.getDialogPane().setContent(grid);
 
         // Add some spacing to improve layout
         dialogPane.setPrefWidth(450);
-        dialogPane.setPrefHeight(600); // Increased height to accommodate the time picker
+        dialogPane.setPrefHeight(650); // Adjusted height for the form
 
         // Request focus on the patient selector by default
         patientComboBox.requestFocus();
@@ -255,10 +303,34 @@ public class AppointmentDialog {
                         return null;
                     }
 
-                    String patientName = patient.getName();
-                    String patientSurname = patient.getSurname();
+                    String patientFirstName = patient.getName();
+                    String patientLastName = patient.getSurname();
+
+                    // Get doctor information from text fields
+                    String doctorName = doctorNameField.getText().trim();
                     String doctorSurname = doctorSurnameField.getText().trim();
-                    String nurseSurname = nurseSurnameField.getText().trim();
+
+                    // Get nurse information from dropdown (if selected)
+                    String nurseName = "";
+                    String nurseSurname = "";
+                    String selectedNurse = nurseComboBox.getValue();
+
+                    if (selectedNurse != null && !selectedNurse.isEmpty()) {
+                        // Extract nurse ID from selection (format: "ID: Name Surname")
+                        int nurseId = Integer.parseInt(selectedNurse.split(":")[0].trim());
+
+                        // Find the nurse in our list
+                        Nurse nurse = nursesList.stream()
+                                .filter(n -> n.getNurseId() == nurseId)
+                                .findFirst()
+                                .orElse(null);
+
+                        if (nurse != null) {
+                            nurseName = nurse.getNurseName();
+                            nurseSurname = nurse.getNurseSurname();
+                        }
+                    }
+
                     LocalDate appointmentDate = appointmentDatePicker.getValue();
 
                     // Get time values
@@ -284,16 +356,19 @@ public class AppointmentDialog {
                     Appointment appointment;
                     if (existingAppointment != null) {
                         appointment = existingAppointment;
-                        appointment.setPatientName(patientName);
-                        appointment.setPatientSurname(patientSurname);
+                        appointment.setPatientFirstName(patientFirstName);
+                        appointment.setPatientLastName(patientLastName);
+                        appointment.setDoctorName(doctorName);
                         appointment.setDoctorSurname(doctorSurname);
+                        appointment.setNurseName(nurseName);
                         appointment.setNurseSurname(nurseSurname);
                         appointment.setAppointmentDate(appointmentDateTime);
                         appointment.setStatus(status);
                         appointment.setNotes(notes);
                     } else {
-                        appointment = new Appointment(null, patientName, patientSurname,
-                                doctorSurname, nurseSurname, appointmentDateTime, status, notes);
+                        appointment = new Appointment(null, patientFirstName, patientLastName,
+                                doctorName, doctorSurname, nurseName, nurseSurname,
+                                appointmentDateTime, status, notes);
                     }
 
                     return appointment;
@@ -316,10 +391,25 @@ public class AppointmentDialog {
 
         // Format the appointment details
         StringBuilder contentBuilder = new StringBuilder();
-        contentBuilder.append("Patient: ").append(appointment.getPatientName()).append(" ")
-                .append(appointment.getPatientSurname()).append("\n\n");
-        contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorSurname()).append("\n\n");
-        contentBuilder.append("Nurse: ").append(appointment.getNurseSurname()).append("\n\n");
+        contentBuilder.append("Patient: ").append(appointment.getPatientFirstName()).append(" ")
+                .append(appointment.getPatientLastName()).append("\n\n");
+
+        // Display doctor's full name if available, otherwise just surname
+        if (appointment.getDoctorName() != null && !appointment.getDoctorName().isEmpty()) {
+            contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorName()).append(" ")
+                    .append(appointment.getDoctorSurname()).append("\n\n");
+        } else {
+            contentBuilder.append("Doctor: Dr. ").append(appointment.getDoctorSurname()).append("\n\n");
+        }
+
+        // Display nurse's full name if available, otherwise just surname
+        if (appointment.getNurseName() != null && !appointment.getNurseName().isEmpty()) {
+            contentBuilder.append("Nurse: ").append(appointment.getNurseName()).append(" ")
+                    .append(appointment.getNurseSurname()).append("\n\n");
+        } else {
+            contentBuilder.append("Nurse: ").append(appointment.getNurseSurname()).append("\n\n");
+        }
+
         contentBuilder.append("Date: ").append(
                 appointment.getAppointmentDate() != null ?
                         appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) :

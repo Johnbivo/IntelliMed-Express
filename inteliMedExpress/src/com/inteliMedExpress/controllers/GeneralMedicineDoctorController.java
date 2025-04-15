@@ -51,6 +51,37 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+
+import com.inteliMedExpress.classes.labTests.LabTest;
+import com.inteliMedExpress.classes.labTests.LabTestDialog;
+import com.inteliMedExpress.classes.labTests.LabTestService;
+import javafx.beans.binding.Bindings;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableRow;
+
+
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+
 public class GeneralMedicineDoctorController {
 
     @FXML
@@ -263,7 +294,68 @@ public class GeneralMedicineDoctorController {
 
 
 
+    // Lab Tests!!!!
 
+    @FXML
+    private TableView<LabTest> testTable;
+    @FXML
+    private TableColumn<LabTest, Integer> testIDcolumn;
+    @FXML
+    private TableColumn<LabTest, String> testNameColumn;
+    @FXML
+    private TableColumn<LabTest, String> testSurnameColumn;
+    @FXML
+    private TableColumn<LabTest, String> testDoctorSurnameColumn;
+    @FXML
+    private TableColumn<LabTest, String> testTypeColumn;
+    @FXML
+    private TableColumn<LabTest, LocalDateTime> OrderDateColumn;
+    @FXML
+    private TableColumn<LabTest, String> testResultColumn;
+    @FXML
+    private TableColumn<LabTest, LocalDateTime> testCompletionDateColumn;
+    @FXML
+    private TableColumn<LabTest, String> testRequestingDoctor;
+    @FXML
+    private TableColumn<LabTest, String> testRequestingDepartmentColumn;
+    @FXML
+    private TableColumn<LabTest, String> testNotesColumn;
+
+    @FXML
+    private Button requestLabTestButton;
+
+    private ObservableList<LabTest> labTestsList = FXCollections.observableArrayList();
+    private LabTestService labTestService;
+    @FXML
+    private Button refresh_labTests_button;
+    private ImageView staticRefreshIconLabTests;
+    private ImageView animatedRefreshIconLabTests;
+
+
+
+
+    //AI Diagnostics
+    // AI Diagnostics UI Components
+    @FXML
+    private ScrollPane aiDiagnosticsScrollPane;
+    @FXML
+    private ImageView xrayImageView;
+    @FXML
+    private Label noImageLabel;
+    @FXML
+    private Label diagnosisResultLabel;
+    @FXML
+    private Button selectXrayButton;
+    @FXML
+    private Button analyzeXrayButton;
+    @FXML
+    private BarChart<String, Number> confidenceChart;
+    @FXML
+    private Label serverStatusLabel;
+
+    private File selectedXrayFile;
+    private final HttpClient httpClient = HttpClient.newBuilder().build();
+    private final String aiServerUrl = "http://localhost:5000";
 
 
     @FXML
@@ -298,6 +390,10 @@ public class GeneralMedicineDoctorController {
             setupMedicalRecordTable();
 
             setupBeds();
+
+            setupLabTestTable();
+
+            setupAIDiagnosticsHandlers();
 
             // Initially show appointments view
             handleNavigation(appointments_button);
@@ -408,7 +504,8 @@ public class GeneralMedicineDoctorController {
             // Use NavigationManager to handle button styling if available
             if (navigationManager != null) {
                 navigationManager.selectButton(selectedButton);
-            } else {
+            }
+            else {
                 // Fallback styling if NavigationManager is unavailable
                 resetAllButtons();
                 selectedButton.setStyle("-fx-background-color: #e6f2ff; -fx-text-fill: #0052cc; -fx-font-weight: bold;");
@@ -418,7 +515,9 @@ public class GeneralMedicineDoctorController {
             disablePatientComponents();
             disableAppointmentComponents();
             disableMedicalRecordComponents();
-            disableBedComponents();// Make sure to add this line
+            disableBedComponents();
+            disableLabTestComponents();
+            disableAIDiagnosticsComponents();
 
             // Show the appropriate view based on button
             if (selectedButton == patients_button) {
@@ -430,9 +529,14 @@ public class GeneralMedicineDoctorController {
             } else if (selectedButton == medical_records_button) {
                 enableMedicalRecordComponents();
                 loadAllMedicalRecords();
-            }else if (selectedButton == hospital_beds_button) {
+            } else if (selectedButton == hospital_beds_button) {
                 enableBedComponents();
                 loadAndDisplayBeds();
+            } else if (selectedButton == lab_tests_button) {
+                enableLabTestComponents();
+            } else if (selectedButton == AI_diagnostics_button) {
+                // Show AI diagnostics pane and check server status
+                enableAIDiagnosticsComponents();
             }
             // Other navigation options would be handled here
         } catch (Exception e) {
@@ -440,6 +544,7 @@ public class GeneralMedicineDoctorController {
             e.printStackTrace();
         }
     }
+
 
 
 
@@ -648,6 +753,138 @@ public class GeneralMedicineDoctorController {
 
 
 
+    // Lab tests table setup
+
+
+    private void setupLabTestTable() {
+        // Initialize LabTestService
+        labTestService = new LabTestService("General"); // Set your department
+
+        // Configure lab test table
+        testTable.setEditable(false);
+        TableView.TableViewSelectionModel<LabTest> selectionModel = testTable.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        testTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        // Configure lab test table columns
+        testIDcolumn.setCellValueFactory(new PropertyValueFactory<>("testId"));
+        testNameColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        testSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("patientSurname"));
+        testDoctorSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
+        testTypeColumn.setCellValueFactory(new PropertyValueFactory<>("testType"));
+        OrderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        testResultColumn.setCellValueFactory(new PropertyValueFactory<>("result"));
+        testCompletionDateColumn.setCellValueFactory(new PropertyValueFactory<>("completionDate"));
+        testRequestingDoctor.setCellValueFactory(new PropertyValueFactory<>("requestingDoctorSurname"));
+        testRequestingDepartmentColumn.setCellValueFactory(new PropertyValueFactory<>("requestingDepartmentName"));
+        testNotesColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+        // Add date formatters for date columns
+        OrderDateColumn.setCellFactory(column -> {
+            return new TableCell<LabTest, LocalDateTime>() {
+                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                @Override
+                protected void updateItem(LocalDateTime dateTime, boolean empty) {
+                    super.updateItem(dateTime, empty);
+                    setText(empty || dateTime == null ? null : formatter.format(dateTime));
+                }
+            };
+        });
+
+        testCompletionDateColumn.setCellFactory(column -> {
+            return new TableCell<LabTest, LocalDateTime>() {
+                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                @Override
+                protected void updateItem(LocalDateTime dateTime, boolean empty) {
+                    super.updateItem(dateTime, empty);
+                    setText(empty || dateTime == null ? null : formatter.format(dateTime));
+                }
+            };
+        });
+
+        // Add a status color formatter
+        testResultColumn.setCellFactory(column -> {
+            return new TableCell<LabTest, String>() {
+                @Override
+                protected void updateItem(String result, boolean empty) {
+                    super.updateItem(result, empty);
+
+                    if (empty || result == null) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(result.length() > 30 ? result.substring(0, 27) + "..." : result);
+                    }
+                }
+            };
+        });
+
+        // Set items to the observable list
+        testTable.setItems(labTestsList);
+
+        // Setup button actions
+        requestLabTestButton.setOnAction(event -> handleRequestLabTest());
+
+        // Double-click to view details
+        testTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && testTable.getSelectionModel().getSelectedItem() != null) {
+                handleViewLabTestDetails();
+            }
+        });
+
+        // Add context menu for additional actions
+        testTable.setRowFactory(tv -> {
+            TableRow<LabTest> row = new TableRow<>();
+
+            // Create context menu
+            ContextMenu contextMenu = new ContextMenu();
+
+            // View details option
+            MenuItem viewItem = new MenuItem("View Details");
+            viewItem.setOnAction(event -> handleViewLabTestDetails());
+
+            // Assign doctor option
+            MenuItem assignItem = new MenuItem("Assign Doctor");
+            assignItem.setOnAction(event -> handleAssignLabTest());
+
+            // Complete test option
+            MenuItem completeItem = new MenuItem("Complete Test");
+            completeItem.setOnAction(event -> handleCompleteLabTest());
+
+            // Delete option
+            MenuItem deleteItem = new MenuItem("Delete Test");
+            deleteItem.setOnAction(event -> handleDeleteLabTest());
+
+            // Add all items to context menu
+            contextMenu.getItems().addAll(viewItem, assignItem, completeItem, deleteItem);
+
+            // Set context menu on rows only if not empty
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu)
+            );
+
+            // Disable/enable menu items based on test status
+            row.setOnContextMenuRequested(event -> {
+                LabTest test = row.getItem();
+                if (test != null) {
+                    // Only allow assignment if test has no doctor assigned
+                    assignItem.setDisable(test.getDoctorId() != null && test.getDoctorId() > 0);
+
+                    // Only allow completion if test has a doctor assigned and is not already completed
+                    completeItem.setDisable(test.getDoctorId() == null || test.getDoctorId() <= 0 ||
+                            "Completed".equalsIgnoreCase(test.getStatus()));
+                }
+            });
+
+            return row;
+        });
+    }
+
+
     //refresh buttons
 
     private void initializePatientRefreshButton() {
@@ -755,6 +992,37 @@ public class GeneralMedicineDoctorController {
             timeline.setCycleCount(1);
             timeline.play();
         });
+        try {
+            // Reuse the same icon resources for lab tests
+            staticRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconLabTests.setFitHeight(20);
+            staticRefreshIconLabTests.setFitWidth(20);
+
+            animatedRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconLabTests.setFitHeight(20);
+            animatedRefreshIconLabTests.setFitWidth(20);
+
+            refresh_labTests_button.setGraphic(staticRefreshIconLabTests);
+            refresh_labTests_button.setContentDisplay(ContentDisplay.LEFT);
+            refresh_labTests_button.setGraphicTextGap(8);
+        } catch (Exception e) {
+            System.err.println("Could not load lab tests refresh icons: " + e.getMessage());
+            // Continue without icons
+        }
+
+// Set action for lab tests refresh button
+        refresh_labTests_button.setOnAction(event -> {
+            refresh_labTests_button.setGraphic(animatedRefreshIconLabTests != null ? animatedRefreshIconLabTests : null);
+            refresh_labTests_button.setDisable(true);
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+                loadAllLabTests();
+                refresh_labTests_button.setGraphic(staticRefreshIconLabTests != null ? staticRefreshIconLabTests : null);
+                refresh_labTests_button.setDisable(false);
+            }));
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
     }
 
 
@@ -845,6 +1113,10 @@ public class GeneralMedicineDoctorController {
         bedPane112.setVisible(false);
         bedPane121.setVisible(false);
         bedPane1111.setVisible(false);
+
+
+        assign_patient_button.setVisible(false);
+        discharge_patient_button.setVisible(false);
     }
 
     private void enableBedComponents() {
@@ -882,6 +1154,42 @@ public class GeneralMedicineDoctorController {
     }
 
 
+    //Enable-Disable lab tests components
+    private void disableLabTestComponents() {
+        testTable.setVisible(false);
+        requestLabTestButton.setVisible(false);
+        refresh_labTests_button.setVisible(false);
+    }
+
+    private void enableLabTestComponents() {
+        testTable.setVisible(true);
+        requestLabTestButton.setVisible(true);
+        refresh_labTests_button.setVisible(true);
+        loadAllLabTests();
+    }
+
+    private void disableAIDiagnosticsComponents() {
+        aiDiagnosticsScrollPane.setVisible(false);
+    }
+
+    private void enableAIDiagnosticsComponents() {
+        aiDiagnosticsScrollPane.setVisible(true);
+        checkAIServerStatus();
+    }
+
+
+    //AI diagnostics handler
+    private void setupAIDiagnosticsHandlers() {
+        // Set up button handlers
+        selectXrayButton.setOnAction(e -> handleSelectXrayImage());
+        analyzeXrayButton.setOnAction(e -> handleAnalyzeXray());
+
+        // Check server status
+        checkAIServerStatus();
+    }
+
+// And in your handleAnalyzeXray method, when styling the chart bars:
+// Style the bars based on prediction
 
 
 
@@ -1483,18 +1791,18 @@ public class GeneralMedicineDoctorController {
 
     // Map all bed components for easier access
     private void mapBedComponents() {
-        bedPaneMap.put(1, bedPane);
-        bedPaneMap.put(2, bedPane1);
-        bedPaneMap.put(3, bedPane2);
-        bedPaneMap.put(4, bedPane3);
-        bedPaneMap.put(5, bedPane11);
-        bedPaneMap.put(6, bedPane12);
-        bedPaneMap.put(7, bedPane21);
-        bedPaneMap.put(8, bedPane111);
-        bedPaneMap.put(9, bedPane13);
-        bedPaneMap.put(10, bedPane112);
-        bedPaneMap.put(11, bedPane121);
-        bedPaneMap.put(12, bedPane1111);
+        bedPaneMap.put(25, bedPane);
+        bedPaneMap.put(26, bedPane1);
+        bedPaneMap.put(27, bedPane2);
+        bedPaneMap.put(28, bedPane3);
+        bedPaneMap.put(29, bedPane11);
+        bedPaneMap.put(30, bedPane12);
+        bedPaneMap.put(31, bedPane21);
+        bedPaneMap.put(32, bedPane111);
+        bedPaneMap.put(33, bedPane13);
+        bedPaneMap.put(34, bedPane112);
+        bedPaneMap.put(35, bedPane121);
+        bedPaneMap.put(36, bedPane1111);
 
         // Add click handlers to all bed panes
         for (Map.Entry<Integer, StackPane> entry : bedPaneMap.entrySet()) {
@@ -1612,18 +1920,21 @@ public class GeneralMedicineDoctorController {
         }).start();
     }
 
-    // Update bed display with data from server
+
     private void updateBedDisplay(List<Bed> beds) {
         System.out.println("Updating bed display with " + beds.size() + " beds");
 
-        // Clear previous mappings
+
         bedsMap.clear();
 
-        // Reset all bed visuals to a default "no data" state first
+
         for (Map.Entry<Integer, StackPane> entry : bedPaneMap.entrySet()) {
             StackPane pane = entry.getValue();
 
-            // Find the labels within the bed pane
+
+            pane.setEffect(new DropShadow(5, Color.rgb(0, 0, 0, 0.3))); // Reset to default shadow
+            pane.setStyle("");
+
             Label bedIdLabel = (Label) pane.lookup(".bed-id-label");
             Label patientNameLabel = (Label) pane.lookup(".patient-name-label");
             Label statusLabel = (Label) pane.lookup(".status-label-available");
@@ -1636,17 +1947,13 @@ public class GeneralMedicineDoctorController {
             }
         }
 
-        // Now map beds by their actual bedId, not by index in the list
         for (Bed bed : beds) {
-            // Store bed in map by its actual ID
+
             bedsMap.put(bed.getBedId(), bed);
             System.out.println("Stored bed " + bed.getBedId() + " in bedsMap");
-
-            // Find the corresponding UI pane for this bed ID if it exists
             if (bedPaneMap.containsKey(bed.getBedId())) {
                 StackPane bedPane = bedPaneMap.get(bed.getBedId());
 
-                // Update the visual elements
                 Label bedIdLabel = (Label) bedPane.lookup(".bed-id-label");
                 Label patientNameLabel = (Label) bedPane.lookup(".patient-name-label");
                 Label statusLabel = (Label) bedPane.lookup(".status-label-available");
@@ -1684,7 +1991,7 @@ public class GeneralMedicineDoctorController {
             System.out.println("bedsMap entry: Key=" + entry.getKey() + ", Value=" + entry.getValue());
         }
 
-        // Reset selection
+
         selectedBed = null;
         updateBedActionButtons();
     }
@@ -1715,7 +2022,7 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Handle discharge patient action
+
     private void handleDischargePatient() {
         if (selectedBed == null) {
             UIHelper.showAlert("Selection Required", "Please select a bed first.");
@@ -1742,6 +2049,486 @@ public class GeneralMedicineDoctorController {
     }
 
 
+
+    //Lab tests functions
+
+
+
+
+
+    // Load lab tests from the server
+    private void loadAllLabTests() {
+        new Thread(() -> {
+            try {
+                // Fetch tests assigned to this department
+                List<LabTest> assignedTests = labTestService.getAllLabTests();
+
+                // Fetch tests requested by this department
+                List<LabTest> requestedTests = LabTest.getRequestedLabTests();
+
+                // Merge lists, avoiding duplicates
+                Set<Integer> seenIds = new HashSet<>();
+                List<LabTest> combinedTests = new ArrayList<>();
+
+                for (LabTest test : assignedTests) {
+                    if (test.getTestId() != null && seenIds.add(test.getTestId())) {
+                        combinedTests.add(test);
+                    }
+                }
+
+                for (LabTest test : requestedTests) {
+                    if (test.getTestId() != null && seenIds.add(test.getTestId())) {
+                        combinedTests.add(test);
+                    }
+                }
+
+                // Update UI on JavaFX thread
+                Platform.runLater(() -> {
+                    labTestsList.clear();
+                    labTestsList.addAll(combinedTests);
+                });
+            } catch (IOException e) {
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Error", "Failed to load lab tests: " + e.getMessage());
+                });
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    // Handle requesting a new lab test
+    private void handleRequestLabTest() {
+        try {
+            Stage stage = (Stage) requestLabTestButton.getScene().getWindow();
+
+            // Get the current doctor info from the logged-in user
+            // Replace these with your actual values from login
+            String doctorName = loggedInDoctorName;
+            String doctorSurname = "Collins"; // Replace with actual value
+            int doctorId = 3; // Replace with actual value
+            String doctorSpecialty = "General_Medicine"; // Replace with actual value
+            int departmentId = 3; // Replace with actual value
+            String departmentName = "General"; // Replace with actual value
+
+            LabTest newLabTest = LabTestDialog.showRequestLabTestDialog(
+                    stage,
+                    doctorName, doctorSurname,
+                    doctorId, doctorSpecialty,
+                    departmentId, departmentName
+            );
+
+            if (newLabTest != null) {
+                boolean success = labTestService.requestLabTest(newLabTest);
+                if (success) {
+                    UIHelper.showAlert("Success", "Lab test requested successfully!");
+                    loadAllLabTests(); // Refresh the table
+                } else {
+                    UIHelper.showAlert("Error", "Failed to request lab test from the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error requesting lab test: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Handle viewing lab test details
+    private void handleViewLabTestDetails() {
+        LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTest == null) {
+            UIHelper.showAlert("Selection Required", "Please select a lab test to view details.");
+            return;
+        }
+
+        Stage stage = (Stage) testTable.getScene().getWindow();
+        LabTestDialog.showLabTestDetailsDialog(stage, selectedTest);
+    }
+
+    // Handle assigning a doctor to a lab test
+    private void handleAssignLabTest() {
+        LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTest == null) {
+            UIHelper.showAlert("Selection Required", "Please select a lab test to assign.");
+            return;
+        }
+
+        // Check if test already has a doctor assigned
+        if (selectedTest.getDoctorId() != null && selectedTest.getDoctorId() > 0) {
+            UIHelper.showAlert("Already Assigned", "This test already has a doctor assigned.");
+            return;
+        }
+
+        try {
+            Stage stage = (Stage) testTable.getScene().getWindow();
+
+            // Get the current doctor info from the logged-in user
+            // Replace these with your actual values from login
+            String doctorName = loggedInDoctorName;
+            String doctorSurname = "Collins"; // Replace with actual value
+            int doctorId = 3; // Replace with actual value
+
+            boolean confirmed = LabTestDialog.showAssignDoctorDialog(
+                    stage, selectedTest, doctorId, doctorName, doctorSurname
+            );
+
+            if (confirmed) {
+                boolean success = labTestService.assignDoctorToTest(selectedTest.getTestId(), doctorId);
+
+                if (success) {
+                    UIHelper.showAlert("Success", "You have been assigned to this lab test!");
+                    loadAllLabTests(); // Refresh the table
+                } else {
+                    UIHelper.showAlert("Error", "Failed to assign doctor to test on the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error assigning doctor to test: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Handle completing a lab test with results
+    private void handleCompleteLabTest() {
+        LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTest == null) {
+            UIHelper.showAlert("Selection Required", "Please select a lab test to complete.");
+            return;
+        }
+
+        // Check if test is already completed
+        if ("Completed".equalsIgnoreCase(selectedTest.getStatus())) {
+            UIHelper.showAlert("Already Completed", "This test has already been completed.");
+            return;
+        }
+
+        // Check if test has a doctor assigned
+        if (selectedTest.getDoctorId() == null || selectedTest.getDoctorId() <= 0) {
+            UIHelper.showAlert("Not Assigned", "This test needs to be assigned to a doctor before it can be completed.");
+            return;
+        }
+
+        try {
+            Stage stage = (Stage) testTable.getScene().getWindow();
+            LabTest completedTest = LabTestDialog.showCompleteLabTestDialog(stage, selectedTest);
+
+            if (completedTest != null) {
+                boolean success = labTestService.completeLabTest(
+                        completedTest.getTestId(),
+                        completedTest.getResult(),
+                        completedTest.getNotes()
+                );
+
+                if (success) {
+                    UIHelper.showAlert("Success", "Lab test completed successfully!");
+                    loadAllLabTests(); // Refresh the table
+                } else {
+                    UIHelper.showAlert("Error", "Failed to complete lab test on the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error completing lab test: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Handle deleting a lab test
+    private void handleDeleteLabTest() {
+        LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTest == null) {
+            UIHelper.showAlert("Selection Required", "Please select a lab test to delete.");
+            return;
+        }
+
+        try {
+            Stage stage = (Stage) testTable.getScene().getWindow();
+            boolean confirmed = LabTestDialog.showDeleteConfirmationDialog(stage, selectedTest);
+
+            if (confirmed) {
+                boolean success = labTestService.deleteLabTest(selectedTest.getTestId());
+
+                if (success) {
+                    UIHelper.showAlert("Success", "Lab test deleted successfully!");
+                    loadAllLabTests(); // Refresh the table
+                } else {
+                    UIHelper.showAlert("Error", "Failed to delete lab test from the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error deleting lab test: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    //AI DIAGNOSTICS
+
+    private void checkAIServerStatus() {
+        new Thread(() -> {
+            try {
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(aiServerUrl + "/health"))
+                        .timeout(java.time.Duration.ofSeconds(5))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(
+                        request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    JSONParser parser = new JSONParser();
+                    JSONObject json = (JSONObject) parser.parse(response.body());
+                    boolean modelLoaded = (boolean) json.get("model_loaded");
+
+                    Platform.runLater(() -> {
+                        if (modelLoaded) {
+                            serverStatusLabel.setText("AI Server Status: Connected");
+                            serverStatusLabel.setStyle("-fx-text-fill: green;");
+                        } else {
+                            serverStatusLabel.setText("AI Server Status: Error - Model not loaded");
+                            serverStatusLabel.setStyle("-fx-text-fill: orange;");
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    serverStatusLabel.setText("AI Server Status: Disconnected");
+                    serverStatusLabel.setStyle("-fx-text-fill: red;");
+
+                    // Schedule another check in 5 seconds
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            checkAIServerStatus();
+                        }
+                    }, 5000);
+                });
+            }
+        }).start();
+    }
+
+    // Handle selecting an X-ray image
+    private void handleSelectXrayImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select X-ray Image");
+        fileChooser.getExtensionFilters().addAll(
+                new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(selectXrayButton.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                // Load and display the image
+                Image image = new Image(selectedFile.toURI().toString());
+                xrayImageView.setImage(image);
+
+                // Hide the "No image selected" label
+                noImageLabel.setVisible(false);
+
+                // Enable the analyze button
+                analyzeXrayButton.setDisable(false);
+
+                // Store the selected file
+                selectedXrayFile = selectedFile;
+
+                // Reset results
+                diagnosisResultLabel.setText("Analysis Results: None");
+                confidenceChart.getData().clear();
+            } catch (Exception e) {
+                UIHelper.showAlert("Error", "Could not load the selected image: " + e.getMessage());
+            }
+        }
+    }
+
+    // Handle analyzing the X-ray
+    private void handleAnalyzeXray() {
+        if (selectedXrayFile == null) {
+            return;
+        }
+
+        // Disable button and show "Analyzing..." text
+        analyzeXrayButton.setDisable(true);
+        analyzeXrayButton.setText("Analyzing...");
+
+        new Thread(() -> {
+            try {
+                // Read file as bytes
+                byte[] fileBytes = Files.readAllBytes(selectedXrayFile.toPath());
+
+                // Create multipart form data
+                String boundary = "----WebKitFormBoundary" + System.currentTimeMillis();
+                String lineEnd = "\r\n";
+                String twoHyphens = "--";
+
+                // Create request body
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                // Write boundary
+                baos.write((twoHyphens + boundary + lineEnd).getBytes());
+                // Write Content-Disposition
+                baos.write(("Content-Disposition: form-data; name=\"file\"; filename=\"" +
+                        selectedXrayFile.getName() + "\"" + lineEnd).getBytes());
+                // Write Content-Type
+                baos.write(("Content-Type: image/jpeg" + lineEnd).getBytes());
+                // Empty line
+                baos.write(lineEnd.getBytes());
+                // Write file content
+                baos.write(fileBytes);
+                // Write end boundary
+                baos.write((lineEnd + twoHyphens + boundary + twoHyphens + lineEnd).getBytes());
+
+                // Create HTTP request
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(aiServerUrl + "/predict"))
+                        .header("Content-Type", "multipart/form-data; boundary=" + boundary)
+                        .POST(HttpRequest.BodyPublishers.ofByteArray(baos.toByteArray()))
+                        .build();
+
+                // Send request
+                HttpResponse<String> response = httpClient.send(
+                        request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    // Parse JSON response
+                    JSONParser parser = new JSONParser();
+                    JSONObject result = (JSONObject) parser.parse(response.body());
+
+                    // Get prediction
+                    String prediction = (String) result.get("prediction");
+                    double confidence = (double) result.get("confidence");
+
+                    // Format prediction string (replace underscores with spaces and capitalize)
+                    String formattedPrediction = prediction.replace("_", " ");
+                    formattedPrediction = formattedPrediction.substring(0, 1).toUpperCase() +
+                            formattedPrediction.substring(1);
+
+                    // Get probabilities
+                    JSONObject probabilities = (JSONObject) result.get("probabilities");
+
+                    // Debug log to see all keys in probabilities
+                    System.out.println("All classification categories: " + probabilities.keySet());
+
+                    // Update UI on JavaFX thread
+                    String finalFormattedPrediction = formattedPrediction;
+                    Platform.runLater(() -> {
+                        try {
+                            // Update diagnosis result label
+                            diagnosisResultLabel.setText(String.format(
+                                    "Analysis Results: %s (Confidence: %.1f%%)",
+                                    finalFormattedPrediction, confidence * 100));
+
+                            // Clear any existing data
+                            confidenceChart.getData().clear();
+
+                            // Create a new series for the data
+                            XYChart.Series<String, Number> series = new XYChart.Series<>();
+                            series.setName("Confidence");
+
+                            // Add all probabilities to chart - convert from keys like "virus_pneumonia" to "Virus Pneumonia"
+                            for (Object key : probabilities.keySet()) {
+                                String className = (String) key;
+                                double prob = (double) probabilities.get(className);
+
+                                // Format class name (replace underscores with spaces and capitalize each word)
+                                String formattedClass = formatClassName(className);
+
+                                // Add to series - important to maintain order
+                                series.getData().add(new XYChart.Data<>(formattedClass, prob));
+                            }
+
+                            // Style the chart
+                            confidenceChart.setTitle("X-ray Analysis Confidence Levels");
+                            // Make sure we can see all bars
+                            confidenceChart.setVerticalGridLinesVisible(true);
+                            confidenceChart.setHorizontalGridLinesVisible(true);
+                            confidenceChart.setAnimated(false); // Disable animation to ensure immediate display
+
+                            // Add the data series to the chart
+                            confidenceChart.getData().add(series);
+
+                            // Now that data is added, apply styles to each bar
+                            for (XYChart.Data<String, Number> item : series.getData()) {
+                                // Get the bar node
+                                Node bar = item.getNode();
+                                if (bar != null) {
+                                    // Check if this is the predicted class
+                                    if (item.getXValue().equalsIgnoreCase(finalFormattedPrediction)) {
+                                        // If it's the predicted class, apply blue styling
+                                        bar.setStyle("-fx-bar-fill: #4080c0; -fx-background-color: #4080c0;");
+                                        // Add custom class for CSS styling
+                                        bar.getStyleClass().add("selected-bar");
+                                    } else {
+                                        // Otherwise use gray for other classes
+                                        bar.setStyle("-fx-bar-fill: #a0a0a0; -fx-background-color: #a0a0a0;");
+                                    }
+
+                                    // Add tooltip to show exact value
+                                    Tooltip tooltip = new Tooltip(String.format("%s: %.1f%%",
+                                            item.getXValue(), item.getYValue().doubleValue() * 100));
+                                    Tooltip.install(bar, tooltip);
+                                } else {
+                                    System.out.println("Warning: Bar node is null for " + item.getXValue());
+                                }
+                            }
+
+                            // Make sure chart is visible and properly sized
+                            confidenceChart.setVisible(true);
+                            confidenceChart.setLegendVisible(false);
+
+                            // Force layout pass to ensure bars are visible
+                            confidenceChart.layout();
+                        } catch (Exception e) {
+                            System.err.println("Error updating chart: " + e.getMessage());
+                            e.printStackTrace();
+                        } finally {
+                            // Re-enable analyze button
+                            analyzeXrayButton.setDisable(false);
+                            analyzeXrayButton.setText("Analyze X-ray");
+                        }
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        UIHelper.showAlert("Error", "Failed to analyze X-ray: " + response.body());
+                        analyzeXrayButton.setDisable(false);
+                        analyzeXrayButton.setText("Analyze X-ray");
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Error", "Error analyzing X-ray: " + e.getMessage());
+                    analyzeXrayButton.setDisable(false);
+                    analyzeXrayButton.setText("Analyze X-ray");
+                });
+            }
+        }).start();
+    }
+
+    // Helper method to format class names
+    private String formatClassName(String className) {
+        if (className == null || className.isEmpty()) {
+            return "";
+        }
+
+        // Replace underscores with spaces
+        String formatted = className.replace("_", " ");
+
+        // Capitalize each word
+        String[] words = formatted.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            if (word.length() > 0) {
+                result.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+
+        return result.toString().trim();
+    }
 }
 
 

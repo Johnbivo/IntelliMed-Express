@@ -151,7 +151,7 @@ public class Patient {
                 JSONObject patientJson = (JSONObject) obj;
 
                 // Extract patient data with type conversion
-                Long idLong = (Long) patientJson.get("id");
+                Long idLong = (Long) patientJson.get("patientId");
                 Integer id = (idLong != null) ? idLong.intValue() : null;
 
                 String name = (String) patientJson.get("firstName");

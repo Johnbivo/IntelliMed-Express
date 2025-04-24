@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MedicalRecord {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
     // Department-specific URLs
     private static String department = "General"; // Default department
@@ -65,7 +65,7 @@ public class MedicalRecord {
 
     // Constructors
     public MedicalRecord() {
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     public MedicalRecord(Integer recordId, String patientName, String patientSurname,
@@ -85,7 +85,7 @@ public class MedicalRecord {
         this.recordStatus = recordStatus;
         this.recordDate = recordDate;
 
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // Legacy constructor for backward compatibility

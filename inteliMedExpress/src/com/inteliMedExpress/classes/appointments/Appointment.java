@@ -22,7 +22,7 @@ import java.util.List;
 
 public class Appointment {
 
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
     private static String department = "General_Medicine";
 
@@ -65,7 +65,7 @@ public class Appointment {
 
     // Default constructor
     public Appointment() {
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // Parameterized constructor with LocalDateTime
@@ -86,7 +86,7 @@ public class Appointment {
         this.creatorName = doctorName; // Default to the same doctor
         this.creatorSurname = doctorSurname;
 
-        HttpsUtil.setupSSL();
+       // HttpsUtil.setupSSL();
     }
 
     // Parameterized constructor with LocalDate

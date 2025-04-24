@@ -79,14 +79,14 @@ public class LoginController {
     @FXML
     private Hyperlink credits;
 
-    private static final String LOGIN_API_URL = "https://127.0.0.1:8080/api/auth/login";
+    private static final String LOGIN_API_URL = "https://springserver-kl8q.onrender.com/api/auth/login";
 
     public void initialize() {
         AppLogger.initialize();
         AppLogger.info(CLASS_NAME, "LoginController initialized");
 
         //Setting up the certificate verification
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // function that gets triggered by the login button

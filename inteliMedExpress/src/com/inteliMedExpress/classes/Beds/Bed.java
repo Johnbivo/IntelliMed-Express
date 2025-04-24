@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Bed {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
     // Department-specific URLs
     private static String department = "General"; // Default department
@@ -53,7 +53,7 @@ public class Bed {
 
     // Constructors
     public Bed() {
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     public Bed(Integer bedId, Integer roomNumber, String status, Integer patientId,
@@ -65,7 +65,7 @@ public class Bed {
         this.patientFirstName = patientFirstName;
         this.patientLastName = patientLastName;
 
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // Getters and Setters

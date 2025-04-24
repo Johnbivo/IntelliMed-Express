@@ -72,13 +72,13 @@ public class RegisterController implements Initializable {
 
 
 
-    private static final String REGISTER_API_URL = "https://127.0.0.1:8080/api/auth/register";
+    private static final String REGISTER_API_URL = "https://springserver-kl8q.onrender.com/api/auth/register";
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
 
         ObservableList<String> genders = FXCollections.observableArrayList("male", "female");
         gender_dropdown.setItems(genders);

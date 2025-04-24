@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LabTest {
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
     private static String department = "General";
 
@@ -78,7 +78,7 @@ public class LabTest {
 
     // Default constructor
     public LabTest() {
-        HttpsUtil.setupSSL();
+       // HttpsUtil.setupSSL();
     }
 
     // Constructor with essential fields
@@ -95,7 +95,7 @@ public class LabTest {
         this.orderDate = LocalDateTime.now();
         this.status = "Ordered";
 
-        HttpsUtil.setupSSL();
+       // HttpsUtil.setupSSL();
     }
 
     // Getters and Setters

@@ -355,7 +355,7 @@ public class GeneralMedicineDoctorController {
 
     private File selectedXrayFile;
     private final HttpClient httpClient = HttpClient.newBuilder().build();
-    private final String aiServerUrl = "http://localhost:5000";
+    private final String aiServerUrl = "https://intellimed-ai.onrender.com";
 
 
     @FXML

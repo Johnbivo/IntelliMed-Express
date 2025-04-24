@@ -676,3 +676,230 @@
     -fx-font-style: italic;
     -fx-text-fill: #6c757d;
 }
+
+
+/* Enhanced AI Diagnostics Panel Styling */
+
+/* ScrollPane styling */
+#aiDiagnosticsScrollPane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+#aiDiagnosticsScrollPane > .viewport {
+    -fx-background-color: transparent;
+}
+
+#aiDiagnosticsScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#aiDiagnosticsScrollPane .scroll-bar:vertical .thumb {
+    -fx-background-color: #d0e6f5;
+    -fx-background-radius: 4;
+}
+
+/* Main AI Diagnostics container */
+#aiDiagnosticsPane {
+    -fx-background-color: #f8fbff;
+    -fx-background-radius: 12;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 4);
+}
+
+/* Title styling for AI Diagnostics */
+#aiDiagnosticsPane .title {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+    -fx-font-family: "System";
+    -fx-padding: 0 0 10 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+/* Image display area styling */
+#aiDiagnosticsPane StackPane {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+/* No image selected label */
+#noImageLabel {
+    -fx-text-fill: #95a5a6;
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+}
+
+/* X-ray image view */
+#xrayImageView {
+    -fx-border-color: transparent;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Control buttons styling */
+#selectXrayButton, #analyzeXrayButton {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 10 15;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+#selectXrayButton:hover, #analyzeXrayButton:hover {
+    -fx-background-color: #0953a0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0, 0, 2);
+}
+
+#selectXrayButton:pressed, #analyzeXrayButton:pressed {
+    -fx-background-color: #084086;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+#analyzeXrayButton:disabled {
+    -fx-background-color: #95a5a6;
+    -fx-opacity: 0.7;
+}
+
+/* Server status label styles */
+#serverStatusLabel {
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+    -fx-background-radius: 4;
+    -fx-background-color: #f8f9fa;
+    -fx-border-radius: 4;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1;
+}
+
+/* Diagnosis result label */
+#diagnosisResultLabel {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10;
+    -fx-background-color: #e6f2ff;
+    -fx-background-radius: 6;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+}
+
+/* Bar Chart Enhancements */
+#confidenceChart {
+    -fx-background-color: transparent;
+    -fx-padding: 10 0 0 0;
+    -fx-pref-height: 300.0; /* Increased height for better display */
+    -fx-max-width: 1000.0;
+    -fx-animated: true;
+}
+
+/* Chart Title */
+#confidenceChart .chart-title {
+    -fx-text-fill: #1e67a8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Chart Plot Background */
+#confidenceChart .chart-plot-background {
+    -fx-background-color: rgba(245, 245, 245, 0.7);
+    -fx-background-radius: 8;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}
+
+/* Axis styling */
+#confidenceChart .axis {
+    -fx-tick-label-font-size: 12px;
+    -fx-tick-label-fill: #34495e;
+}
+
+/* X-Axis specific styling */
+#confidenceChart .axis-label {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+}
+
+/* X-Axis tick marks and labels */
+#confidenceChart .axis .tick-mark {
+    -fx-stroke: #95a5a6;
+    -fx-stroke-width: 1;
+}
+
+/* This is the key fix for your virus pneumonia label issue */
+#confidenceChart .axis .tick-label {
+    -fx-font-size: 11px;
+}
+
+/* CRITICAL - This makes sure X-axis labels are rotated and positioned properly */
+#confidenceChart .x-axis .tick-label {
+    -fx-rotate: 45;
+    -fx-translate-y: 7;
+    -fx-translate-x: 5;
+    -fx-max-width: 150px;
+    -fx-wrap-text: true;
+}
+
+/* Grid lines */
+#confidenceChart .chart-vertical-grid-lines {
+    -fx-stroke: #ecf0f1;
+    -fx-stroke-width: 1;
+}
+
+#confidenceChart .chart-horizontal-grid-lines {
+    -fx-stroke: #ecf0f1;
+    -fx-stroke-width: 1;
+}
+
+/* Bar styling - FIXED to ensure bars are visible */
+.chart-bar {
+    -fx-bar-fill: #a0a0a0 !important; /* Using !important to override any conflicting styles */
+    -fx-background-color: #a0a0a0 !important;
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-color: #888888;
+    -fx-border-width: 1;
+    -fx-opacity: 1.0;
+}
+
+/* Style for the predicted class - this will visually distinguish the predicted diagnosis */
+.selected-bar, .chart-bar.selected-bar {
+    -fx-bar-fill: #4080c0 !important;
+    -fx-background-color: #4080c0 !important;
+    -fx-effect: dropshadow(gaussian, rgba(0,100,255,0.4), 10, 0, 0, 0);
+    -fx-border-color: #2c5c94;
+    -fx-opacity: 1.0;
+}
+
+/* Need to also style the series directly for bar charts */
+.default-color0.chart-bar {
+    -fx-bar-fill: #a0a0a0;
+    -fx-background-color: #a0a0a0;
+}
+
+/* Style for the legend - if you want to show it */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+/* Tooltips for the chart */
+.chart-tooltip {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+    -fx-text-fill: white;
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+}

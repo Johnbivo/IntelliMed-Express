@@ -1,30 +1,28 @@
-/* Enhanced Dashboard styling with premium minimalistic look */
 
-/* Main panel background */
 #main_panel {
     -fx-background-color: white;
 }
 
-/* Dashboard panels styling - refined shadows and radius */
+
 .dashboard-panel {
-    -fx-background-color: #f0f8ff; /* Alice blue - very light blue background */
+    -fx-background-color: #f0f8ff;
     -fx-background-radius: 12;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 4);
     -fx-padding: 18;
 }
 
-/* Header/Title styling - more refined */
+
 .dashboard-title {
-    -fx-text-fill: #1e67a8; /* Medium-dark blue */
+    -fx-text-fill: #1e67a8;
     -fx-font-weight: bold;
     -fx-font-size: 22px;
     -fx-font-family: "System";
-    -fx-padding: 0 0 8 0; /* Add bottom spacing */
+    -fx-padding: 0 0 8 0;
 }
 
-/* Enhanced General Medicine title styling - with !important flag */
+
 #general_medicine_title {
-    -fx-text-fill: #3498db !important; /* Bright blue color with !important flag */
+    -fx-text-fill: #3498db !important;
     -fx-font-weight: bold !important;
     -fx-font-size: 28px !important;
     -fx-font-family: "System" !important;
@@ -33,26 +31,25 @@
     -fx-background-color: rgba(240, 248, 255, 0.5) !important;
     -fx-background-radius: 6 !important;
     -fx-border-color: #3498db transparent transparent transparent !important;
-    -fx-border-width: 2 0 0 0 !important; /* Top border only */
+    -fx-border-width: 2 0 0 0 !important;
     -fx-alignment: center-left !important;
     -fx-letter-spacing: 0.5 !important;
 }
 
-/* Section titles - more refined */
+
 .section-title {
     -fx-text-fill: #1e67a8;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-padding: 5 0 5 0; /* Add spacing */
+    -fx-padding: 5 0 5 0;
 }
 
-/* Regular labels - cleaner */
 .label {
     -fx-text-fill: #2c7bb6;
-    -fx-font-smoothing-type: lcd; /* Smoother text rendering */
+    -fx-font-smoothing-type: lcd;
 }
 
-/* Welcome text styling */
+
 #doctorName {
     -fx-text-fill: #1e67a8;
     -fx-font-weight: bold;
@@ -60,23 +57,23 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 1, 0, 0, 1);
 }
 
-/* Text fields - cleaner look */
+
 .text-field, .text-area {
     -fx-background-color: white;
-    -fx-border-color: #d0e6f5; /* Lighter border for subtlety */
+    -fx-border-color: #d0e6f5;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
 }
 
 .text-field:focused, .text-area:focused {
     -fx-border-color: #2986cc;
-    -fx-border-width: 1.5; /* Thinner border for minimalism */
+    -fx-border-width: 1.5;
 }
 
-/* Table view styling - more premium */
+
 .table-view {
     -fx-background-color: transparent;
-    -fx-border-color: #d0e6f5; /* Lighter border */
+    -fx-border-color: #d0e6f5;
     -fx-border-radius: 6;
     -fx-border-width: 1;
     -fx-padding: 0;
@@ -85,7 +82,7 @@
 
 .table-view .column-header {
     -fx-background-color: #1e67a8;
-    -fx-padding: 8 5 8 5; /* More vertical padding */
+    -fx-padding: 8 5 8 5;
 }
 
 .table-view .column-header .label {
@@ -95,25 +92,25 @@
 }
 
 .table-view .table-row-cell {
-    -fx-border-color: transparent; /* Remove cell borders */
-    -fx-padding: 1 0 1 0; /* Tighter rows */
+    -fx-border-color: transparent;
+    -fx-padding: 1 0 1 0;
 }
 
 .table-view .table-row-cell:odd {
-    -fx-background-color: #f8fbff; /* Even lighter blue */
+    -fx-background-color: #f8fbff;
 }
 
-/* Original selection style that will be overridden */
+
 .table-view .table-row-cell:selected {
-    -fx-background-color: #d0e6f5; /* Lighter selection */
+    -fx-background-color: #d0e6f5;
     -fx-text-fill: #1e67a8;
 }
 
 .table-view .table-row-cell:hover {
-    -fx-background-color: #e6f2ff; /* Subtle hover effect */
+    -fx-background-color: #e6f2ff;
 }
 
-/* Button styling - more refined */
+
 .button {
     -fx-background-color: #1e67a8;
     -fx-text-fill: white;
@@ -135,18 +132,18 @@
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 1, 0, 0, 1);
 }
 
-/* Toolbar styling */
+
 .tool-bar {
-    -fx-background-color: #f5faff; /* Even lighter background */
-    -fx-padding: 10; /* Add padding */
-    -fx-spacing: 12; /* More space between toolbar items */
-    -fx-border-color: #d0e6f5; /* Lighter border */
-    -fx-border-width: 0 1 0 0; /* Only right border */
+    -fx-background-color: #f5faff;
+    -fx-padding: 10;
+    -fx-spacing: 12;
+    -fx-border-color: #d0e6f5;
+    -fx-border-width: 0 1 0 0;
     -fx-border-radius: 0;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);
 }
 
-/* Default style for all toolbar buttons */
+
 .tool-bar .button {
     -fx-background-color: transparent;
     -fx-text-fill: #1e67a8;
@@ -157,7 +154,7 @@
     -fx-effect: none;
 }
 
-/* Hover state for toolbar buttons */
+
 .tool-bar .button:hover {
     -fx-background-color: #e6f2ff;
     -fx-background-radius: 4;
@@ -182,7 +179,7 @@
     -fx-background-color: #d0e6f5;
 }
 
-/* Selected button in toolbar */
+
 .tool-bar .button:focused,
 .tool-bar .button.selected {
     -fx-background-color: #1e67a8;
@@ -191,7 +188,7 @@
     -fx-font-weight: bold;
 }
 
-/* Logout button - distinct styling */
+
 #logout_button {
     -fx-background-color: white;
     -fx-text-fill: #1e67a8;
@@ -205,7 +202,8 @@
     -fx-background-color: #f0f8ff;
 }
 
-/* Action buttons with fill animation */
+
+
 #add_patient_button, #update_patient_button, #delete_patient_button {
     -fx-background-color: white;
     -fx-text-fill: #1e67a8;
@@ -214,7 +212,7 @@
     -fx-border-radius: 4;
     -fx-background-radius: 4;
     -fx-padding: 10 15;
-    -fx-transition: background-color 0.3s, text-fill 0.3s; /* Add transition for smooth animation */
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
     -fx-cursor: hand;
 }
 
@@ -225,17 +223,17 @@
 }
 
 #delete_patient_button {
-    -fx-border-color: #d32f2f; /* Red border */
-    -fx-text-fill: #d32f2f; /* Red text */
+    -fx-border-color: #d32f2f;
+    -fx-text-fill: #d32f2f;
 }
 
 #delete_patient_button:hover {
-    -fx-background-color: #d32f2f; /* Red fill */
+    -fx-background-color: #d32f2f;
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
 }
 
-/* Alert dialog styling */
+
 .dialog-pane {
     -fx-background-color: white;
     -fx-background-radius: 8;
@@ -275,7 +273,6 @@
     -fx-background-color: #f0f8ff;
 }
 
-/* Refresh Button Styling for GIF version */
 #refresh_button {
     -fx-background-color: white;
     -fx-text-fill: #2986cc;
@@ -289,7 +286,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
 }
 
-/* Hover effect */
 #refresh_button:hover {
     -fx-background-color: #e6f2ff;
     -fx-text-fill: #1e67a8;
@@ -297,7 +293,6 @@
     -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
 }
 
-/* Pressed effect */
 #refresh_button:pressed {
     -fx-background-color: #d0e6f5;
     -fx-border-color: #0953a0;
@@ -307,7 +302,6 @@
     -fx-scale-y: 0.98;
 }
 
-/* Disabled state - used during animation */
 #refresh_button:disabled {
     -fx-opacity: 0.9;
     -fx-background-color: #f0f8ff;
@@ -315,26 +309,25 @@
 
 
 
-/* Modified table selection styles */
+
 .table-view .table-row-cell:selected {
-    -fx-background-color: rgba(30, 103, 168, 0.3); /* Darker blue with 30% opacity */
-    -fx-text-fill: #000000; /* Black text for better contrast */
+    -fx-background-color: rgba(30, 103, 168, 0.3);
+    -fx-text-fill: #000000;
     -fx-table-cell-border-color: transparent;
 }
 
 .table-view .table-row-cell:selected .text {
-    -fx-fill: #000000; /* Ensure text inside selected cells is black */
+    -fx-fill: #000000;
 }
 
 .table-view .table-row-cell:selected > .table-cell {
-    -fx-text-fill: #000000; /* Ensure text in all selected cells is black */
-    -fx-opacity: 1.0; /* Ensure full opacity */
+    -fx-text-fill: #000000;
+    -fx-opacity: 1.0;
 }
 
-/* Optional: Add a subtle border to selected rows for better visibility */
 .table-view .table-row-cell:selected {
     -fx-border-color: #1e67a8;
-    -fx-border-width: 0 0 1 0; /* Just bottom border */
+    -fx-border-width: 0 0 1 0;
 }
 
 
@@ -358,7 +351,8 @@
     -fx-font-size: 12px;
 }
 
-/* Medical Record Button Styling - matching your existing button patterns */
+
+
 #add_record_button, #modify_record_button, #view_medical_history_button, #create_appointment_button, #modify_appointment_button, #view_appointment_details_button{
     -fx-background-color: white;
     -fx-text-fill: #1e67a8;
@@ -378,7 +372,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
 }
 
-/* Delete record button - special styling for destructive action */
+
+
 #delete_record_button, #delete_appointment_button {
     -fx-border-color: #d32f2f;
     -fx-text-fill: #d32f2f;
@@ -397,7 +392,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
 }
 
-/* Refresh Records Button Styling */
+
+
 #refresh_records_button {
     -fx-background-color: white;
     -fx-text-fill: #2986cc;
@@ -432,7 +428,7 @@
     -fx-background-color: #f0f8ff;
 }
 
-/* Medical Record table row styling - ensuring consistency with other tables */
+
 #MedicalRecordsTable .table-row-cell {
     -fx-border-color: transparent;
     -fx-padding: 1 0 1 0;
@@ -463,7 +459,8 @@
     -fx-background-color: #e6f2ff;
 }
 
-/* Medical Record dialog styling enhancements */
+
+
 .medical-record-dialog {
     -fx-background-color: white;
     -fx-background-radius: 8;
@@ -504,7 +501,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2, 0, 0, 1);
 }
 
-/* Ensuring text areas for medical records have proper styling */
+
+
 .medical-record-dialog .text-area {
     -fx-background-color: white;
     -fx-border-color: #d0e6f5;
@@ -516,35 +514,24 @@
     -fx-border-color: #2986cc;
 }
 
-
-
-
-
-/* Hospital beds section title*/
-
-/* Add these styles to your generalMedicineDoctor.css file */
-
-/* Hospital Bed Container */
-
-/* FREE bed style: a fresh green gradient */
-/* Free bed card style */
+/*Beds */
 .bed-container {
     -fx-background-radius: 15;
     -fx-background-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 5, 0.05, 0, 0);
     -fx-cursor: hand;
-    -fx-transition: all 0.3s ease; /* Smooth transitions for animations */
+    -fx-transition: all 0.3s ease;
 }
 
 .bed-container:hover {
-    -fx-translate-y: -5px; /* Lifts the bed slightly on hover */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 10, 0.05, 0, 0); /* More prominent shadow on hover */
+    -fx-translate-y: -5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 10, 0.05, 0, 0);
 }
 
 
 
 .ripple {
-    -fx-background-color: rgba(0, 118, 255, 0.3); /* Semi-transparent blue */
+    -fx-background-color: rgba(0, 118, 255, 0.3);
     -fx-background-radius: 50%;
     -fx-opacity: 0;
     -fx-scale-x: 0;
@@ -552,7 +539,7 @@
     -fx-transition: all 0.4s ease-out;
 }
 
-/* Status label pulse animation */
+
 .status-label-available {
     -fx-background-color: #d4edda;
     -fx-text-fill: #155724;
@@ -595,9 +582,7 @@
 }
 
 
-/* Add these styles to your generalMedicineDoctor.css file */
 
-/* Bed container styling */
 .bed-container {
     -fx-cursor: hand;
     transition: all 0.3s ease;
@@ -609,14 +594,14 @@
     -fx-scale-y: 1.02;
 }
 
-/* Selected bed styling */
+
 .bed-selected {
     -fx-border-color: #4080c0;
     -fx-border-width: 3;
     -fx-effect: dropshadow(three-pass-box, rgba(0,100,255,0.7), 15, 0, 0, 0);
 }
 
-/* Bed action buttons */
+
 .action-button {
     -fx-background-color: #1e67a8;
     -fx-text-fill: white;
@@ -638,7 +623,7 @@
     -fx-opacity: 0.7;
 }
 
-/* Occupied bed styling */
+
 .status-label-occupied {
     -fx-background-color: #f8d7da;
     -fx-text-fill: #721c24;
@@ -648,7 +633,7 @@
     -fx-border-radius: 10;
 }
 
-/* Available bed styling */
+
 .status-label-available {
     -fx-background-color: #d4edda;
     -fx-text-fill: #155724;
@@ -658,7 +643,6 @@
     -fx-border-radius: 10;
 }
 
-/* Patient name label styling */
 .patient-name-label {
     -fx-background-color: white;
     -fx-padding: 3 8;
@@ -678,9 +662,6 @@
 }
 
 
-/* Enhanced AI Diagnostics Panel Styling */
-
-/* ScrollPane styling */
 #aiDiagnosticsScrollPane {
     -fx-background-color: transparent;
     -fx-background: transparent;
@@ -702,7 +683,6 @@
     -fx-background-radius: 4;
 }
 
-/* Main AI Diagnostics container */
 #aiDiagnosticsPane {
     -fx-background-color: #f8fbff;
     -fx-background-radius: 12;
@@ -712,7 +692,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 4);
 }
 
-/* Title styling for AI Diagnostics */
+
 #aiDiagnosticsPane .title {
     -fx-text-fill: #1e67a8;
     -fx-font-weight: bold;
@@ -722,7 +702,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
 }
 
-/* Image display area styling */
+
 #aiDiagnosticsPane StackPane {
     -fx-background-color: white;
     -fx-border-color: #d0e6f5;
@@ -731,21 +711,20 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
 }
 
-/* No image selected label */
+
 #noImageLabel {
     -fx-text-fill: #95a5a6;
     -fx-font-style: italic;
     -fx-font-size: 16px;
 }
 
-/* X-ray image view */
 #xrayImageView {
     -fx-border-color: transparent;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
 }
 
-/* Control buttons styling */
+
 #selectXrayButton, #analyzeXrayButton {
     -fx-background-color: #1e67a8;
     -fx-text-fill: white;
@@ -773,7 +752,7 @@
     -fx-opacity: 0.7;
 }
 
-/* Server status label styles */
+
 #serverStatusLabel {
     -fx-font-size: 14px;
     -fx-padding: 5 10;
@@ -784,7 +763,7 @@
     -fx-border-width: 1;
 }
 
-/* Diagnosis result label */
+
 #diagnosisResultLabel {
     -fx-text-fill: #2c3e50;
     -fx-font-weight: bold;
@@ -797,23 +776,23 @@
     -fx-border-width: 1;
 }
 
-/* Bar Chart Enhancements */
+
 #confidenceChart {
     -fx-background-color: transparent;
     -fx-padding: 10 0 0 0;
-    -fx-pref-height: 300.0; /* Increased height for better display */
+    -fx-pref-height: 300.0;
     -fx-max-width: 1000.0;
     -fx-animated: true;
 }
 
-/* Chart Title */
+
 #confidenceChart .chart-title {
     -fx-text-fill: #1e67a8;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
-/* Chart Plot Background */
+
 #confidenceChart .chart-plot-background {
     -fx-background-color: rgba(245, 245, 245, 0.7);
     -fx-background-radius: 8;
@@ -822,30 +801,30 @@
     -fx-border-width: 1;
 }
 
-/* Axis styling */
+
 #confidenceChart .axis {
     -fx-tick-label-font-size: 12px;
     -fx-tick-label-fill: #34495e;
 }
 
-/* X-Axis specific styling */
+
 #confidenceChart .axis-label {
     -fx-text-fill: #1e67a8;
     -fx-font-weight: bold;
 }
 
-/* X-Axis tick marks and labels */
+
 #confidenceChart .axis .tick-mark {
     -fx-stroke: #95a5a6;
     -fx-stroke-width: 1;
 }
 
-/* This is the key fix for your virus pneumonia label issue */
+
 #confidenceChart .axis .tick-label {
     -fx-font-size: 11px;
 }
 
-/* CRITICAL - This makes sure X-axis labels are rotated and positioned properly */
+
 #confidenceChart .x-axis .tick-label {
     -fx-rotate: 45;
     -fx-translate-y: 7;
@@ -865,9 +844,9 @@
     -fx-stroke-width: 1;
 }
 
-/* Bar styling - FIXED to ensure bars are visible */
+
 .chart-bar {
-    -fx-bar-fill: #a0a0a0 !important; /* Using !important to override any conflicting styles */
+    -fx-bar-fill: #a0a0a0 !important;
     -fx-background-color: #a0a0a0 !important;
     -fx-background-radius: 5 5 0 0;
     -fx-border-color: #888888;
@@ -875,7 +854,7 @@
     -fx-opacity: 1.0;
 }
 
-/* Style for the predicted class - this will visually distinguish the predicted diagnosis */
+
 .selected-bar, .chart-bar.selected-bar {
     -fx-bar-fill: #4080c0 !important;
     -fx-background-color: #4080c0 !important;
@@ -884,22 +863,177 @@
     -fx-opacity: 1.0;
 }
 
-/* Need to also style the series directly for bar charts */
+
 .default-color0.chart-bar {
     -fx-bar-fill: #a0a0a0;
     -fx-background-color: #a0a0a0;
 }
 
-/* Style for the legend - if you want to show it */
+
 .chart-legend {
     -fx-background-color: transparent;
     -fx-padding: 10px;
 }
 
-/* Tooltips for the chart */
+
 .chart-tooltip {
     -fx-background-color: rgba(0, 0, 0, 0.8);
     -fx-text-fill: white;
     -fx-padding: 5;
     -fx-background-radius: 5;
+}
+
+
+
+#PrescriptionsTable {
+    -fx-background-color: transparent;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 2);
+}
+
+#PrescriptionsTable .column-header {
+    -fx-background-color: #1e67a8;
+    -fx-padding: 8 5 8 5;
+}
+
+#PrescriptionsTable .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+#PrescriptionsTable .table-row-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 1 0 1 0;
+}
+
+#PrescriptionsTable .table-row-cell:odd {
+    -fx-background-color: #f8fbff;
+}
+
+#PrescriptionsTable .table-row-cell:selected {
+    -fx-background-color: rgba(30, 103, 168, 0.3);
+    -fx-text-fill: #000000;
+    -fx-table-cell-border-color: transparent;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 0 0 1 0;
+}
+
+#PrescriptionsTable .table-row-cell:selected .text {
+    -fx-fill: #000000;
+}
+
+#PrescriptionsTable .table-row-cell:selected > .table-cell {
+    -fx-text-fill: #000000;
+    -fx-opacity: 1.0;
+}
+
+#PrescriptionsTable .table-row-cell:hover {
+    -fx-background-color: #e6f2ff;
+}
+
+#add_prescription_button, #modify_prescription_button {
+    -fx-background-color: white;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#add_prescription_button:hover, #modify_prescription_button:hover {
+    -fx-background-color: #1e67a8;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+#delete_prescription_button {
+    -fx-border-color: #d32f2f;
+    -fx-text-fill: #d32f2f;
+    -fx-background-color: white;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 15;
+    -fx-transition: background-color 0.3s, text-fill 0.3s;
+    -fx-cursor: hand;
+}
+
+#delete_prescription_button:hover {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+#refresh_prescription_button {
+    -fx-background-color: white;
+    -fx-text-fill: #2986cc;
+    -fx-border-color: #2986cc;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+#refresh_prescription_button:hover {
+    -fx-background-color: #e6f2ff;
+    -fx-text-fill: #1e67a8;
+    -fx-border-color: #1e67a8;
+    -fx-effect: dropshadow(gaussian, rgba(30,103,168,0.15), 8, 0, 0, 1);
+}
+
+#refresh_prescription_button:pressed {
+    -fx-background-color: #d0e6f5;
+    -fx-border-color: #0953a0;
+    -fx-text-fill: #0953a0;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+#refresh_prescription_button:disabled {
+    -fx-opacity: 0.9;
+    -fx-background-color: #f0f8ff;
+}
+
+.prescription-details-dialog {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);
+}
+
+.prescription-details-dialog .header-panel {
+    -fx-background-color: #f5faff;
+    -fx-border-color: #d0e6f5;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15;
+}
+
+.prescription-details-dialog .header-panel .label {
+    -fx-text-fill: #1e67a8;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.prescription-details-dialog .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #d0e6f5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.prescription-details-dialog .text-area:focused {
+    -fx-border-color: #2986cc;
 }

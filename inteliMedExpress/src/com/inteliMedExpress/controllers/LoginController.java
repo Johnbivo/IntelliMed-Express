@@ -142,36 +142,8 @@ public class LoginController {
     }
 
     private void navigateBasedOnDepartment(String name, String surname, String department, String profession) throws IOException {
-        // FXML path - set default to empty
-        String fxmlPath = "";
-
-        // Determine which controller class to use based on department
-        Class<?> controllerClass = null;
-
-        if (department == null) {
-            return;
-        }
-
-        // Set the appropriate FXML path and controller class based on department
-        if (department.equals("General")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
-            controllerClass = GeneralMedicineDoctorController.class;
-        } else if (department.equals("Microbiology")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/MicrobiologyDoctor.fxml";
-            controllerClass = MicrobiologyDoctorController.class;
-        } else if (department.equals("Pharmacology")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/PharmacologyDoctor.fxml";
-            controllerClass = PharmacologyDoctorController.class; // You need to create this controller class
-        } else if (department.equals("Pediatrics")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/PediatricsDoctor.fxml";
-            controllerClass = PediatricsDoctorController.class;
-        } else if (department.equals("Radiology")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/RadiologyDoctor.fxml";
-            controllerClass = RadiologyDoctorController.class; // You need to create this controller class
-        } else if (department.equals("Cardiology")) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/CardiologyDoctor.fxml";
-            controllerClass = CardiologyDoctorController.class; // You need to create this controller class
-        }
+        // Use the same FXML path for all departments
+        String fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
 
         // Set the window title based on department and role
         String title = "InteliMedExpress";
@@ -186,22 +158,14 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboardRoot = loader.load();
 
-            // Get the controller and set the user name
-            Object controller = loader.getController();
+            // Get the controller
+            GeneralMedicineDoctorController controller = loader.getController();
 
-            // Check controller type and call setDoctorName if it's a subclass of GeneralMedicineDoctorController
-            // or has a setDoctorName method
-            if (controller instanceof GeneralMedicineDoctorController) {
-                ((GeneralMedicineDoctorController) controller).setDoctorName(name + " " + surname);
-            } else {
-                // For other controller types, try to call setDoctorName using reflection
-                try {
-                    java.lang.reflect.Method setDoctorNameMethod = controller.getClass().getMethod("setDoctorName", String.class);
-                    setDoctorNameMethod.invoke(controller, name + " " + surname);
-                } catch (Exception e) {
-                    AppLogger.warning(CLASS_NAME, "Controller doesn't have setDoctorName method: " + e.getMessage());
-                }
-            }
+            // Set user information
+            controller.setDoctorName(name + " " + surname);
+
+            // Set department information - add this method to your controller
+            controller.setDepartment(department);
 
             // Log which department was loaded
             AppLogger.info(CLASS_NAME, "Loaded view for " + displayDepartment + " with role " + profession);

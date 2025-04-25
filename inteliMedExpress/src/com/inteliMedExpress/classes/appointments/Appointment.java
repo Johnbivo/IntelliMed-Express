@@ -22,9 +22,11 @@ import java.util.List;
 
 public class Appointment {
 
+
+
     private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
-    private static String department = "General_Medicine";
+    private static String department;
 
     private static String getAppointmentsUrl() {
         return SERVER_BASE_URL + department + "/appointments";
@@ -42,10 +44,9 @@ public class Appointment {
         return SERVER_BASE_URL + department + "/appointments/" + id + "/delete";
     }
 
-    // Set the department for all appointments
-    public static void setDepartment(String dept) {
-        department = dept != null ? dept.replaceAll("\\s", "_") : "General_Medicine";
-        System.out.println("Appointment department set to: " + department);
+
+    public static void setDepartment(String departmentName) {
+        department = departmentName;
     }
 
     // Appointment Attributes

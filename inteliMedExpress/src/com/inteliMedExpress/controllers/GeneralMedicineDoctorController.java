@@ -4,6 +4,12 @@ import com.inteliMedExpress.classes.*;
 import com.inteliMedExpress.classes.Beds.Bed;
 import com.inteliMedExpress.classes.Beds.BedDialog;
 import com.inteliMedExpress.classes.Beds.BedService;
+import com.inteliMedExpress.classes.Employees.Doctor;
+import com.inteliMedExpress.classes.Employees.DoctorService;
+import com.inteliMedExpress.classes.Employees.NurseService;
+import com.inteliMedExpress.classes.Prescriptions.Prescription;
+import com.inteliMedExpress.classes.Prescriptions.PrescriptionDialog;
+import com.inteliMedExpress.classes.Prescriptions.PrescriptionService;
 import com.inteliMedExpress.classes.appointments.Appointment;
 import com.inteliMedExpress.classes.appointments.AppointmentDialog;
 import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
@@ -243,7 +249,43 @@ public class GeneralMedicineDoctorController {
 
 
 
-    // Method to show details of the selected appointment
+    //Prescriptions!!
+    // Prescriptions-related fields
+    @FXML
+    private TableView<Prescription> PrescriptionsTable;
+    @FXML
+    private TableColumn<Prescription, Integer> prescription_column;
+    @FXML
+    private TableColumn<Prescription, String> patient_name_column_prescription;
+    @FXML
+    private TableColumn<Prescription, String> patient_surname_prescription;
+    @FXML
+    private TableColumn<Prescription, String> doctor_surname_prescription;
+    @FXML
+    private TableColumn<Prescription, String> dosage_prescription;
+    @FXML
+    private TableColumn<Prescription, String> duration_prescription;
+    @FXML
+    private TableColumn<Prescription, LocalDateTime> date_prescription;
+    @FXML
+    private TableColumn<Prescription, String> medication_prescription_text;
+
+    @FXML
+    private Button add_prescription_button;
+    @FXML
+    private Button modify_prescription_button;
+    @FXML
+    private Button delete_prescription_button;
+    @FXML
+    private Button refresh_prescription_button;
+    @FXML
+    private Button prescriptions_button;
+
+    private ObservableList<Prescription> prescriptionsList = FXCollections.observableArrayList();
+    private PrescriptionService prescriptionService;
+    private ImageView staticRefreshIconPrescription;
+    private ImageView animatedRefreshIconPrescription;
+
     @FXML
     private void showAppointmentDetails(ActionEvent event ) {
         Appointment selectedAppointment = appointmentsViewTable.getSelectionModel().getSelectedItem();
@@ -252,8 +294,6 @@ public class GeneralMedicineDoctorController {
             UIHelper.showAlert("Selection Required", "Please select an appointment to view details.");
             return;
         }
-
-        // Show dialog with formatted details
         AppointmentDialog.showAppointmentDetailsDialog(selectedAppointment);
     }
 
@@ -334,7 +374,7 @@ public class GeneralMedicineDoctorController {
 
 
 
-    //AI Diagnostics
+
     // AI Diagnostics UI Components
     @FXML
     private ScrollPane aiDiagnosticsScrollPane;
@@ -353,54 +393,122 @@ public class GeneralMedicineDoctorController {
     @FXML
     private Label serverStatusLabel;
 
+    @FXML
+    private VBox aiDiagnosticsPane;
+
     private File selectedXrayFile;
     private final HttpClient httpClient = HttpClient.newBuilder().build();
     private final String aiServerUrl = "https://intellimed-ai.onrender.com";
 
 
+    private String departmentName;
+
+    private Doctor currentDoctor;
+    private DoctorService doctorService;
+
+
+    @FXML
+    private Label general_medicine_title;
+
+
     @FXML
     public void initialize() {
         try {
-            // Initial setup - doctor greeting
-            updateDoctorGreeting();
+            System.out.println("Controller initializing...");
 
-            // Create required services
-            patientService = new PatientService();
-            medicalRecordsService = new MedicalRecordsService();
-
-            // Setup patient table
-            setupPatientTable();
-
-            // Initialize refresh buttons (if files exist)
-            try {
-                initializeRefreshButtons();
-            } catch (Exception e) {
-                System.err.println("Warning: Could not initialize refresh buttons: " + e.getMessage());
-                // Continue initialization even if refresh buttons fail
+            // Set default department if not set
+            if (departmentName == null || departmentName.isEmpty()) {
+                departmentName = "General";
+                System.out.println("Setting default department: General");
             }
 
-            // Setup appointment table
-            setupAppointmentTable();
+            setDepartment(departmentName);
 
-            // Setup navigation buttons
+            // First set up all your UI components and event handlers
             setupNavigationButtons();
 
-
-            //Setup medical records table
+            // THEN initialize tables
+            setupPatientTable();
+            setupAppointmentTable();
             setupMedicalRecordTable();
-
             setupBeds();
-
             setupLabTestTable();
-
             setupAIDiagnosticsHandlers();
+            setupPrescriptionTable();
+            initializeRefreshButtons();
 
-            // Initially show appointments view
-            handleNavigation(appointments_button);
+            // FINALLY activate the default view (appointments)
+            System.out.println("Setting up default view...");
+            Platform.runLater(() -> {
+                if (appointments_button != null) {
+                    System.out.println("Showing appointments view");
+                    handleNavigation(appointments_button);
+                } else {
+                    System.err.println("appointments_button is null!");
+                }
+            });
 
         } catch (Exception e) {
             System.err.println("Initialization error: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+    private void initializeServices() {
+        patientService = new PatientService();
+        medicalRecordsService = new MedicalRecordsService();
+        prescriptionService = new PrescriptionService(departmentName);
+        labTestService = new LabTestService(departmentName);
+        bedService = new BedService();
+    }
+
+    public void setDepartment(String department) {
+        this.departmentName = department;
+        System.out.println("Setting department to: " + department);
+        initializeServices();
+        updateDoctorGreeting();
+
+        if (general_medicine_title != null) {
+            if (departmentName.equals("General")){
+                general_medicine_title.setText("General Medicine");
+            } else {
+                general_medicine_title.setText(department);
+            }
+        }
+
+        try {
+            Appointment.setDepartment(department);
+            MedicalRecord.setDepartment(department);
+            Patient.setDepartment(department);
+            NurseService.setDepartment(department);
+            Prescription.setDepartment(department);
+            labTestService = new LabTestService(department);
+            bedService = new BedService();
+            Bed.setDepartment(department);
+
+            // Load data specific to this department
+            loadAllAppointments();
+            loadPatientsFromServer();
+            loadAllMedicalRecords();
+            loadAllLabTests();
+            mapBedComponents();
+            loadAndDisplayBeds();
+            loadAllPrescriptions();
+
+            setupNavigationButtons();
+
+            customizeDepartmentUI(department);
+        } catch (Exception e) {
+            System.err.println("Error setting department: " + e.getMessage());
+        }
+    }
+
+    private void customizeDepartmentUI(String department) {
+        switch (department.toLowerCase()) {
+            case "cardiology":
+                break;
+            case "radiology":
+                AI_diagnostics_button.setStyle("-fx-font-weight: bold;");
+                break;
         }
     }
 
@@ -410,17 +518,10 @@ public class GeneralMedicineDoctorController {
     @FXML
     public void logout(ActionEvent event) {
         try {
-            // Load the login.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
             Parent loginRoot = loader.load();
-
-            // Create a new scene with the login form
             Scene loginScene = new Scene(loginRoot);
-
-            // Get the current stage from the event source
             Stage currentStage = (Stage) logout_button.getScene().getWindow();
-
-            // Set the new scene on the current stage
             currentStage.setScene(loginScene);
             currentStage.setTitle("InteliMedExpress - Login");
             currentStage.centerOnScreen();
@@ -439,26 +540,53 @@ public class GeneralMedicineDoctorController {
     //Setup the navigation buttons
 
     private void setupNavigationButtons() {
-        // Setup navigation button actions
-        appointments_button.setOnAction(event -> handleNavigation(appointments_button));
-        patients_button.setOnAction(event -> handleNavigation(patients_button));
-        medical_records_button.setOnAction(event -> handleNavigation(medical_records_button));
-        AI_diagnostics_button.setOnAction(event -> handleNavigation(AI_diagnostics_button));
-        lab_tests_button.setOnAction(event -> handleNavigation(lab_tests_button));
-        hospital_beds_button.setOnAction(event -> handleNavigation(hospital_beds_button));
+        System.out.println("Setting up navigation buttons...");
 
-        // Create navigation manager
+        // Set up all navigation buttons with proper logging
+        appointments_button.setOnAction(event -> {
+            System.out.println("Appointments button clicked");
+            handleNavigation(appointments_button);
+        });
+
+        patients_button.setOnAction(event -> {
+            System.out.println("Patients button clicked");
+            handleNavigation(patients_button);
+        });
+
+        medical_records_button.setOnAction(event -> {
+            System.out.println("Medical Records button clicked");
+            handleNavigation(medical_records_button);
+        });
+
+        AI_diagnostics_button.setOnAction(event -> {
+            System.out.println("AI Diagnostics button clicked");
+            handleNavigation(AI_diagnostics_button);
+        });
+
+        lab_tests_button.setOnAction(event -> {
+            System.out.println("Lab Tests button clicked");
+            handleNavigation(lab_tests_button);
+        });
+
+        hospital_beds_button.setOnAction(event -> {
+            System.out.println("Hospital Beds button clicked");
+            handleNavigation(hospital_beds_button);
+        });
+
+        prescriptions_button.setOnAction(event -> {
+            System.out.println("Prescriptions button clicked");
+            handleNavigation(prescriptions_button);
+        });
+
         List<Button> navButtons = Arrays.asList(
-                appointments_button,
-                patients_button,
-                medical_records_button,
-                AI_diagnostics_button,
-                lab_tests_button,
-                hospital_beds_button
+                appointments_button, patients_button, medical_records_button,
+                AI_diagnostics_button, lab_tests_button, hospital_beds_button,
+                prescriptions_button
         );
 
         try {
             navigationManager = new NavigationManager(navButtons);
+            System.out.println("Navigation manager initialized");
         } catch (Exception e) {
             System.err.println("Warning: Could not initialize navigation manager: " + e.getMessage());
         }
@@ -466,7 +594,7 @@ public class GeneralMedicineDoctorController {
 
 
 
-    // Refreshing navigation buttons
+
     private void resetAllButtons() {
         String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: #1e67a8; -fx-font-weight: normal;";
         appointments_button.setStyle(defaultStyle);
@@ -482,10 +610,11 @@ public class GeneralMedicineDoctorController {
     public void setDoctorName(String doctorName) {
         this.loggedInDoctorName = doctorName;
         updateDoctorGreeting();
+
     }
 
 
-    // Setting the text for greeting
+
     private void updateDoctorGreeting() {
         if (loggedInDoctorName != null && !loggedInDoctorName.isEmpty()) {
             doctorName.setText("Welcome, Dr. " + loggedInDoctorName);
@@ -501,12 +630,11 @@ public class GeneralMedicineDoctorController {
 
     private void handleNavigation(Button selectedButton) {
         try {
-            // Use NavigationManager to handle button styling if available
+
             if (navigationManager != null) {
                 navigationManager.selectButton(selectedButton);
             }
             else {
-                // Fallback styling if NavigationManager is unavailable
                 resetAllButtons();
                 selectedButton.setStyle("-fx-background-color: #e6f2ff; -fx-text-fill: #0052cc; -fx-font-weight: bold;");
             }
@@ -518,6 +646,7 @@ public class GeneralMedicineDoctorController {
             disableBedComponents();
             disableLabTestComponents();
             disableAIDiagnosticsComponents();
+            disablePrescriptionComponents();
 
             // Show the appropriate view based on button
             if (selectedButton == patients_button) {
@@ -535,10 +664,11 @@ public class GeneralMedicineDoctorController {
             } else if (selectedButton == lab_tests_button) {
                 enableLabTestComponents();
             } else if (selectedButton == AI_diagnostics_button) {
-                // Show AI diagnostics pane and check server status
                 enableAIDiagnosticsComponents();
+            }else if (selectedButton == prescriptions_button) {
+                enablePrescriptionComponents();
+
             }
-            // Other navigation options would be handled here
         } catch (Exception e) {
             System.err.println("Navigation error: " + e.getMessage());
             e.printStackTrace();
@@ -558,9 +688,9 @@ public class GeneralMedicineDoctorController {
         TableView.TableViewSelectionModel<Patient> selectionModel = patientsTableView.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
         patientsTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        patientsTableView.setPrefHeight(581.0); // Match the height in your FXML
-        patientsTableView.setFixedCellSize(25); // Set fixed cell height for better scrolling
-        patientsTableView.setMinHeight(581.0); // Ensure minimum height
+        patientsTableView.setPrefHeight(581.0);
+        patientsTableView.setFixedCellSize(25);
+        patientsTableView.setMinHeight(581.0);
         VirtualFlow<?> flow = (VirtualFlow<?>) patientsTableView.lookup(".virtual-flow");
         if (flow != null) {
             flow.setVertical(true);
@@ -608,14 +738,12 @@ public class GeneralMedicineDoctorController {
 
 
     private void setupAppointmentTable() {
-        // Configure appointment table
         TableView.TableViewSelectionModel<Appointment> selectionModel = appointmentsViewTable.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
-        // In setupAppointmentTable()
         appointmentsViewTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        appointmentsViewTable.setPrefHeight(581.0); // Match the height in your FXML
-        appointmentsViewTable.setFixedCellSize(25); // Set fixed cell height for better scrolling
-        appointmentsViewTable.setMinHeight(581.0); // Ensure minimum height
+        appointmentsViewTable.setPrefHeight(581.0);
+        appointmentsViewTable.setFixedCellSize(25);
+        appointmentsViewTable.setMinHeight(581.0);
         VirtualFlow<?> flowAppointments = (VirtualFlow<?>) appointmentsViewTable.lookup(".virtual-flow");
         if (flowAppointments != null) {
             flowAppointments.setVertical(true);
@@ -629,7 +757,7 @@ public class GeneralMedicineDoctorController {
         nurse_surname_column.setCellValueFactory(new PropertyValueFactory<>("nurseSurname"));
         appointment_date_column.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
 
-        // Add this new cell factory to format the date-time properly
+
         appointment_date_column.setCellFactory(column -> {
             return new TableCell<Appointment, LocalDateTime>() {
                 private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -662,13 +790,12 @@ public class GeneralMedicineDoctorController {
 
     private void setupMedicalRecordTable() {
 
-        // Configure MedicalRecord table
         TableView.TableViewSelectionModel<MedicalRecord> selectionModel = MedicalRecordsTable.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
         MedicalRecordsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        MedicalRecordsTable.setPrefHeight(581.0); // Match the height in your FXML
-        MedicalRecordsTable.setFixedCellSize(25); // Set fixed cell height for better scrolling
-        MedicalRecordsTable.setMinHeight(581.0); // Ensure minimum height
+        MedicalRecordsTable.setPrefHeight(581.0);
+        MedicalRecordsTable.setFixedCellSize(25);
+        MedicalRecordsTable.setMinHeight(581.0);
         VirtualFlow<?> flowRecords = (VirtualFlow<?>) MedicalRecordsTable.lookup(".virtual-flow");
         if (flowRecords != null) {
             flowRecords.setVertical(true);
@@ -710,14 +837,8 @@ public class GeneralMedicineDoctorController {
 
     }
 
-
-
-    // Method to initialize the bed service and set up bed interaction
     private void setupBeds() {
-        // Initialize bed service
         bedService = new BedService();
-
-        // Map all bed components for easier access
         mapBedComponents();
 
         // Add buttons for assigning and discharging patients
@@ -731,7 +852,7 @@ public class GeneralMedicineDoctorController {
             assign_patient_button.setOnAction(event -> handleAssignPatient());
         }
         assign_patient_button.setVisible(false);
-        assign_patient_button.setDisable(true); // Initially disabled
+        assign_patient_button.setDisable(true);
 
         if (discharge_patient_button == null) {
             discharge_patient_button = new Button("Discharge Patient");
@@ -743,9 +864,8 @@ public class GeneralMedicineDoctorController {
             discharge_patient_button.setOnAction(event -> handleDischargePatient());
         }
         discharge_patient_button.setVisible(false);
-        discharge_patient_button.setDisable(true); // Initially disabled
+        discharge_patient_button.setDisable(true);
 
-        // Add buttons to the parent container if they don't exist yet
         if (!((AnchorPane)bedPane.getParent()).getChildren().contains(assign_patient_button)) {
             ((AnchorPane)bedPane.getParent()).getChildren().addAll(assign_patient_button, discharge_patient_button);
         }
@@ -757,10 +877,8 @@ public class GeneralMedicineDoctorController {
 
 
     private void setupLabTestTable() {
-        // Initialize LabTestService
-        labTestService = new LabTestService("General"); // Set your department
+        labTestService = new LabTestService(departmentName);
 
-        // Configure lab test table
         testTable.setEditable(false);
         TableView.TableViewSelectionModel<LabTest> selectionModel = testTable.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
@@ -779,7 +897,7 @@ public class GeneralMedicineDoctorController {
         testRequestingDepartmentColumn.setCellValueFactory(new PropertyValueFactory<>("requestingDepartmentName"));
         testNotesColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
 
-        // Add date formatters for date columns
+        //Date formatter
         OrderDateColumn.setCellFactory(column -> {
             return new TableCell<LabTest, LocalDateTime>() {
                 private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -804,7 +922,7 @@ public class GeneralMedicineDoctorController {
             };
         });
 
-        // Add a status color formatter
+        // Add a status color
         testResultColumn.setCellFactory(column -> {
             return new TableCell<LabTest, String>() {
                 @Override
@@ -821,53 +939,32 @@ public class GeneralMedicineDoctorController {
             };
         });
 
-        // Set items to the observable list
         testTable.setItems(labTestsList);
-
-        // Setup button actions
         requestLabTestButton.setOnAction(event -> handleRequestLabTest());
-
-        // Double-click to view details
         testTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && testTable.getSelectionModel().getSelectedItem() != null) {
                 handleViewLabTestDetails();
             }
         });
 
-        // Add context menu for additional actions
         testTable.setRowFactory(tv -> {
             TableRow<LabTest> row = new TableRow<>();
-
-            // Create context menu
             ContextMenu contextMenu = new ContextMenu();
-
-            // View details option
             MenuItem viewItem = new MenuItem("View Details");
             viewItem.setOnAction(event -> handleViewLabTestDetails());
-
-            // Assign doctor option
             MenuItem assignItem = new MenuItem("Assign Doctor");
             assignItem.setOnAction(event -> handleAssignLabTest());
-
-            // Complete test option
             MenuItem completeItem = new MenuItem("Complete Test");
             completeItem.setOnAction(event -> handleCompleteLabTest());
-
-            // Delete option
             MenuItem deleteItem = new MenuItem("Delete Test");
             deleteItem.setOnAction(event -> handleDeleteLabTest());
-
-            // Add all items to context menu
             contextMenu.getItems().addAll(viewItem, assignItem, completeItem, deleteItem);
-
-            // Set context menu on rows only if not empty
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu) null)
                             .otherwise(contextMenu)
             );
 
-            // Disable/enable menu items based on test status
             row.setOnContextMenuRequested(event -> {
                 LabTest test = row.getItem();
                 if (test != null) {
@@ -883,6 +980,53 @@ public class GeneralMedicineDoctorController {
             return row;
         });
     }
+    // Setup prescription table
+    private void setupPrescriptionTable() {
+        // Configure prescription table
+        TableView.TableViewSelectionModel<Prescription> selectionModel = PrescriptionsTable.getSelectionModel();
+        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        PrescriptionsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        PrescriptionsTable.setPrefHeight(581.0);
+        PrescriptionsTable.setFixedCellSize(25);
+        PrescriptionsTable.setMinHeight(581.0);
+
+        VirtualFlow<?> flowPrescriptions = (VirtualFlow<?>) PrescriptionsTable.lookup(".virtual-flow");
+        if (flowPrescriptions != null) {
+            flowPrescriptions.setVertical(true);
+        }
+
+        // Configure prescription table columns using the fields from your Prescription class
+        prescription_column.setCellValueFactory(new PropertyValueFactory<>("prescriptionId"));
+        patient_name_column_prescription.setCellValueFactory(new PropertyValueFactory<>("patientFirstName"));
+        patient_surname_prescription.setCellValueFactory(new PropertyValueFactory<>("patientLastName"));
+        doctor_surname_prescription.setCellValueFactory(new PropertyValueFactory<>("doctorSurname"));
+        dosage_prescription.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+        duration_prescription.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        date_prescription.setCellValueFactory(new PropertyValueFactory<>("datePrescribed"));
+        medication_prescription_text.setCellValueFactory(new PropertyValueFactory<>("medicationName"));
+
+        // Date formatter for prescription date
+        date_prescription.setCellFactory(column -> {
+            return new TableCell<Prescription, LocalDateTime>() {
+                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                @Override
+                protected void updateItem(LocalDateTime dateTime, boolean empty) {
+                    super.updateItem(dateTime, empty);
+                    setText(empty || dateTime == null ? null : formatter.format(dateTime));
+                }
+            };
+        });
+
+        PrescriptionsTable.setItems(prescriptionsList);
+
+        // Setup prescription action buttons
+        add_prescription_button.setOnAction(event -> handleAddPrescription());
+        modify_prescription_button.setOnAction(event -> handleModifyPrescription());
+        delete_prescription_button.setOnAction(event -> handleDeletePrescription());
+
+    }
+
 
 
     //refresh buttons
@@ -924,12 +1068,12 @@ public class GeneralMedicineDoctorController {
     }
 
     private void initializeRefreshButtons() {
-        // Initialize patient refresh button
         initializePatientRefreshButton();
+        initializePrescriptionRefreshButton();
 
-        // Initialize appointment refresh button
+
         try {
-            // Reuse the same icon resources for appointments
+
             staticRefreshIconAppointment = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
             staticRefreshIconAppointment.setFitHeight(20);
             staticRefreshIconAppointment.setFitWidth(20);
@@ -943,10 +1087,9 @@ public class GeneralMedicineDoctorController {
             refresh_appointment_button.setGraphicTextGap(8);
         } catch (Exception e) {
             System.err.println("Could not load appointment refresh icons: " + e.getMessage());
-            // Continue without icons
+
         }
 
-        // Set action for appointment refresh button
         refresh_appointment_button.setOnAction(event -> {
             refresh_appointment_button.setGraphic(animatedRefreshIconAppointment != null ? animatedRefreshIconAppointment : null);
             refresh_appointment_button.setDisable(true);
@@ -960,9 +1103,7 @@ public class GeneralMedicineDoctorController {
             timeline.play();
         });
 
-        // Initialize medical records refresh button
         try {
-            // Reuse the same icon resources for medical records
             staticRefreshIconRecords = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
             staticRefreshIconRecords.setFitHeight(20);
             staticRefreshIconRecords.setFitWidth(20);
@@ -976,7 +1117,7 @@ public class GeneralMedicineDoctorController {
             refresh_records_button.setGraphicTextGap(8);
         } catch (Exception e) {
             System.err.println("Could not load medical records refresh icons: " + e.getMessage());
-            // Continue without icons
+
         }
 
         // Set action for medical records refresh button
@@ -1024,6 +1165,39 @@ public class GeneralMedicineDoctorController {
             timeline.play();
         });
     }
+    private void initializePrescriptionRefreshButton() {
+        try {
+            // Reuse the same icon resources for prescriptions
+            staticRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconPrescription.setFitHeight(20);
+            staticRefreshIconPrescription.setFitWidth(20);
+
+            animatedRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconPrescription.setFitHeight(20);
+            animatedRefreshIconPrescription.setFitWidth(20);
+
+            refresh_prescription_button.setGraphic(staticRefreshIconPrescription);
+            refresh_prescription_button.setContentDisplay(ContentDisplay.LEFT);
+            refresh_prescription_button.setGraphicTextGap(8);
+        } catch (Exception e) {
+            System.err.println("Could not load prescription refresh icons: " + e.getMessage());
+        }
+
+        // Set action for prescription refresh button
+        refresh_prescription_button.setOnAction(event -> {
+            refresh_prescription_button.setGraphic(animatedRefreshIconPrescription != null ? animatedRefreshIconPrescription : null);
+            refresh_prescription_button.setDisable(true);
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+                loadAllPrescriptions();
+                refresh_prescription_button.setGraphic(staticRefreshIconPrescription != null ? staticRefreshIconPrescription : null);
+                refresh_prescription_button.setDisable(false);
+            }));
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+    }
+
 
 
 
@@ -1045,6 +1219,8 @@ public class GeneralMedicineDoctorController {
         update_patient_button.setVisible(true);
         delete_patient_button.setVisible(true);
         refresh_button.setVisible(true);
+
+        initializePatientRefreshButton();
     }
 
 
@@ -1090,17 +1266,31 @@ public class GeneralMedicineDoctorController {
         view_medical_history_button.setVisible(true);
         refresh_records_button.setVisible(true);
 
+    }
 
+    //prescriptions
+    // Prescriptions dashboard enable/disable functions
+    private void disablePrescriptionComponents() {
+        PrescriptionsTable.setVisible(false);
+        add_prescription_button.setVisible(false);
+        modify_prescription_button.setVisible(false);
+        delete_prescription_button.setVisible(false);
+        refresh_prescription_button.setVisible(false);
+    }
+
+    private void enablePrescriptionComponents() {
+        PrescriptionsTable.setVisible(true);
+        add_prescription_button.setVisible(true);
+        modify_prescription_button.setVisible(true);
+        delete_prescription_button.setVisible(true);
+        refresh_prescription_button.setVisible(true);
 
     }
 
 
-
-
-    //Beds hide/unhide
-
-    // Hospital Beds dashboard
+    //Beds dashboard
     private void disableBedComponents() {
+        // Hide all bed panes
         bedPane.setVisible(false);
         bedPane1.setVisible(false);
         bedPane2.setVisible(false);
@@ -1115,8 +1305,14 @@ public class GeneralMedicineDoctorController {
         bedPane1111.setVisible(false);
 
 
-        assign_patient_button.setVisible(false);
-        discharge_patient_button.setVisible(false);
+        //Due to null pointer errors, added these.
+        if (assign_patient_button != null) {
+            assign_patient_button.setVisible(false);
+        }
+
+        if (discharge_patient_button != null) {
+            discharge_patient_button.setVisible(false);
+        }
     }
 
     private void enableBedComponents() {
@@ -1134,7 +1330,7 @@ public class GeneralMedicineDoctorController {
         bedPane121.setVisible(true);
         bedPane1111.setVisible(true);
 
-        // Make sure the buttons are visible
+
         if (assign_patient_button != null) {
             assign_patient_button.setVisible(true);
             System.out.println("Assign patient button made visible");
@@ -1148,8 +1344,7 @@ public class GeneralMedicineDoctorController {
         } else {
             System.out.println("Warning: Discharge patient button is null");
         }
-
-        // Load bed data
+        mapBedComponents();
         loadAndDisplayBeds();
     }
 
@@ -1174,29 +1369,24 @@ public class GeneralMedicineDoctorController {
 
     private void enableAIDiagnosticsComponents() {
         aiDiagnosticsScrollPane.setVisible(true);
+        aiDiagnosticsPane.setVisible(true);
         checkAIServerStatus();
     }
 
 
     //AI diagnostics handler
     private void setupAIDiagnosticsHandlers() {
-        // Set up button handlers
         selectXrayButton.setOnAction(e -> handleSelectXrayImage());
         analyzeXrayButton.setOnAction(e -> handleAnalyzeXray());
-
-        // Check server status
         checkAIServerStatus();
     }
 
-// And in your handleAnalyzeXray method, when styling the chart bars:
-// Style the bars based on prediction
 
 
 
     // Patient Handlers
 
     private void loadPatientsFromServer() {
-        // Create a background thread to fetch data
         new Thread(() -> {
             try {
                 List<Patient> serverPatients = patientService.getAllPatients();
@@ -1298,19 +1488,14 @@ public class GeneralMedicineDoctorController {
     //Appointment Handlers
 
     private void loadAllAppointments() {
-        // Create a background thread to fetch data
         new Thread(() -> {
             try {
-                // Use the static method from Appointment class
                 List<Appointment> serverAppointments = Appointment.getAllAppointments();
-
-                // Update UI on the JavaFX application thread
                 Platform.runLater(() -> {
                     appointmentList.clear();
                     appointmentList.addAll(serverAppointments);
                 });
             } catch (IOException e) {
-                // Handle error on JavaFX thread
                 Platform.runLater(() -> {
                     UIHelper.showAlert("Connection Error", "Failed to fetch appointments from server: " + e.getMessage());
                 });
@@ -1409,14 +1594,10 @@ public class GeneralMedicineDoctorController {
 
     //Medical Records Handlers
 
-    // Just one loadAllMedicalRecords method
     private void loadAllMedicalRecords() {
         new Thread(() -> {
             try {
-                // Use MedicalRecordsService to fetch records
                 List<MedicalRecord> serverMedicalRecords = medicalRecordsService.getAllMedicalRecords();
-
-                // Update UI on the JavaFX application thread
                 Platform.runLater(() -> {
                     medicalRecordsList.clear();
                     medicalRecordsList.addAll(serverMedicalRecords);
@@ -1430,7 +1611,6 @@ public class GeneralMedicineDoctorController {
         }).start();
     }
 
-    // Just one handleAddRecord method
     private void handleAddRecord() {
         try {
             Stage stage = (Stage) add_record_button.getScene().getWindow();
@@ -1451,7 +1631,6 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Just one handleUpdateRecord method
     private void handleUpdateRecord() {
         MedicalRecord selectedRecord = MedicalRecordsTable.getSelectionModel().getSelectedItem();
 
@@ -1479,7 +1658,6 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Just one handleDeleteRecord method
     private void handleDeleteRecord() {
         MedicalRecord selectedRecord = MedicalRecordsTable.getSelectionModel().getSelectedItem();
 
@@ -1517,7 +1695,7 @@ public class GeneralMedicineDoctorController {
         }
 
         try {
-            // Filter medical records by patient name and surname
+
             List<MedicalRecord> patientHistory = medicalRecordsList.stream()
                     .filter(record -> record.getPatientName().equals(selectedRecord.getPatientName()) &&
                             record.getPatientSurname().equals(selectedRecord.getPatientSurname()))
@@ -1537,46 +1715,38 @@ public class GeneralMedicineDoctorController {
             dialog.setTitle("Patient Medical History Timeline");
             dialog.setHeaderText("Medical History for " + selectedRecord.getPatientName() + " " + selectedRecord.getPatientSurname());
 
-            // Apply custom styling to the dialog
             DialogPane dialogPane = dialog.getDialogPane();
             dialogPane.getStylesheets().add(
                     MedicalRecordsDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
             dialogPane.setPrefWidth(900);
             dialogPane.setPrefHeight(600);
 
-            // Create a ScrollPane to contain the timeline
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setFitToWidth(true);
             scrollPane.setPrefHeight(500);
 
-            // Timeline container
             VBox timelineContainer = new VBox(20);
             timelineContainer.setPadding(new Insets(20));
             timelineContainer.setAlignment(Pos.CENTER);
 
-            // Add a title for the timeline
             Label titleLabel = new Label("Medical Timeline");
             titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
             timelineContainer.getChildren().add(titleLabel);
 
-            // Create timeline visualization
             HBox timelineTrack = new HBox();
             timelineTrack.setAlignment(Pos.CENTER);
             timelineTrack.setSpacing(0);
             timelineTrack.setPadding(new Insets(10, 0, 30, 0));
 
-            // Create a map to group records by month/year for simplified timeline
             Map<YearMonth, List<MedicalRecord>> recordsByMonth = new HashMap<>();
             for (MedicalRecord record : patientHistory) {
                 YearMonth yearMonth = YearMonth.from(record.getRecordDate());
                 recordsByMonth.computeIfAbsent(yearMonth, k -> new ArrayList<>()).add(record);
             }
 
-            // Get the min and max dates for timeline bounds
             LocalDateTime minDate = patientHistory.get(0).getRecordDate();
             LocalDateTime maxDate = patientHistory.get(patientHistory.size() - 1).getRecordDate();
 
-            // Create a sorted list of year-months for our timeline
             List<YearMonth> timelineMonths = new ArrayList<>();
             YearMonth current = YearMonth.from(minDate);
             YearMonth end = YearMonth.from(maxDate);
@@ -1586,20 +1756,16 @@ public class GeneralMedicineDoctorController {
                 current = current.plusMonths(1);
             }
 
-            // Create the visual timeline
             for (YearMonth month : timelineMonths) {
                 boolean hasRecords = recordsByMonth.containsKey(month);
 
-                // Create the timeline node
                 VBox timelineNode = new VBox(5);
                 timelineNode.setAlignment(Pos.TOP_CENTER);
                 timelineNode.setPrefWidth(120);
 
-                // Month label
                 Label monthLabel = new Label(month.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " + month.getYear());
                 monthLabel.setStyle("-fx-font-size: 10px;");
 
-                // Timeline node (circle or square)
                 Region node;
                 if (hasRecords) {
                     Circle circle = new Circle(10);
@@ -1607,7 +1773,6 @@ public class GeneralMedicineDoctorController {
                     circle.setStroke(Color.BLACK);
                     circle.setStrokeWidth(1);
 
-                    // Add record count badge if multiple records in same month
                     List<MedicalRecord> monthRecords = recordsByMonth.get(month);
                     if (monthRecords.size() > 1) {
                         StackPane stackPane = new StackPane();
@@ -1619,13 +1784,13 @@ public class GeneralMedicineDoctorController {
 
                         node = stackPane;
                     } else {
-                        // Wrap the circle in a StackPane so it can be a Region
+
                         StackPane circleWrapper = new StackPane();
                         circleWrapper.getChildren().add(circle);
                         node = circleWrapper;
                     }
                 } else {
-                    // Empty timeline node needs to be wrapped too
+
                     Circle emptyCircle = new Circle(5);
                     emptyCircle.setFill(Color.LIGHTGRAY);
                     StackPane emptyWrapper = new StackPane();
@@ -1633,16 +1798,13 @@ public class GeneralMedicineDoctorController {
                     node = emptyWrapper;
                 }
 
-                // Connecting line
                 Line line = new Line();
                 line.setStartX(0);
                 line.setEndX(120);
                 line.setStroke(Color.LIGHTGRAY);
 
-                // Add components to node
                 timelineNode.getChildren().addAll(node, line, monthLabel);
 
-                // Make nodes with records clickable to show details
                 if (hasRecords) {
                     List<MedicalRecord> monthRecords = recordsByMonth.get(month);
                     final YearMonth finalMonth = month;
@@ -1654,24 +1816,18 @@ public class GeneralMedicineDoctorController {
                 timelineTrack.getChildren().add(timelineNode);
             }
 
-            // Add timeline to container
             timelineContainer.getChildren().add(timelineTrack);
-
-            // Add summary panel with most recent record details
             MedicalRecord mostRecentRecord = patientHistory.get(patientHistory.size() - 1);
             VBox summaryBox = createRecordSummaryPanel(mostRecentRecord, "Most Recent Record");
             timelineContainer.getChildren().add(summaryBox);
 
-            // Add instructions
             Label instructionsLabel = new Label("Click on any blue node to view details for that month");
             instructionsLabel.setStyle("-fx-font-style: italic; -fx-text-fill: #555555;");
             timelineContainer.getChildren().add(instructionsLabel);
 
-            // Set the content
             scrollPane.setContent(timelineContainer);
             dialogPane.setContent(scrollPane);
 
-            // Add close button
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
             dialog.showAndWait();
@@ -1681,33 +1837,25 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Helper method to show details for a specific month
     private void showMonthRecordsDetails(YearMonth month, List<MedicalRecord> records) {
         Dialog<Void> detailsDialog = new Dialog<>();
         detailsDialog.setTitle("Medical Records: " +
                 month.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()) + " " + month.getYear());
         detailsDialog.setHeaderText("Patient: " + records.get(0).getPatientName() + " " + records.get(0).getPatientSurname());
 
-        // Apply styling
         DialogPane dialogPane = detailsDialog.getDialogPane();
         dialogPane.getStylesheets().add(
                 MedicalRecordsDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
 
-        // Content area
         VBox content = new VBox(15);
         content.setPadding(new Insets(10));
 
-        // Sort records by date (most recent first)
         records.sort(Comparator.comparing(MedicalRecord::getRecordDate).reversed());
-
-        // Add each record
         for (MedicalRecord record : records) {
             VBox recordSummary = createRecordSummaryPanel(record,
                     "Record Date: " + record.getRecordDate().format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
             content.getChildren().add(recordSummary);
         }
-
-        // Add to a scroll pane for larger history
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefHeight(400);
@@ -1719,22 +1867,16 @@ public class GeneralMedicineDoctorController {
         detailsDialog.showAndWait();
     }
 
-    // Helper method to create a summary panel for a medical record
     private VBox createRecordSummaryPanel(MedicalRecord record, String title) {
         VBox recordBox = new VBox(8);
         recordBox.setPadding(new Insets(15));
         recordBox.setStyle("-fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;");
-
-        // Title
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
-        // Create a grid for record details
         GridPane detailsGrid = new GridPane();
         detailsGrid.setHgap(15);
         detailsGrid.setVgap(8);
-
-        // Add record details
         int row = 0;
 
         addDetailRow(detailsGrid, row++, "Doctor:", "Dr. " + record.getDoctorSurname());
@@ -1742,7 +1884,6 @@ public class GeneralMedicineDoctorController {
         addDetailRow(detailsGrid, row++, "Treatment:", record.getTreatment());
         addDetailRow(detailsGrid, row++, "Prescription:", record.getPrescription());
 
-        // Status with color coding
         Label statusLabel = new Label("Status:");
         statusLabel.setStyle("-fx-font-weight: bold;");
 
@@ -1769,13 +1910,11 @@ public class GeneralMedicineDoctorController {
         detailsGrid.add(statusLabel, 0, row);
         detailsGrid.add(statusValue, 1, row);
 
-        // Add components to panel
         recordBox.getChildren().addAll(titleLabel, detailsGrid);
 
         return recordBox;
     }
 
-    // Helper method to add a row to the details grid
     private void addDetailRow(GridPane grid, int row, String label, String value) {
         Label labelNode = new Label(label);
         labelNode.setStyle("-fx-font-weight: bold;");
@@ -1786,40 +1925,67 @@ public class GeneralMedicineDoctorController {
         grid.add(valueNode, 1, row);
     }
 
-
-
-
-    // Map all bed components for easier access
     private void mapBedComponents() {
-        bedPaneMap.put(25, bedPane);
-        bedPaneMap.put(26, bedPane1);
-        bedPaneMap.put(27, bedPane2);
-        bedPaneMap.put(28, bedPane3);
-        bedPaneMap.put(29, bedPane11);
-        bedPaneMap.put(30, bedPane12);
-        bedPaneMap.put(31, bedPane21);
-        bedPaneMap.put(32, bedPane111);
-        bedPaneMap.put(33, bedPane13);
-        bedPaneMap.put(34, bedPane112);
-        bedPaneMap.put(35, bedPane121);
-        bedPaneMap.put(36, bedPane1111);
+        System.out.println("Mapping bed components for department: " + departmentName);
+        bedPaneMap.clear();
+        String dept = (departmentName != null) ? departmentName : "General";
+        if (departmentName.equals("Cardiology")) {
+            System.out.println("Setting up Cardiology bed mapping");
+            bedPaneMap.put(1, bedPane);
+            bedPaneMap.put(2, bedPane1);
+            bedPaneMap.put(3, bedPane2);
+            bedPaneMap.put(4, bedPane3);
+            bedPaneMap.put(5, bedPane11);
+            bedPaneMap.put(6, bedPane12);
+            bedPaneMap.put(7, bedPane21);
+            bedPaneMap.put(8, bedPane111);
+            bedPaneMap.put(9, bedPane13);
+            bedPaneMap.put(10, bedPane112);
+            bedPaneMap.put(11, bedPane121);
+            bedPaneMap.put(12, bedPane1111);
+        }
+        else if (departmentName.equals("Pediatrics")) {
+            System.out.println("Setting up Pediatrics bed mapping");
+            bedPaneMap.put(13, bedPane);
+            bedPaneMap.put(14, bedPane1);
+            bedPaneMap.put(15, bedPane2);
+            bedPaneMap.put(16, bedPane3);
+            bedPaneMap.put(17, bedPane11);
+            bedPaneMap.put(18, bedPane12);
+            bedPaneMap.put(19, bedPane21);
+            bedPaneMap.put(20, bedPane111);
+            bedPaneMap.put(21, bedPane13);
+            bedPaneMap.put(22, bedPane112);
+            bedPaneMap.put(23, bedPane121);
+            bedPaneMap.put(24, bedPane1111);
+        }
+        else { // Default to General
+            System.out.println("Setting up General Medicine bed mapping");
+            bedPaneMap.put(25, bedPane);
+            bedPaneMap.put(26, bedPane1);
+            bedPaneMap.put(27, bedPane2);
+            bedPaneMap.put(28, bedPane3);
+            bedPaneMap.put(29, bedPane11);
+            bedPaneMap.put(30, bedPane12);
+            bedPaneMap.put(31, bedPane21);
+            bedPaneMap.put(32, bedPane111);
+            bedPaneMap.put(33, bedPane13);
+            bedPaneMap.put(34, bedPane112);
+            bedPaneMap.put(35, bedPane121);
+            bedPaneMap.put(36, bedPane1111);
+        }
 
-        // Add click handlers to all bed panes
+        System.out.println("Mapped " + bedPaneMap.size() + " bed components for " + dept + " department");
+
         for (Map.Entry<Integer, StackPane> entry : bedPaneMap.entrySet()) {
             final Integer bedIndex = entry.getKey();
             StackPane bedPane = entry.getValue();
-
-            // Explicitly set these properties
             bedPane.setCursor(Cursor.HAND);
-            bedPane.setPickOnBounds(true); // Ensures clicks register within bounds
+            bedPane.setPickOnBounds(true);
 
-            // Debug output for clicks
             bedPane.setOnMouseClicked(e -> {
-                // Get the bedId from the bedPane's bedIdLabel, not from the map index
                 Label bedIdLabel = (Label) bedPane.lookup(".bed-id-label");
                 String bedIdText = bedIdLabel.getText();
-
-                // Extract just the number from "Bed X"
                 int bedId = -1;
                 try {
                     if (bedIdText.startsWith("Bed ")) {
@@ -1830,10 +1996,7 @@ public class GeneralMedicineDoctorController {
                 }
 
                 System.out.println("Clicked on bed with ID: " + bedId);
-
-                // Now look up the bed by its actual ID
                 if (bedId > 0 && bedsMap.containsKey(bedId)) {
-                    // Reset previous selection styling
                     if (selectedBed != null) {
                         int prevBedId = selectedBed.getBedId();
                         if (bedPaneMap.containsKey(prevBedId)) {
@@ -1842,7 +2005,6 @@ public class GeneralMedicineDoctorController {
                         }
                     }
 
-                    // Set current selection
                     selectedBed = bedsMap.get(bedId);
                     if (selectedBed != null) {
                         System.out.println("Selected bed: " + selectedBed.getBedId() + ", Status: " + selectedBed.getStatus());
@@ -1850,10 +2012,14 @@ public class GeneralMedicineDoctorController {
                         bedPane.setStyle("-fx-border-color: #4080c0; -fx-border-width: 3;");
 
                         // Force button visibility again to be sure
-                        assign_patient_button.setVisible(true);
-                        discharge_patient_button.setVisible(true);
+                        if (assign_patient_button != null) {
+                            assign_patient_button.setVisible(true);
+                        }
 
-                        // Ensure buttons are updated based on bed status
+                        if (discharge_patient_button != null) {
+                            discharge_patient_button.setVisible(true);
+                        }
+
                         updateBedActionButtons();
                     }
                 } else {
@@ -1863,9 +2029,14 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Update assign/discharge buttons based on selected bed status
     private void updateBedActionButtons() {
         System.out.println("Updating bed action buttons");
+
+        if (assign_patient_button == null || discharge_patient_button == null) {
+            System.out.println("Bed action buttons not initialized yet");
+            return;
+        }
+
         if (selectedBed != null) {
             System.out.println("Selected bed status: " + selectedBed.getStatus());
 
@@ -1889,25 +2060,19 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Load beds from server and update UI
     private void loadAndDisplayBeds() {
         System.out.println("Starting to load bed data...");
         new Thread(() -> {
             try {
-                // Set the department to "General" for general medicine
-                Bed.setDepartment("General");
-                System.out.println("Fetching beds from server...");
 
-                // Get all beds
+                Bed.setDepartment(departmentName);
+                System.out.println("Fetching beds from server...");
                 List<Bed> beds = bedService.getAllBeds();
                 System.out.println("Received " + beds.size() + " beds from server");
 
-                // Log each bed received
                 for (Bed bed : beds) {
                     System.out.println("Server bed: " + bed.getBedId() + ", Status: " + bed.getStatus());
                 }
-
-                // Update UI on JavaFX thread
                 Platform.runLater(() -> {
                     updateBedDisplay(beds);
                 });
@@ -2011,7 +2176,8 @@ public class GeneralMedicineDoctorController {
                 boolean success = bedService.assignPatientToBed(updatedBed);
                 if (success) {
                     UIHelper.showAlert("Success", "Patient assigned to bed successfully!");
-                    loadAndDisplayBeds(); // Refresh all beds
+                    mapBedComponents();
+                    loadAndDisplayBeds();
                 } else {
                     UIHelper.showAlert("Error", "Failed to assign patient to bed on the server.");
                 }
@@ -2097,19 +2263,22 @@ public class GeneralMedicineDoctorController {
     }
 
 
-    // Handle requesting a new lab test
     private void handleRequestLabTest() {
         try {
             Stage stage = (Stage) requestLabTestButton.getScene().getWindow();
 
-            // Get the current doctor info from the logged-in user
-            // Replace these with your actual values from login
-            String doctorName = loggedInDoctorName;
-            String doctorSurname = "Collins"; // Replace with actual value
-            int doctorId = 3; // Replace with actual value
-            String doctorSpecialty = "General_Medicine"; // Replace with actual value
-            int departmentId = 3; // Replace with actual value
-            String departmentName = "General"; // Replace with actual value
+            if (currentDoctor == null) {
+                UIHelper.showAlert("Error", "Doctor information not available. Please log in again.");
+                return;
+            }
+
+            String doctorName = currentDoctor.getDoctorName();
+            String doctorSurname = currentDoctor.getDoctorSurname();
+            int doctorId = currentDoctor.getDoctorId();
+            String doctorSpecialty = currentDoctor.getDoctorSpecialty();
+
+            int departmentId = currentDoctor.getDepartmentId();
+            String departmentName = this.departmentName;
 
             LabTest newLabTest = LabTestDialog.showRequestLabTestDialog(
                     stage,
@@ -2122,7 +2291,7 @@ public class GeneralMedicineDoctorController {
                 boolean success = labTestService.requestLabTest(newLabTest);
                 if (success) {
                     UIHelper.showAlert("Success", "Lab test requested successfully!");
-                    loadAllLabTests(); // Refresh the table
+                    loadAllLabTests();
                 } else {
                     UIHelper.showAlert("Error", "Failed to request lab test from the server.");
                 }
@@ -2133,7 +2302,6 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Handle viewing lab test details
     private void handleViewLabTestDetails() {
         LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
 
@@ -2141,12 +2309,12 @@ public class GeneralMedicineDoctorController {
             UIHelper.showAlert("Selection Required", "Please select a lab test to view details.");
             return;
         }
-
         Stage stage = (Stage) testTable.getScene().getWindow();
         LabTestDialog.showLabTestDetailsDialog(stage, selectedTest);
     }
 
-    // Handle assigning a doctor to a lab test
+
+
     private void handleAssignLabTest() {
         LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
 
@@ -2155,7 +2323,6 @@ public class GeneralMedicineDoctorController {
             return;
         }
 
-        // Check if test already has a doctor assigned
         if (selectedTest.getDoctorId() != null && selectedTest.getDoctorId() > 0) {
             UIHelper.showAlert("Already Assigned", "This test already has a doctor assigned.");
             return;
@@ -2164,11 +2331,13 @@ public class GeneralMedicineDoctorController {
         try {
             Stage stage = (Stage) testTable.getScene().getWindow();
 
-            // Get the current doctor info from the logged-in user
-            // Replace these with your actual values from login
-            String doctorName = loggedInDoctorName;
-            String doctorSurname = "Collins"; // Replace with actual value
-            int doctorId = 3; // Replace with actual value
+            if (currentDoctor == null) {
+                UIHelper.showAlert("Error", "Doctor information not available. Please log in again.");
+                return;
+            }
+            String doctorName = currentDoctor.getDoctorName();
+            String doctorSurname = currentDoctor.getDoctorSurname();
+            int doctorId = currentDoctor.getDoctorId();
 
             boolean confirmed = LabTestDialog.showAssignDoctorDialog(
                     stage, selectedTest, doctorId, doctorName, doctorSurname
@@ -2179,7 +2348,7 @@ public class GeneralMedicineDoctorController {
 
                 if (success) {
                     UIHelper.showAlert("Success", "You have been assigned to this lab test!");
-                    loadAllLabTests(); // Refresh the table
+                    loadAllLabTests();
                 } else {
                     UIHelper.showAlert("Error", "Failed to assign doctor to test on the server.");
                 }
@@ -2198,14 +2367,11 @@ public class GeneralMedicineDoctorController {
             UIHelper.showAlert("Selection Required", "Please select a lab test to complete.");
             return;
         }
-
-        // Check if test is already completed
         if ("Completed".equalsIgnoreCase(selectedTest.getStatus())) {
             UIHelper.showAlert("Already Completed", "This test has already been completed.");
             return;
         }
 
-        // Check if test has a doctor assigned
         if (selectedTest.getDoctorId() == null || selectedTest.getDoctorId() <= 0) {
             UIHelper.showAlert("Not Assigned", "This test needs to be assigned to a doctor before it can be completed.");
             return;
@@ -2235,7 +2401,6 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Handle deleting a lab test
     private void handleDeleteLabTest() {
         LabTest selectedTest = testTable.getSelectionModel().getSelectedItem();
 
@@ -2321,20 +2486,14 @@ public class GeneralMedicineDoctorController {
         File selectedFile = fileChooser.showOpenDialog(selectXrayButton.getScene().getWindow());
         if (selectedFile != null) {
             try {
-                // Load and display the image
                 Image image = new Image(selectedFile.toURI().toString());
                 xrayImageView.setImage(image);
 
-                // Hide the "No image selected" label
                 noImageLabel.setVisible(false);
 
-                // Enable the analyze button
                 analyzeXrayButton.setDisable(false);
 
-                // Store the selected file
                 selectedXrayFile = selectedFile;
-
-                // Reset results
                 diagnosisResultLabel.setText("Analysis Results: None");
                 confidenceChart.getData().clear();
             } catch (Exception e) {
@@ -2343,128 +2502,87 @@ public class GeneralMedicineDoctorController {
         }
     }
 
-    // Handle analyzing the X-ray
     private void handleAnalyzeXray() {
         if (selectedXrayFile == null) {
             return;
         }
 
-        // Disable button and show "Analyzing..." text
         analyzeXrayButton.setDisable(true);
         analyzeXrayButton.setText("Analyzing...");
 
         new Thread(() -> {
             try {
-                // Read file as bytes
                 byte[] fileBytes = Files.readAllBytes(selectedXrayFile.toPath());
 
-                // Create multipart form data
                 String boundary = "----WebKitFormBoundary" + System.currentTimeMillis();
                 String lineEnd = "\r\n";
                 String twoHyphens = "--";
-
-                // Create request body
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                // Write boundary
                 baos.write((twoHyphens + boundary + lineEnd).getBytes());
-                // Write Content-Disposition
                 baos.write(("Content-Disposition: form-data; name=\"file\"; filename=\"" +
                         selectedXrayFile.getName() + "\"" + lineEnd).getBytes());
-                // Write Content-Type
                 baos.write(("Content-Type: image/jpeg" + lineEnd).getBytes());
-                // Empty line
                 baos.write(lineEnd.getBytes());
-                // Write file content
                 baos.write(fileBytes);
-                // Write end boundary
                 baos.write((lineEnd + twoHyphens + boundary + twoHyphens + lineEnd).getBytes());
 
-                // Create HTTP request
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(aiServerUrl + "/predict"))
                         .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                         .POST(HttpRequest.BodyPublishers.ofByteArray(baos.toByteArray()))
                         .build();
 
-                // Send request
                 HttpResponse<String> response = httpClient.send(
                         request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
-                    // Parse JSON response
+
                     JSONParser parser = new JSONParser();
                     JSONObject result = (JSONObject) parser.parse(response.body());
-
-                    // Get prediction
                     String prediction = (String) result.get("prediction");
                     double confidence = (double) result.get("confidence");
 
-                    // Format prediction string (replace underscores with spaces and capitalize)
                     String formattedPrediction = prediction.replace("_", " ");
                     formattedPrediction = formattedPrediction.substring(0, 1).toUpperCase() +
                             formattedPrediction.substring(1);
 
-                    // Get probabilities
+
                     JSONObject probabilities = (JSONObject) result.get("probabilities");
-
-                    // Debug log to see all keys in probabilities
                     System.out.println("All classification categories: " + probabilities.keySet());
-
-                    // Update UI on JavaFX thread
                     String finalFormattedPrediction = formattedPrediction;
                     Platform.runLater(() -> {
                         try {
-                            // Update diagnosis result label
                             diagnosisResultLabel.setText(String.format(
                                     "Analysis Results: %s (Confidence: %.1f%%)",
                                     finalFormattedPrediction, confidence * 100));
 
-                            // Clear any existing data
                             confidenceChart.getData().clear();
-
-                            // Create a new series for the data
                             XYChart.Series<String, Number> series = new XYChart.Series<>();
                             series.setName("Confidence");
-
-                            // Add all probabilities to chart - convert from keys like "virus_pneumonia" to "Virus Pneumonia"
                             for (Object key : probabilities.keySet()) {
                                 String className = (String) key;
                                 double prob = (double) probabilities.get(className);
-
-                                // Format class name (replace underscores with spaces and capitalize each word)
                                 String formattedClass = formatClassName(className);
-
-                                // Add to series - important to maintain order
                                 series.getData().add(new XYChart.Data<>(formattedClass, prob));
                             }
 
-                            // Style the chart
                             confidenceChart.setTitle("X-ray Analysis Confidence Levels");
-                            // Make sure we can see all bars
+
                             confidenceChart.setVerticalGridLinesVisible(true);
                             confidenceChart.setHorizontalGridLinesVisible(true);
-                            confidenceChart.setAnimated(false); // Disable animation to ensure immediate display
+                            confidenceChart.setAnimated(false);
 
-                            // Add the data series to the chart
+
                             confidenceChart.getData().add(series);
-
-                            // Now that data is added, apply styles to each bar
                             for (XYChart.Data<String, Number> item : series.getData()) {
-                                // Get the bar node
                                 Node bar = item.getNode();
                                 if (bar != null) {
-                                    // Check if this is the predicted class
                                     if (item.getXValue().equalsIgnoreCase(finalFormattedPrediction)) {
-                                        // If it's the predicted class, apply blue styling
                                         bar.setStyle("-fx-bar-fill: #4080c0; -fx-background-color: #4080c0;");
-                                        // Add custom class for CSS styling
                                         bar.getStyleClass().add("selected-bar");
                                     } else {
-                                        // Otherwise use gray for other classes
                                         bar.setStyle("-fx-bar-fill: #a0a0a0; -fx-background-color: #a0a0a0;");
                                     }
-
-                                    // Add tooltip to show exact value
                                     Tooltip tooltip = new Tooltip(String.format("%s: %.1f%%",
                                             item.getXValue(), item.getYValue().doubleValue() * 100));
                                     Tooltip.install(bar, tooltip);
@@ -2472,18 +2590,13 @@ public class GeneralMedicineDoctorController {
                                     System.out.println("Warning: Bar node is null for " + item.getXValue());
                                 }
                             }
-
-                            // Make sure chart is visible and properly sized
                             confidenceChart.setVisible(true);
                             confidenceChart.setLegendVisible(false);
-
-                            // Force layout pass to ensure bars are visible
                             confidenceChart.layout();
                         } catch (Exception e) {
                             System.err.println("Error updating chart: " + e.getMessage());
                             e.printStackTrace();
                         } finally {
-                            // Re-enable analyze button
                             analyzeXrayButton.setDisable(false);
                             analyzeXrayButton.setText("Analyze X-ray");
                         }
@@ -2511,11 +2624,7 @@ public class GeneralMedicineDoctorController {
         if (className == null || className.isEmpty()) {
             return "";
         }
-
-        // Replace underscores with spaces
         String formatted = className.replace("_", " ");
-
-        // Capitalize each word
         String[] words = formatted.split(" ");
         StringBuilder result = new StringBuilder();
 
@@ -2529,6 +2638,167 @@ public class GeneralMedicineDoctorController {
 
         return result.toString().trim();
     }
+
+
+    private void loadAllPrescriptions() {
+        System.out.println("Loading prescriptions from server...");
+        new Thread(() -> {
+            try {
+
+                System.out.println("Using department: " + departmentName + " for prescriptions");
+                List<Prescription> serverPrescriptions = prescriptionService.getAllPrescriptions();
+                System.out.println("Received " + (serverPrescriptions != null ? serverPrescriptions.size() : 0) + " prescriptions from server");
+
+                if (serverPrescriptions != null && !serverPrescriptions.isEmpty()) {
+                    for (Prescription p : serverPrescriptions) {
+                        System.out.println("Prescription: ID=" + p.getPrescriptionId() +
+                                ", Patient=" + p.getPatientFirstName() + " " + p.getPatientLastName() +
+                                ", Medication=" + p.getMedicationName());
+                    }
+                } else {
+                    System.out.println("No prescriptions found or list is null");
+                }
+
+                Platform.runLater(() -> {
+                    prescriptionsList.clear();
+                    if (serverPrescriptions != null) {
+                        prescriptionsList.addAll(serverPrescriptions);
+                    }
+                    System.out.println("Prescription table updated with " + prescriptionsList.size() + " items");
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Connection Error", "Failed to fetch prescriptions from server: " + e.getMessage());
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    UIHelper.showAlert("Error", "Unexpected error loading prescriptions: " + e.getMessage());
+                });
+            }
+        }).start();
+    }
+
+
+    private void handleAddPrescription() {
+        try {
+            // Add debug output to check the current doctor
+            System.out.println("Current doctor: " + (currentDoctor != null ?
+                    currentDoctor.getDoctorName() + " " + currentDoctor.getDoctorSurname() : "NULL"));
+
+            // Create a fallback doctor if needed
+            if (currentDoctor == null) {
+                System.out.println("Creating fallback doctor information");
+                // Create temporary doctor information to allow adding prescriptions
+                currentDoctor = new Doctor();
+                currentDoctor.setDoctorId(1);  // Use a default ID
+                currentDoctor.setDoctorName("Default");
+                currentDoctor.setDoctorSurname("Doctor");
+                currentDoctor.setDepartmentId(1);
+            }
+
+            Stage stage = (Stage) add_prescription_button.getScene().getWindow();
+            Prescription newPrescription = PrescriptionDialog.showAddPrescriptionDialog(stage);
+
+            if (newPrescription != null) {
+                // Set doctor information
+                newPrescription.setDoctorId(currentDoctor.getDoctorId());
+                newPrescription.setDoctorName(currentDoctor.getDoctorName());
+                newPrescription.setDoctorSurname(currentDoctor.getDoctorSurname());
+                newPrescription.setDepartmentId(currentDoctor.getDepartmentId());
+                newPrescription.setDepartmentName(departmentName);
+
+                System.out.println("Adding prescription with doctor: " +
+                        newPrescription.getDoctorName() + " " + newPrescription.getDoctorSurname());
+
+                boolean success = prescriptionService.addPrescription(newPrescription);
+                if (success) {
+                    UIHelper.showAlert("Success", "Prescription added successfully!");
+                    loadAllPrescriptions(); // Refresh the table
+                } else {
+                    UIHelper.showAlert("Error", "Failed to add prescription to the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error adding prescription: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void handleModifyPrescription() {
+        Prescription selectedPrescription = PrescriptionsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedPrescription == null) {
+            UIHelper.showAlert("Selection Required", "Please select a prescription to modify.");
+            return;
+        }
+
+        try {
+            Stage stage = (Stage) modify_prescription_button.getScene().getWindow();
+            Prescription updatedPrescription = PrescriptionDialog.showUpdatePrescriptionDialog(stage, selectedPrescription);
+
+            if (updatedPrescription != null) {
+                if (selectedPrescription.getDoctorId() != null) {
+                    updatedPrescription.setDoctorId(selectedPrescription.getDoctorId());
+                    updatedPrescription.setDoctorName(selectedPrescription.getDoctorName());
+                    updatedPrescription.setDoctorSurname(selectedPrescription.getDoctorSurname());
+                } else if (currentDoctor != null) {
+                    updatedPrescription.setDoctorId(currentDoctor.getDoctorId());
+                    updatedPrescription.setDoctorName(currentDoctor.getDoctorName());
+                    updatedPrescription.setDoctorSurname(currentDoctor.getDoctorSurname());
+                }
+
+                if (selectedPrescription.getDepartmentId() != null) {
+                    updatedPrescription.setDepartmentId(selectedPrescription.getDepartmentId());
+                    updatedPrescription.setDepartmentName(selectedPrescription.getDepartmentName());
+                } else {
+                    updatedPrescription.setDepartmentId(currentDoctor.getDepartmentId());
+                    updatedPrescription.setDepartmentName(departmentName);
+                }
+
+                boolean success = prescriptionService.updatePrescription(updatedPrescription);
+                if (success) {
+                    UIHelper.showAlert("Success", "Prescription updated successfully!");
+                    loadAllPrescriptions();
+                } else {
+                    UIHelper.showAlert("Error", "Failed to update prescription on the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error updating prescription: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDeletePrescription() {
+        Prescription selectedPrescription = PrescriptionsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedPrescription == null) {
+            UIHelper.showAlert("Selection Required", "Please select a prescription to delete.");
+            return;
+        }
+
+        try {
+            Stage stage = (Stage) delete_prescription_button.getScene().getWindow();
+            boolean confirmed = PrescriptionDialog.showDeleteConfirmationDialog(stage, selectedPrescription);
+
+            if (confirmed) {
+                boolean success = prescriptionService.deletePrescription(selectedPrescription.getPrescriptionId());
+                if (success) {
+                    UIHelper.showAlert("Success", "Prescription deleted successfully!");
+                    loadAllPrescriptions();
+                } else {
+                    UIHelper.showAlert("Error", "Failed to delete prescription from the server.");
+                }
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Error deleting prescription: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
 

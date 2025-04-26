@@ -65,7 +65,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="phone_textfield" layoutX="333.0" layoutY="202.0" promptText="Email" />
+            <TextField fx:id="phone_textfield" layoutX="333.0" layoutY="202.0" promptText="Phone Number" />
             <Label fx:id="age_label" alignment="CENTER" layoutX="331.0" layoutY="239.0" prefHeight="20.0" prefWidth="151.0" text="Age" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />

@@ -32,7 +32,7 @@ public class LoginController {
         PEDIATRICS("Pediatrics"),
         GENERAL_MEDICINE("General"),
         MICROBIOLOGY("Microbiology"),
-        PHARMACOLOGY("Pharmacology"),
+        PHARMACOLOGY("Pharmacy"),  // Changed to match server's expected value
         RADIOLOGY("Radiology");
 
         private final String displayName;
@@ -48,6 +48,12 @@ public class LoginController {
         // Convert from string representation to enum
         public static Department fromString(String department) {
             if (department == null) return GENERAL_MEDICINE;
+
+            // Handle Pharmacy/Pharmacology special case
+            if (department.equalsIgnoreCase("Pharmacy") ||
+                    department.equalsIgnoreCase("Pharmacology")) {
+                return PHARMACOLOGY;
+            }
 
             // Remove spaces and convert to uppercase for comparison
             String normalizedDept = department.replaceAll("\\s", "_").toUpperCase();
@@ -84,12 +90,8 @@ public class LoginController {
     public void initialize() {
         AppLogger.initialize();
         AppLogger.info(CLASS_NAME, "LoginController initialized");
-
-        //Setting up the certificate verification
-        //HttpsUtil.setupSSL();
     }
 
-    // function that gets triggered by the login button
     public void login(ActionEvent event) {
         String username = username_textfield.getText();
         String password = password_textfield.getText();
@@ -112,6 +114,9 @@ public class LoginController {
                 String department = (String) response.get("department");
                 String profession = (String) response.get("profession");
 
+                // Log the received department for debugging
+                AppLogger.info(CLASS_NAME, "Department received from server: " + department);
+
                 // Set the department for all API calls
                 Department dept = Department.fromString(department);
 
@@ -123,7 +128,6 @@ public class LoginController {
                     MedicalRecord.setDepartment(dept.getDisplayName());
                     Patient.setDepartment(dept.getDisplayName());
                     NurseService.setDepartment(dept.getDisplayName());
-
                 } catch (Exception e) {
                     AppLogger.warning(CLASS_NAME, "Could not set department for all classes: " + e.getMessage());
                 }
@@ -131,7 +135,7 @@ public class LoginController {
                 AppLogger.info(CLASS_NAME, "Department set to: " + dept.getDisplayName());
 
                 // Navigate to appropriate page based on department and profession
-                navigateBasedOnDepartment(name, surname, dept.getDisplayName(), profession);
+                navigateBasedOnDepartment(name, surname, department, profession);
             } else {
                 UIHelper.showAlert("Error", "Login failed");
             }
@@ -148,18 +152,43 @@ public class LoginController {
         boolean isDoctorRole = "DOCTOR".equalsIgnoreCase(profession);
         String roleText = isDoctorRole ? "Doctor" : "Nurse";
 
-        // Check specifically for Microbiology department
+        // Log which department we're processing
+        AppLogger.info(CLASS_NAME, "Processing navigation for department: " + department);
+
+        // Check department and load appropriate view
         if ("Microbiology".equalsIgnoreCase(department)) {
             fxmlPath = "/com/inteliMedExpress/resources/fxml/microbiology.fxml";
             title += " - Microbiology " + roleText;
-            AppLogger.info(CLASS_NAME, "Directing to Microbiology interface for " + name + " " + surname);
+            AppLogger.info(CLASS_NAME, "Directing to Microbiology interface");
         }
         else if ("Radiology".equalsIgnoreCase(department)) {
             fxmlPath = "/com/inteliMedExpress/resources/fxml/radiology.fxml";
             title += " - Radiology " + roleText;
-            AppLogger.info(CLASS_NAME, "Directing to Radiology interface for " + name + " " + surname);
+            AppLogger.info(CLASS_NAME, "Directing to Radiology interface");
+        }
+        else if ("Pharmacy".equalsIgnoreCase(department) || "Pharmacology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/pharmacology.fxml";
+            title += " - Pharmacology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Pharmacology interface");
+        }
+        else if ("Cardiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - Cardiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Cardiology interface");
+        }
+        else if ("Pediatrics".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - Pediatrics " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Pediatrics interface");
+        }
+        else if ("General".equalsIgnoreCase(department) || "General Medicine".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - General Medicine " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to General Medicine interface");
         }
         else {
+            // Default case
+            AppLogger.warning(CLASS_NAME, "Unknown department '" + department + "', defaulting to General Medicine");
             fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
             title += " - " + department + " " + roleText;
         }
@@ -168,18 +197,24 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboardRoot = loader.load();
 
-            // Handle controller differently based on department
+            // Handle controller setup
             if ("Microbiology".equalsIgnoreCase(department)) {
                 MicrobiologyController controller = loader.getController();
                 controller.setDoctorName(name + " " + surname);
                 AppLogger.info(CLASS_NAME, "Loaded Microbiology controller for " + name + " " + surname);
-            }else if ("Radiology".equalsIgnoreCase(department)) {
+            }
+            else if ("Radiology".equalsIgnoreCase(department)) {
                 RadiologyController controller = loader.getController();
                 controller.setDoctorName(name + " " + surname);
                 AppLogger.info(CLASS_NAME, "Loaded Radiology controller for " + name + " " + surname);
             }
-
+            else if ("Pharmacy".equalsIgnoreCase(department) || "Pharmacology".equalsIgnoreCase(department)) {
+                PharmacologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Pharmacology controller for " + name + " " + surname);
+            }
             else {
+                // General controller for Cardiology, Pediatrics, General Medicine, and default
                 GeneralMedicineDoctorController controller = loader.getController();
                 controller.setDoctorName(name + " " + surname);
                 controller.setDepartment(department);
@@ -225,22 +260,44 @@ public class LoginController {
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
 
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
 
-            // Parse the JSON response
-            JSONParser parser = new JSONParser();
-            try {
-                return (JSONObject) parser.parse(response.toString());
-            } catch (org.json.simple.parser.ParseException e) {
-                throw new IOException("Error parsing response: " + e.getMessage());
+                // Log the raw response for debugging
+                AppLogger.info(CLASS_NAME, "Server response: " + response.toString());
+
+                // Parse the JSON response
+                JSONParser parser = new JSONParser();
+                try {
+                    return (JSONObject) parser.parse(response.toString());
+                } catch (org.json.simple.parser.ParseException e) {
+                    throw new IOException("Error parsing response: " + e.getMessage());
+                }
             }
         } else {
+            // Log error response
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getErrorStream() != null ?
+                            connection.getErrorStream() :
+                            connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                AppLogger.error(CLASS_NAME, "Login failed with code " + responseCode +
+                        " and response: " + response.toString());
+            } catch (Exception e) {
+                AppLogger.error(CLASS_NAME, "Failed to read error response: " + e.getMessage());
+            }
             return null;
         }
     }
@@ -265,6 +322,6 @@ public class LoginController {
     }
 
     public void showCredits(ActionEvent event) {
-        UIHelper.showAlert("Credits", "Icons by icons8.com - https:/icon8.com");
+        UIHelper.showAlert("Credits", "Icons by icons8.com - https://icons8.com");
     }
 }

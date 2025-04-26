@@ -443,7 +443,7 @@ public class Medication {
             throw new IllegalStateException("Cannot update stock without medication ID");
         }
 
-        URL url = new URL(SERVER_BASE_URL + department + "/medications/" + this.medicationId + "/updateStock");
+        URL url = new URL(SERVER_BASE_URL + department + "/medications/" + this.medicationId + "/update-stock");
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
@@ -455,7 +455,7 @@ public class Medication {
 
             // Create JSON payload
             JSONObject stockData = new JSONObject();
-            stockData.put("stockQuantity", newQuantity);
+            stockData.put("quantityChange", newQuantity);
 
             // Convert JSON to string and get bytes
             String jsonInputString = stockData.toJSONString();

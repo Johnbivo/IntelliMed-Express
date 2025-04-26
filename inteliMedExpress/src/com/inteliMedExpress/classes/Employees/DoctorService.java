@@ -31,7 +31,15 @@ public class DoctorService {
 
     // Set the department for all doctor operations
     public static void setDepartment(String dept) {
-        department = dept != null ? dept.replaceAll("\\s", "_") : "General";
+        if (dept != null) {
+            if (dept.equals("Pharmacology")) {
+                department = "Pharmacy";
+            } else {
+                department = dept.replaceAll("\\s", "_");
+            }
+        } else {
+            department = "General";
+        }
         System.out.println("Doctor service department set to: " + department);
     }
 

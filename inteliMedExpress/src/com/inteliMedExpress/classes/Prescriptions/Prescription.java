@@ -42,13 +42,13 @@ public class Prescription {
         return SERVER_BASE_URL + department + "/prescriptions/" + id + "/delete";
     }
 
-    // Set the department for all prescriptions
+
     public static void setDepartment(String dept) {
         department = dept != null ? dept.replaceAll("\\s", "_") : "General";
         System.out.println("Prescription department set to: " + department);
     }
 
-    // Prescription Attributes
+
     private Integer prescriptionId;
     private Integer patientId;
     private String patientFirstName;
@@ -65,12 +65,10 @@ public class Prescription {
     private Integer departmentId;
     private String departmentName;
 
-    // Default constructor
     public Prescription() {
         //HttpsUtil.setupSSL();
     }
 
-    // Parameterized constructor
     public Prescription(Integer prescriptionId, Integer patientId, String patientFirstName, String patientLastName,
                         Integer doctorId, String doctorName, String doctorSurname,
                         Integer medicationId, String medicationName, String medicationDescription,
@@ -95,7 +93,7 @@ public class Prescription {
         //HttpsUtil.setupSSL();
     }
 
-    // Constructor with minimum required fields
+
     public Prescription(Integer patientId, String patientFirstName, String patientLastName,
                         Integer doctorId, String doctorName, String doctorSurname,
                         Integer medicationId, String medicationName,
@@ -228,7 +226,7 @@ public class Prescription {
         this.departmentName = departmentName;
     }
 
-    // Helper method to get formatted date
+
     public String getFormattedDateTime() {
         if (datePrescribed == null) return "Not specified";
         return datePrescribed.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -241,19 +239,19 @@ public class Prescription {
         BufferedReader reader = null;
 
         try {
-            // Set up the connection using the dynamic URL
+
             URL url = new URL(getPrescriptionsUrl());
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
 
-            // Check if the request was successful
+
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new IOException("HTTP error code: " + responseCode);
             }
 
-            // Read the response
+
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -262,15 +260,15 @@ public class Prescription {
                 response.append(line);
             }
 
-            // Parse the JSON response
+
             JSONParser parser = new JSONParser();
             JSONArray jsonArray = (JSONArray) parser.parse(response.toString());
 
-            // Process each prescription in the array
+
             for (Object obj : jsonArray) {
                 JSONObject prescriptionJson = (JSONObject) obj;
 
-                // Extract prescription data with type conversion
+
                 Long idLong = (Long) prescriptionJson.get("prescriptionId");
                 Integer id = (idLong != null) ? idLong.intValue() : null;
 
@@ -297,37 +295,30 @@ public class Prescription {
 
                 Long departmentIdLong = (Long) prescriptionJson.get("departmentId");
                 Integer departmentId = (departmentIdLong != null) ? departmentIdLong.intValue() : null;
-
                 String departmentName = (String) prescriptionJson.get("departmentName");
-
-                // Parse prescription date
                 LocalDateTime datePrescribed = null;
                 String datePrescribedStr = (String) prescriptionJson.get("datePrescribed");
 
                 if (datePrescribedStr != null && !datePrescribedStr.isEmpty()) {
                     try {
-                        // Try to parse as a full datetime
                         datePrescribed = LocalDateTime.parse(datePrescribedStr);
                     } catch (Exception e) {
                         try {
-                            // If that fails, try to parse with a formatter that handles both patterns
+
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'HH:mm:ss]");
                             datePrescribed = LocalDateTime.parse(datePrescribedStr, formatter);
                         } catch (Exception e2) {
                             try {
-                                // If all else fails, extract just the date part
+
                                 String datePortion = datePrescribedStr.split("T")[0];
-                                // Convert to LocalDateTime with time at 00:00
                                 datePrescribed = LocalDate.parse(datePortion).atStartOfDay();
                             } catch (Exception e3) {
-                                // If we still can't parse it, leave as null
                                 System.err.println("Could not parse date: " + datePrescribedStr);
                             }
                         }
                     }
                 }
 
-                // Create and add the prescription to our list
                 Prescription prescription = new Prescription(id, patientId, patientFirstName, patientLastName,
                         doctorId, doctorName, doctorSurname,
                         medicationId, medicationName, medicationDescription,
@@ -344,12 +335,11 @@ public class Prescription {
             System.err.println("Error fetching prescriptions: " + e.getMessage());
             throw new IOException("Failed to fetch prescriptions", e);
         } finally {
-            // Clean up resources
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    // Ignore
+                    System.err.println("Error closing reader: " + e.getMessage());
                 }
             }
             if (connection != null) {
@@ -360,13 +350,11 @@ public class Prescription {
         return prescriptions;
     }
 
-    // Add a new prescription
     public boolean addToServer() throws IOException {
         URL url = new URL(getAddPrescriptionUrl());
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            // Set up the HTTP request
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
@@ -385,13 +373,11 @@ public class Prescription {
             prescriptionData.put("medicationDescription", this.medicationDescription);
             prescriptionData.put("dosage", this.dosage);
             prescriptionData.put("duration", this.duration);
-            // Format the LocalDateTime properly for the server
             prescriptionData.put("datePrescribed", this.datePrescribed != null ?
-                    this.datePrescribed.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null);
+                    this.datePrescribed.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null);
             prescriptionData.put("departmentId", this.departmentId);
             prescriptionData.put("departmentName", this.departmentName);
 
-            // Convert JSON to string and get bytes
             String jsonInputString = prescriptionData.toJSONString();
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 
@@ -402,11 +388,8 @@ public class Prescription {
             try (OutputStream outputStream = connection.getOutputStream()) {
                 outputStream.write(input, 0, input.length);
             }
-
-            // Get response code
             int responseCode = connection.getResponseCode();
 
-            // Read response body even if there's an error
             StringBuilder response = new StringBuilder();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
@@ -416,11 +399,9 @@ public class Prescription {
                 }
             }
 
-            // Log error response
             if (responseCode >= 400) {
                 System.err.println("Error response: " + response.toString());
             } else if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                // Try to extract the ID from the response
                 try {
                     JSONParser parser = new JSONParser();
                     JSONObject jsonResponse = (JSONObject) parser.parse(response.toString());
@@ -439,7 +420,6 @@ public class Prescription {
         }
     }
 
-    // Update an existing prescription
     public boolean updateOnServer() throws IOException {
         if (this.prescriptionId == null) {
             throw new IllegalStateException("Cannot update prescription without ID");
@@ -449,13 +429,11 @@ public class Prescription {
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            // Set up the HTTP request
             connection.setRequestMethod("PUT");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
 
-            // Create JSON payload
             JSONObject prescriptionData = new JSONObject();
             prescriptionData.put("patientId", this.patientId);
             prescriptionData.put("patientFirstName", this.patientFirstName);
@@ -470,26 +448,21 @@ public class Prescription {
             prescriptionData.put("duration", this.duration);
             // Format the LocalDateTime properly for the server
             prescriptionData.put("datePrescribed", this.datePrescribed != null ?
-                    this.datePrescribed.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null);
+                    this.datePrescribed.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null);
             prescriptionData.put("departmentId", this.departmentId);
             prescriptionData.put("departmentName", this.departmentName);
 
-            // Convert JSON to string and get bytes
             String jsonInputString = prescriptionData.toJSONString();
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 
-            // Set content length
             connection.setRequestProperty("Content-Length", String.valueOf(input.length));
 
-            // Write JSON data to output stream
             try (OutputStream outputStream = connection.getOutputStream()) {
                 outputStream.write(input, 0, input.length);
             }
 
-            // Get response code
             int responseCode = connection.getResponseCode();
 
-            // Read response body even if there's an error
             StringBuilder response = new StringBuilder();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
@@ -498,8 +471,6 @@ public class Prescription {
                     response.append(line);
                 }
             }
-
-            // Log error response
             if (responseCode >= 400) {
                 System.err.println("Error response: " + response.toString());
             }
@@ -510,20 +481,16 @@ public class Prescription {
         }
     }
 
-    // Delete a prescription
     public static boolean deletePrescription(Integer prescriptionId) throws IOException {
         URL url = new URL(getDeletePrescriptionUrl(prescriptionId));
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
-            // Set up the HTTP request
             connection.setRequestMethod("DELETE");
             connection.setRequestProperty("Accept", "application/json");
 
-            // Get response code
             int responseCode = connection.getResponseCode();
 
-            // Read response body even if there's an error
             StringBuilder response = new StringBuilder();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
@@ -533,7 +500,6 @@ public class Prescription {
                 }
             }
 
-            // Log error response
             if (responseCode >= 400) {
                 System.err.println("Error response: " + response.toString());
             }
@@ -544,26 +510,21 @@ public class Prescription {
         }
     }
 
-    // Get prescriptions by patient ID
     public static List<Prescription> getPrescriptionsByPatientId(Integer patientId) throws IOException {
         List<Prescription> prescriptions = new ArrayList<>();
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-            // Set up the connection
             URL url = new URL(getPrescriptionsUrl() + "/patient/" + patientId);
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
-
-            // Check if the request was successful
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new IOException("HTTP error code: " + responseCode);
             }
 
-            // Read the response
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -572,11 +533,10 @@ public class Prescription {
                 response.append(line);
             }
 
-            // Parse the JSON response
             JSONParser parser = new JSONParser();
             JSONArray jsonArray = (JSONArray) parser.parse(response.toString());
 
-            // Process each prescription in the array - same parsing logic as getAllPrescriptions
+
             for (Object obj : jsonArray) {
                 JSONObject prescriptionJson = (JSONObject) obj;
 
@@ -609,7 +569,6 @@ public class Prescription {
 
                 String departmentName = (String) prescriptionJson.get("departmentName");
 
-                // Parse prescription date
                 LocalDateTime datePrescribed = null;
                 String datePrescribedStr = (String) prescriptionJson.get("datePrescribed");
 
@@ -648,7 +607,7 @@ public class Prescription {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    // Ignore
+                    System.err.println("Error closing reader: " + e.getMessage());
                 }
             }
             if (connection != null) {
@@ -659,14 +618,13 @@ public class Prescription {
         return prescriptions;
     }
 
-    // Get prescriptions by doctor ID
     public static List<Prescription> getPrescriptionsByDoctorId(Integer doctorId) throws IOException {
         List<Prescription> prescriptions = new ArrayList<>();
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-            // Set up the connection
+
             URL url = new URL(getPrescriptionsUrl() + "/doctor/" + doctorId);
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

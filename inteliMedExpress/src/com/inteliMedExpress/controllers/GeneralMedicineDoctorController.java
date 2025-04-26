@@ -608,9 +608,15 @@ public class GeneralMedicineDoctorController {
     //Getting the doctor name for a greeting
 
     public void setDoctorName(String doctorName) {
+        // Parse the full name to get first and last name
+        String[] nameParts = doctorName.split("\\s+", 2);
+        String firstName = nameParts.length > 0 ? nameParts[0] : "";
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
         this.loggedInDoctorName = doctorName;
         updateDoctorGreeting();
 
+        setCurrentDoctor(firstName, lastName);
     }
 
 
@@ -1008,12 +1014,18 @@ public class GeneralMedicineDoctorController {
         // Date formatter for prescription date
         date_prescription.setCellFactory(column -> {
             return new TableCell<Prescription, LocalDateTime>() {
-                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
                 @Override
                 protected void updateItem(LocalDateTime dateTime, boolean empty) {
                     super.updateItem(dateTime, empty);
-                    setText(empty || dateTime == null ? null : formatter.format(dateTime));
+
+                    if (empty || dateTime == null) {
+                        setText(null);
+                        System.out.println("Found empty or null date cell");
+                    } else {
+                        String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                        setText(formattedDate);
+                        System.out.println("Set date cell to: " + formattedDate);
+                    }
                 }
             };
         });
@@ -1025,6 +1037,33 @@ public class GeneralMedicineDoctorController {
         modify_prescription_button.setOnAction(event -> handleModifyPrescription());
         delete_prescription_button.setOnAction(event -> handleDeletePrescription());
 
+    }
+
+    private void setCurrentDoctor(String doctorName, String doctorSurname) {
+        try {
+            // Initialize doctor service if needed
+            if (doctorService == null) {
+                doctorService = new DoctorService(departmentName);
+            }
+
+            // Get all doctors and find the one matching the logged-in name
+            List<Doctor> allDoctors = doctorService.getAllDoctors();
+
+            for (Doctor doctor : allDoctors) {
+                if (doctor.getDoctorName().equalsIgnoreCase(doctorName) &&
+                        doctor.getDoctorSurname().equalsIgnoreCase(doctorSurname)) {
+                    this.currentDoctor = doctor;
+                    System.out.println("Set current doctor: " + doctor.getDoctorName() + " " +
+                            doctor.getDoctorSurname() + " (ID: " + doctor.getDoctorId() + ")");
+                    return;
+                }
+            }
+
+            System.err.println("Warning: Could not find doctor with name: " + doctorName + " " + doctorSurname);
+        } catch (Exception e) {
+            System.err.println("Error setting current doctor: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -2683,34 +2722,46 @@ public class GeneralMedicineDoctorController {
 
     private void handleAddPrescription() {
         try {
-            // Add debug output to check the current doctor
-            System.out.println("Current doctor: " + (currentDoctor != null ?
-                    currentDoctor.getDoctorName() + " " + currentDoctor.getDoctorSurname() : "NULL"));
-
-            // Create a fallback doctor if needed
+            // Get a doctor from the current department if needed
             if (currentDoctor == null) {
-                System.out.println("Creating fallback doctor information");
-                // Create temporary doctor information to allow adding prescriptions
-                currentDoctor = new Doctor();
-                currentDoctor.setDoctorId(1);  // Use a default ID
-                currentDoctor.setDoctorName("Default");
-                currentDoctor.setDoctorSurname("Doctor");
-                currentDoctor.setDepartmentId(1);
+                try {
+                    if (doctorService == null) {
+                        doctorService = new DoctorService(departmentName);
+                    }
+                    List<Doctor> doctors = doctorService.getAllDoctors();
+                    if (!doctors.isEmpty()) {
+                        currentDoctor = doctors.get(0);
+                        System.out.println("Using doctor: " +
+                                currentDoctor.getDoctorName() + " " + currentDoctor.getDoctorSurname());
+                    } else {
+                        UIHelper.showAlert("Error", "No doctors found in department: " + departmentName);
+                        return;
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error finding a doctor: " + e.getMessage());
+                    UIHelper.showAlert("Error", "Could not find a doctor for this department.");
+                    return;
+                }
             }
 
             Stage stage = (Stage) add_prescription_button.getScene().getWindow();
             Prescription newPrescription = PrescriptionDialog.showAddPrescriptionDialog(stage);
 
             if (newPrescription != null) {
-                // Set doctor information
                 newPrescription.setDoctorId(currentDoctor.getDoctorId());
                 newPrescription.setDoctorName(currentDoctor.getDoctorName());
                 newPrescription.setDoctorSurname(currentDoctor.getDoctorSurname());
+
                 newPrescription.setDepartmentId(currentDoctor.getDepartmentId());
                 newPrescription.setDepartmentName(departmentName);
 
-                System.out.println("Adding prescription with doctor: " +
-                        newPrescription.getDoctorName() + " " + newPrescription.getDoctorSurname());
+                if (newPrescription.getDatePrescribed() == null) {
+                    newPrescription.setDatePrescribed(LocalDateTime.now());
+                }
+
+                System.out.println("Adding prescription with: " +
+                        "Doctor=" + newPrescription.getDoctorName() + " " + newPrescription.getDoctorSurname() +
+                        ", Department=" + newPrescription.getDepartmentName());
 
                 boolean success = prescriptionService.addPrescription(newPrescription);
                 if (success) {
@@ -2739,6 +2790,7 @@ public class GeneralMedicineDoctorController {
             Prescription updatedPrescription = PrescriptionDialog.showUpdatePrescriptionDialog(stage, selectedPrescription);
 
             if (updatedPrescription != null) {
+                // Keep the existing doctor information when modifying
                 if (selectedPrescription.getDoctorId() != null) {
                     updatedPrescription.setDoctorId(selectedPrescription.getDoctorId());
                     updatedPrescription.setDoctorName(selectedPrescription.getDoctorName());
@@ -2747,15 +2799,47 @@ public class GeneralMedicineDoctorController {
                     updatedPrescription.setDoctorId(currentDoctor.getDoctorId());
                     updatedPrescription.setDoctorName(currentDoctor.getDoctorName());
                     updatedPrescription.setDoctorSurname(currentDoctor.getDoctorSurname());
+                } else {
+                    // Try to find a doctor in the current department
+                    try {
+                        if (doctorService == null) {
+                            doctorService = new DoctorService(departmentName);
+                        }
+                        List<Doctor> doctors = doctorService.getAllDoctors();
+                        if (!doctors.isEmpty()) {
+                            Doctor doctor = doctors.get(0);
+                            updatedPrescription.setDoctorId(doctor.getDoctorId());
+                            updatedPrescription.setDoctorName(doctor.getDoctorName());
+                            updatedPrescription.setDoctorSurname(doctor.getDoctorSurname());
+                        } else {
+                            UIHelper.showAlert("Error", "No doctors found in department: " + departmentName);
+                            return;
+                        }
+                    } catch (Exception e) {
+                        UIHelper.showAlert("Error", "Could not find a doctor for this department.");
+                        return;
+                    }
                 }
 
                 if (selectedPrescription.getDepartmentId() != null) {
                     updatedPrescription.setDepartmentId(selectedPrescription.getDepartmentId());
                     updatedPrescription.setDepartmentName(selectedPrescription.getDepartmentName());
-                } else {
+                } else if (currentDoctor != null && currentDoctor.getDepartmentId() != null) {
                     updatedPrescription.setDepartmentId(currentDoctor.getDepartmentId());
                     updatedPrescription.setDepartmentName(departmentName);
+                } else {
+                    updatedPrescription.setDepartmentId(updatedPrescription.getDoctorId());
+                    updatedPrescription.setDepartmentName(departmentName);
                 }
+
+                // Ensure date is set
+                if (updatedPrescription.getDatePrescribed() == null) {
+                    updatedPrescription.setDatePrescribed(LocalDateTime.now());
+                }
+
+                System.out.println("Updating prescription with: " +
+                        "Doctor=" + updatedPrescription.getDoctorName() + " " + updatedPrescription.getDoctorSurname() +
+                        ", Department=" + updatedPrescription.getDepartmentName());
 
                 boolean success = prescriptionService.updatePrescription(updatedPrescription);
                 if (success) {
@@ -2796,6 +2880,8 @@ public class GeneralMedicineDoctorController {
             UIHelper.showAlert("Error", "Error deleting prescription: " + e.getMessage());
             e.printStackTrace();
         }
+
+
     }
 
 

@@ -142,33 +142,49 @@ public class LoginController {
     }
 
     private void navigateBasedOnDepartment(String name, String surname, String department, String profession) throws IOException {
-        // Use the same FXML path for all departments
-        String fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
-
-        // Set the window title based on department and role
+        // Determine which FXML to load based on department
+        String fxmlPath;
         String title = "InteliMedExpress";
         boolean isDoctorRole = "DOCTOR".equalsIgnoreCase(profession);
+        String roleText = isDoctorRole ? "Doctor" : "Nurse";
 
-        // Format department for display (replace underscores with spaces)
-        String displayDepartment = department.replace("_", " ");
-        title += " - " + displayDepartment + " " + (isDoctorRole ? "Doctor" : "Nurse");
+        // Check specifically for Microbiology department
+        if ("Microbiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/microbiology.fxml";
+            title += " - Microbiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Microbiology interface for " + name + " " + surname);
+        }
+        else if ("Radiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/radiology.fxml";
+            title += " - Radiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Radiology interface for " + name + " " + surname);
+        }
+        else {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - " + department + " " + roleText;
+        }
 
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboardRoot = loader.load();
 
-            // Get the controller
-            GeneralMedicineDoctorController controller = loader.getController();
+            // Handle controller differently based on department
+            if ("Microbiology".equalsIgnoreCase(department)) {
+                MicrobiologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Microbiology controller for " + name + " " + surname);
+            }else if ("Radiology".equalsIgnoreCase(department)) {
+                RadiologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Radiology controller for " + name + " " + surname);
+            }
 
-            // Set user information
-            controller.setDoctorName(name + " " + surname);
-
-            // Set department information - add this method to your controller
-            controller.setDepartment(department);
-
-            // Log which department was loaded
-            AppLogger.info(CLASS_NAME, "Loaded view for " + displayDepartment + " with role " + profession);
+            else {
+                GeneralMedicineDoctorController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                controller.setDepartment(department);
+                AppLogger.info(CLASS_NAME, "Loaded General controller with department " + department);
+            }
 
             // Create and set the scene
             Scene dashboardScene = new Scene(dashboardRoot);
@@ -186,40 +202,29 @@ public class LoginController {
 
     private JSONObject sendLoginRequest(String username, String password) throws IOException {
         URL url = new URL(LOGIN_API_URL);
-
-        // Cast to HttpsURLConnection for HTTPS
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-        // Sets request method
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
-        // Enables input/output streams
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-
-        // Create JSON payload
         JSONObject loginData = new JSONObject();
         loginData.put("username", username);
         loginData.put("password", password);
 
-        // Convert JSON to string and get bytes
         String jsonInputString = loginData.toString();
         byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 
-        // Set content length
         connection.setRequestProperty("Content-Length", String.valueOf(input.length));
 
-        // Write JSON data to output stream
         try (OutputStream outputStream = connection.getOutputStream()) {
             outputStream.write(input, 0, input.length);
         }
 
-        // Get response code
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Read the response
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -242,7 +247,6 @@ public class LoginController {
 
     public void register(ActionEvent event) {
         try {
-            // Load the register.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/register.fxml"));
             Parent registerRoot = loader.load();
             Scene registerScene = new Scene(registerRoot);

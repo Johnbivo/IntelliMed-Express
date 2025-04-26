@@ -21,14 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Appointment {
-    // Server URLs
-    // Base URL - make this configurable
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
 
-    // Department-specific URLs
-    private static String department = "General_Medicine"; // Default department
 
-    // Dynamic URL getters that use the current department
+
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
+
+    private static String department;
+
     private static String getAppointmentsUrl() {
         return SERVER_BASE_URL + department + "/appointments";
     }
@@ -37,56 +36,81 @@ public class Appointment {
         return SERVER_BASE_URL + department + "/appointments/add";
     }
 
-    private static String getUpdateAppointmentUrl() {
-        return SERVER_BASE_URL + department + "/appointments/update";
+    private static String getUpdateAppointmentUrl(Integer id) {
+        return SERVER_BASE_URL + department + "/appointments/" + id + "/update";
     }
 
-    private static String getDeleteAppointmentUrl() {
-        return SERVER_BASE_URL + department + "/appointments/delete";
+    private static String getDeleteAppointmentUrl(Integer id) {
+        return SERVER_BASE_URL + department + "/appointments/" + id + "/delete";
     }
 
-    // Set the department for all appointments
-    public static void setDepartment(String dept) {
-        department = dept != null ? dept.replaceAll("\\s", "_") : "General_Medicine";
-        System.out.println("Appointment department set to: " + department);
+
+    public static void setDepartment(String departmentName) {
+        department = departmentName;
     }
 
     // Appointment Attributes
     private Integer appointmentId;
-    private String patientName;
-    private String patientSurname;
+    private String patientFirstName; // Changed from patientName
+    private String patientLastName;  // Changed from patientSurname
+    private String doctorName;
     private String doctorSurname;
+    private String nurseName;
     private String nurseSurname;
-    private LocalDateTime appointmentDate; // Changed from LocalDate to LocalDateTime
+    private LocalDateTime appointmentDate;
     private String status;
     private String notes;
+    private String createdByType; // Added field
+    private String creatorName;   // Added field
+    private String creatorSurname; // Added field
 
     // Default constructor
     public Appointment() {
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // Parameterized constructor with LocalDateTime
-    public Appointment(Integer appointmentId, String patientName, String patientSurname,
-                       String doctorSurname, String nurseSurname, LocalDateTime appointmentDate,
-                       String status, String notes) {
+    public Appointment(Integer appointmentId, String patientFirstName, String patientLastName,
+                       String doctorName, String doctorSurname, String nurseName, String nurseSurname,
+                       LocalDateTime appointmentDate, String status, String notes) {
         this.appointmentId = appointmentId;
-        this.patientName = patientName;
-        this.patientSurname = patientSurname;
+        this.patientFirstName = patientFirstName;
+        this.patientLastName = patientLastName;
+        this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
+        this.nurseName = nurseName;
         this.nurseSurname = nurseSurname;
         this.appointmentDate = appointmentDate;
         this.status = status;
         this.notes = notes;
+        this.createdByType = "Doctor"; // Default to Doctor
+        this.creatorName = doctorName; // Default to the same doctor
+        this.creatorSurname = doctorSurname;
 
-        HttpsUtil.setupSSL();
+       // HttpsUtil.setupSSL();
     }
 
-    // Alternate constructor with LocalDate (for backward compatibility)
-    public Appointment(Integer appointmentId, String patientName, String patientSurname,
+    // Parameterized constructor with LocalDate
+    public Appointment(Integer appointmentId, String patientFirstName, String patientLastName,
+                       String doctorName, String doctorSurname, String nurseName, String nurseSurname,
+                       LocalDate appointmentDate, String status, String notes) {
+        this(appointmentId, patientFirstName, patientLastName, doctorName, doctorSurname, nurseName, nurseSurname,
+                appointmentDate != null ? appointmentDate.atStartOfDay() : null,
+                status, notes);
+    }
+
+    // Backward compatibility constructors
+    public Appointment(Integer appointmentId, String patientFirstName, String patientLastName,
+                       String doctorSurname, String nurseSurname, LocalDateTime appointmentDate,
+                       String status, String notes) {
+        this(appointmentId, patientFirstName, patientLastName, null, doctorSurname, null, nurseSurname,
+                appointmentDate, status, notes);
+    }
+
+    public Appointment(Integer appointmentId, String patientFirstName, String patientLastName,
                        String doctorSurname, String nurseSurname, LocalDate appointmentDate,
                        String status, String notes) {
-        this(appointmentId, patientName, patientSurname, doctorSurname, nurseSurname,
+        this(appointmentId, patientFirstName, patientLastName, null, doctorSurname, null, nurseSurname,
                 appointmentDate != null ? appointmentDate.atStartOfDay() : null,
                 status, notes);
     }
@@ -100,20 +124,48 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
+    // Get patientName for backward compatibility
     public String getPatientName() {
-        return patientName;
+        return patientFirstName;
     }
 
+    // Set patientName for backward compatibility
     public void setPatientName(String patientName) {
-        this.patientName = patientName;
+        this.patientFirstName = patientName;
     }
 
+    public String getPatientFirstName() {
+        return patientFirstName;
+    }
+
+    public void setPatientFirstName(String patientFirstName) {
+        this.patientFirstName = patientFirstName;
+    }
+
+    // Get patientSurname for backward compatibility
     public String getPatientSurname() {
-        return patientSurname;
+        return patientLastName;
     }
 
+    // Set patientSurname for backward compatibility
     public void setPatientSurname(String patientSurname) {
-        this.patientSurname = patientSurname;
+        this.patientLastName = patientSurname;
+    }
+
+    public String getPatientLastName() {
+        return patientLastName;
+    }
+
+    public void setPatientLastName(String patientLastName) {
+        this.patientLastName = patientLastName;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
     public String getDoctorSurname() {
@@ -122,6 +174,14 @@ public class Appointment {
 
     public void setDoctorSurname(String doctorSurname) {
         this.doctorSurname = doctorSurname;
+    }
+
+    public String getNurseName() {
+        return nurseName;
+    }
+
+    public void setNurseName(String nurseName) {
+        this.nurseName = nurseName;
     }
 
     public String getNurseSurname() {
@@ -172,6 +232,30 @@ public class Appointment {
         this.notes = notes;
     }
 
+    public String getCreatedByType() {
+        return createdByType;
+    }
+
+    public void setCreatedByType(String createdByType) {
+        this.createdByType = createdByType;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getCreatorSurname() {
+        return creatorSurname;
+    }
+
+    public void setCreatorSurname(String creatorSurname) {
+        this.creatorSurname = creatorSurname;
+    }
+
     // Get all appointments
     public static List<Appointment> getAllAppointments() throws IOException {
         List<Appointment> appointments = new ArrayList<>();
@@ -212,12 +296,17 @@ public class Appointment {
                 Long idLong = (Long) appointmentJson.get("appointmentId");
                 Integer id = (idLong != null) ? idLong.intValue() : null;
 
-                String patientName = (String) appointmentJson.get("patientName");
-                String patientSurname = (String) appointmentJson.get("patientSurname");
+                String patientFirstName = (String) appointmentJson.get("patientFirstName");
+                String patientLastName = (String) appointmentJson.get("patientLastName");
+                String doctorName = (String) appointmentJson.get("doctorName");
                 String doctorSurname = (String) appointmentJson.get("doctorSurname");
+                String nurseName = (String) appointmentJson.get("nurseName");
                 String nurseSurname = (String) appointmentJson.get("nurseSurname");
                 String status = (String) appointmentJson.get("status");
                 String notes = (String) appointmentJson.get("notes");
+                String createdByType = (String) appointmentJson.get("createdByType");
+                String creatorName = (String) appointmentJson.get("creatorName");
+                String creatorSurname = (String) appointmentJson.get("creatorSurname");
 
                 // Parse appointment date - UPDATED TO HANDLE DATETIME
                 LocalDateTime appointmentDateTime = null;
@@ -242,8 +331,21 @@ public class Appointment {
                 }
 
                 // Create and add the appointment to our list
-                Appointment appointment = new Appointment(id, patientName, patientSurname,
-                        doctorSurname, nurseSurname, appointmentDateTime, status, notes);
+                Appointment appointment = new Appointment(id, patientFirstName, patientLastName,
+                        doctorName, doctorSurname, nurseName, nurseSurname,
+                        appointmentDateTime, status, notes);
+
+                // Set creator info
+                if (createdByType != null) {
+                    appointment.setCreatedByType(createdByType);
+                }
+                if (creatorName != null) {
+                    appointment.setCreatorName(creatorName);
+                }
+                if (creatorSurname != null) {
+                    appointment.setCreatorSurname(creatorSurname);
+                }
+
                 appointments.add(appointment);
             }
 
@@ -282,17 +384,24 @@ public class Appointment {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
 
-            // Create JSON payload
+            // Create JSON payload with the correct field names
             JSONObject appointmentData = new JSONObject();
-            appointmentData.put("patientName", this.patientName);
-            appointmentData.put("patientSurname", this.patientSurname);
+            appointmentData.put("patientFirstName", this.patientFirstName);
+            appointmentData.put("patientLastName", this.patientLastName);
+            appointmentData.put("doctorName", this.doctorName);
             appointmentData.put("doctorSurname", this.doctorSurname);
+            appointmentData.put("nurseName", this.nurseName);
             appointmentData.put("nurseSurname", this.nurseSurname);
             // Format the LocalDateTime properly for the server
             appointmentData.put("appointmentDate", this.appointmentDate != null ?
                     this.appointmentDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null);
             appointmentData.put("status", this.status);
             appointmentData.put("notes", this.notes);
+
+            // Add creator information
+            appointmentData.put("createdByType", this.createdByType != null ? this.createdByType : "Doctor");
+            appointmentData.put("creatorName", this.creatorName != null ? this.creatorName : this.doctorName);
+            appointmentData.put("creatorSurname", this.creatorSurname != null ? this.creatorSurname : this.doctorSurname);
 
             // Convert JSON to string and get bytes
             String jsonInputString = appointmentData.toJSONString();
@@ -308,6 +417,22 @@ public class Appointment {
 
             // Get response code
             int responseCode = connection.getResponseCode();
+
+            // Read response body even if there's an error
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+
+            // Log error response
+            if (responseCode >= 400) {
+                System.err.println("Error response: " + response.toString());
+            }
+
             return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED;
         } finally {
             connection.disconnect();
@@ -316,7 +441,11 @@ public class Appointment {
 
     // Update an existing appointment
     public boolean updateOnServer() throws IOException {
-        URL url = new URL(getUpdateAppointmentUrl() + "/" + this.appointmentId);
+        if (this.appointmentId == null) {
+            throw new IllegalStateException("Cannot update appointment without ID");
+        }
+
+        URL url = new URL(getUpdateAppointmentUrl(this.appointmentId));
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
@@ -326,12 +455,13 @@ public class Appointment {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
 
-            // Create JSON payload with appointment ID
+            // Create JSON payload with the correct field names
             JSONObject appointmentData = new JSONObject();
-            appointmentData.put("appointmentId", this.appointmentId);
-            appointmentData.put("patientName", this.patientName);
-            appointmentData.put("patientSurname", this.patientSurname);
+            appointmentData.put("patientFirstName", this.patientFirstName);
+            appointmentData.put("patientLastName", this.patientLastName);
+            appointmentData.put("doctorName", this.doctorName);
             appointmentData.put("doctorSurname", this.doctorSurname);
+            appointmentData.put("nurseName", this.nurseName);
             appointmentData.put("nurseSurname", this.nurseSurname);
             // Format the LocalDateTime properly for the server
             appointmentData.put("appointmentDate", this.appointmentDate != null ?
@@ -353,7 +483,23 @@ public class Appointment {
 
             // Get response code
             int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED;
+
+            // Read response body even if there's an error
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+
+            // Log error response
+            if (responseCode >= 400) {
+                System.err.println("Error response: " + response.toString());
+            }
+
+            return responseCode == HttpURLConnection.HTTP_OK;
         } finally {
             connection.disconnect();
         }
@@ -361,16 +507,145 @@ public class Appointment {
 
     // Delete an appointment
     public static boolean deleteAppointment(Integer appointmentId) throws IOException {
-        URL url = new URL(getDeleteAppointmentUrl() + "/" + appointmentId);
+        URL url = new URL(getDeleteAppointmentUrl(appointmentId));
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
         try {
             // Set up the HTTP request
             connection.setRequestMethod("DELETE");
+            connection.setRequestProperty("Accept", "application/json");
 
             // Get response code
             int responseCode = connection.getResponseCode();
+
+            // Read response body even if there's an error
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode < 400 ? connection.getInputStream() : connection.getErrorStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+
+            // Log error response
+            if (responseCode >= 400) {
+                System.err.println("Error response: " + response.toString());
+            }
+
             return responseCode == HttpURLConnection.HTTP_OK;
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    // Cancel an appointment
+    public boolean cancelAppointment() throws IOException {
+        if (this.appointmentId == null) {
+            throw new IllegalStateException("Cannot cancel appointment without ID");
+        }
+
+        URL url = new URL(SERVER_BASE_URL + department + "/appointments/" + this.appointmentId + "/cancel");
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+        try {
+            // Set up the HTTP request
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "application/json");
+
+            // Get response code
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Update status locally
+                this.status = "Cancelled";
+                return true;
+            }
+
+            // Read error response if needed
+            if (responseCode >= 400) {
+                StringBuilder response = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                }
+                System.err.println("Error response: " + response.toString());
+            }
+
+            return false;
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    // Complete an appointment
+    public boolean completeAppointment(String additionalNotes) throws IOException {
+        if (this.appointmentId == null) {
+            throw new IllegalStateException("Cannot complete appointment without ID");
+        }
+
+        URL url = new URL(SERVER_BASE_URL + department + "/appointments/" + this.appointmentId + "/complete");
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+        try {
+            // Set up the HTTP request
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+
+            // Create JSON payload if additional notes are provided
+            if (additionalNotes != null && !additionalNotes.isEmpty()) {
+                JSONObject notesData = new JSONObject();
+                notesData.put("additionalNotes", additionalNotes);
+
+                // Convert JSON to string and get bytes
+                String jsonInputString = notesData.toJSONString();
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+
+                // Set content length
+                connection.setRequestProperty("Content-Length", String.valueOf(input.length));
+
+                // Write JSON data to output stream
+                try (OutputStream outputStream = connection.getOutputStream()) {
+                    outputStream.write(input, 0, input.length);
+                }
+            }
+
+            // Get response code
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Update status locally
+                this.status = "Completed";
+
+                // Add the additional notes to our local notes if provided
+                if (additionalNotes != null && !additionalNotes.isEmpty()) {
+                    if (this.notes != null && !this.notes.isEmpty()) {
+                        this.notes = this.notes + "\n--- Completion Notes ---\n" + additionalNotes;
+                    } else {
+                        this.notes = "--- Completion Notes ---\n" + additionalNotes;
+                    }
+                }
+
+                return true;
+            }
+
+            // Read error response if needed
+            if (responseCode >= 400) {
+                StringBuilder response = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                }
+                System.err.println("Error response: " + response.toString());
+            }
+
+            return false;
         } finally {
             connection.disconnect();
         }
@@ -380,9 +655,11 @@ public class Appointment {
     public String toString() {
         return "Appointment{" +
                 "appointmentId=" + appointmentId +
-                ", patientName='" + patientName + '\'' +
-                ", patientSurname='" + patientSurname + '\'' +
+                ", patientFirstName='" + patientFirstName + '\'' +
+                ", patientLastName='" + patientLastName + '\'' +
+                ", doctorName='" + doctorName + '\'' +
                 ", doctorSurname='" + doctorSurname + '\'' +
+                ", nurseName='" + nurseName + '\'' +
                 ", nurseSurname='" + nurseSurname + '\'' +
                 ", appointmentDate=" + (appointmentDate != null ? appointmentDate.format(DateTimeFormatter.ISO_DATE_TIME) : null) +
                 ", status='" + status + '\'' +

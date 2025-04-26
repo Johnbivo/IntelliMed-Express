@@ -3,7 +3,6 @@ package com.inteliMedExpress.controllers;
 import com.inteliMedExpress.classes.UIHelper;
 import com.inteliMedExpress.utils.AppLogger;
 import com.inteliMedExpress.utils.HttpsUtil;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,27 +11,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.awt.desktop.AppForegroundListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
-
 
 public class RegisterController implements Initializable {
     private static final String CLASS_NAME = RegisterController.class.getSimpleName();
@@ -49,20 +41,14 @@ public class RegisterController implements Initializable {
     private TextField address_textfield;
     @FXML
     private TextField age_textfield;
-
     @FXML
     private TextField firstName;
-
     @FXML
     private TextField lastName;
-
-
     @FXML
     private Hyperlink back_to_login_hype;
-
     @FXML
     private Button register_button;
-
     @FXML
     private ChoiceBox<String> gender_dropdown;
     @FXML
@@ -70,25 +56,17 @@ public class RegisterController implements Initializable {
     @FXML
     private ChoiceBox<String> department_specialty;
 
-
-
-    private static final String REGISTER_API_URL = "https://127.0.0.1:8080/api/auth/register";
-
+    private static final String REGISTER_API_URL = "https://springserver-kl8q.onrender.com/api/auth/register";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        HttpsUtil.setupSSL();
-
         ObservableList<String> genders = FXCollections.observableArrayList("male", "female");
         gender_dropdown.setItems(genders);
         gender_dropdown.setValue("Select Gender");
 
-
         ObservableList<String> professions = FXCollections.observableArrayList("DOCTOR", "NURSE");
         profession_dropdown.setItems(professions);
         profession_dropdown.setValue("Select Profession");
-
 
         ObservableList<String> departments = FXCollections.observableArrayList("Cardiology", "Pediatrics", "General Medicine", "Microbiology", "Pharmacology", "Radiology");
         department_specialty.setItems(departments);
@@ -98,61 +76,59 @@ public class RegisterController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if (newValue != null) {
-                    if (newValue.equals("Nurse")) {
-                        // Hide department_specialty when "Nurse" is selected
-                        department_specialty.setVisible(false);
+                    if (newValue.equals("NURSE")) {
+                        //Nurses now view departments as well
+                        department_specialty.setVisible(true);
                     } else {
-                        // Show department_specialty for other professions (Doctor)
                         department_specialty.setVisible(true);
                     }
                 }
             }
         });
-
     }
 
-
     public void register(ActionEvent event) throws IOException {
-        // I setup all strings because its easier with javafx to get the entries.
+        // Get all form values
         String username = username_textfield.getText();
         String password = password_textfield.getText();
         String email = email_textfield.getText();
         String phone = phone_textfield.getText();
         String address = address_textfield.getText();
-        String age = age_textfield.getText();
         String gender = gender_dropdown.getValue();
         String profession = profession_dropdown.getValue();
         String department = department_specialty.getValue();
         String firstname = firstName.getText();
         String lastname = lastName.getText();
 
-
-
-        //Conversion to numbers
-        int ageNumber = Integer.parseInt(age_textfield.getText());
-
-
-
+        // Validation
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || phone.isEmpty() ||
-                address.isEmpty() || age.isEmpty() || gender.equals("Select Gender") || profession.equals("Select Profession")) {
+                address.isEmpty() || age_textfield.getText().isEmpty() || gender.equals("Select Gender") ||
+                profession.equals("Select Profession")) {
             UIHelper.showAlert("Error", "Please fill all the required fields");
             return;
         }
 
         // Additional validation for Doctors
-        if (profession.equals("Doctor") && department.equals("Select Department")) {
+        if (profession.equals("DOCTOR") && department.equals("Select Department")) {
             UIHelper.showAlert("Error", "Please select a department/specialty");
+            return;
+        }
+
+        int ageNumber;
+        try {
+            ageNumber = Integer.parseInt(age_textfield.getText());
+        } catch (NumberFormatException e) {
+            UIHelper.showAlert("Error", "Age must be a valid number");
             return;
         }
 
         // Log registration attempt
         AppLogger.info(CLASS_NAME, "Registering user: " + username);
 
-
         try {
-            boolean registerSuccess = sendRegisterRequest(username, password,firstname, lastname, email, phone, address,
-                    ageNumber, gender, profession, department);
-            if(registerSuccess) {
+            boolean registerSuccess = sendRegisterRequest(username, password, firstname, lastname, email, phone,
+                    address, ageNumber, gender, profession, department);
+            if (registerSuccess) {
                 UIHelper.showAlert("Success", "Registration successful.");
                 AppLogger.info(CLASS_NAME, username + " successfully registered.");
 
@@ -167,26 +143,14 @@ public class RegisterController implements Initializable {
         }
     }
 
-
-
-
-
-
-
-    private boolean sendRegisterRequest(String username, String password, String firstname,String lastName,
-                                     String email, String phone, String address,
-                                     int ageNumber, String gender, String profession,
-                                     String department) throws IOException {
-
-/*
-        if (!HttpsUtil.isSSLInitialized()){
-            HttpsUtil.setupSSL();
-        }
-*/
-
+    private boolean sendRegisterRequest(String username, String password, String firstname, String lastName,
+                                        String email, String phone, String address,
+                                        int ageNumber, String gender, String profession,
+                                        String department) throws IOException {
         URL url = new URL(REGISTER_API_URL);
 
         AppLogger.info(CLASS_NAME, "Sending register request to " + url.toString());
+
         // Cast to HttpsURLConnection for HTTPS
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
@@ -197,6 +161,12 @@ public class RegisterController implements Initializable {
         // Enables input/output streams
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
+
+        // Adjust department name if necessary - convert "Pharmacology" to "Pharmacy"
+        String departmentToSend = department;
+        if ("Pharmacology".equals(department)) {
+            departmentToSend = "Pharmacy";
+        }
 
         // Create JSON payload
         JSONObject registerData = new JSONObject();
@@ -210,12 +180,12 @@ public class RegisterController implements Initializable {
         registerData.put("age", ageNumber);
         registerData.put("gender", gender);
         registerData.put("profession", profession);
-        Integer departmentId = mapDepartmentNameToId(department);
-        registerData.put("department", departmentId);
-
+        registerData.put("department", departmentToSend);
 
         // Convert JSON to string and get bytes
         String jsonInputString = registerData.toString();
+        AppLogger.info(CLASS_NAME, "Sending JSON payload: " + jsonInputString);
+
         byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 
         // Set content length
@@ -228,30 +198,34 @@ public class RegisterController implements Initializable {
 
         // Get response code
         int responseCode = connection.getResponseCode();
+
+        // Log error response if needed
+        if (responseCode != HttpsURLConnection.HTTP_CREATED) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    connection.getErrorStream() != null ? connection.getErrorStream() : connection.getInputStream()))) {
+                String line;
+                StringBuilder response = new StringBuilder();
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                AppLogger.error(CLASS_NAME, "Registration failed with code " + responseCode +
+                        " and response: " + response.toString());
+            } catch (IOException e) {
+                AppLogger.error(CLASS_NAME, "Failed to read error response: " + e.getMessage());
+            }
+        }
+
         return responseCode == HttpsURLConnection.HTTP_CREATED;
-
-
     }
-
-
-
-
-
-
-
 
     public void back_to_login(ActionEvent event) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
             Parent loginRoot = loader.load();
 
-
             Scene loginScene = new Scene(loginRoot);
 
-
             Stage currentStage = (Stage) back_to_login_hype.getScene().getWindow();
-
 
             currentStage.setScene(loginScene);
             currentStage.setTitle("InteliMedExpress - Login");
@@ -263,42 +237,5 @@ public class RegisterController implements Initializable {
             System.err.println("Error navigating to login form: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
-
-    private Integer mapDepartmentNameToId(String departmentName) {
-        if (departmentName == null || departmentName.equals("Select Department")) {
-            return null;
-        }
-
-        switch (departmentName) {
-            case "Cardiology":
-                return 1;
-            case "Pediatrics":
-                return 2;
-            case "General Medicine":
-                return 3;
-            case "Microbiology":
-                return 4;
-            case "Pharmacology":
-                return 5;
-            case "Radiology":
-                return 6;
-            default:
-                return null;
-        }
-    }
-
-
-
-/*Cardiology - ID: 1
-Pediatrics - ID: 2
-General - ID: 3
-Microbiology - ID: 4
-Pharmacy - ID: 5 (the name in the database is "Pharmacy" but the specialty type is "Pharmacology")
-Radiology - ID: 6
-
- */
-
-
 }

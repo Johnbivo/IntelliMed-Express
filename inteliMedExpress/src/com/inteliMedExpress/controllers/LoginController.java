@@ -1,5 +1,6 @@
 package com.inteliMedExpress.controllers;
 
+import com.inteliMedExpress.classes.Employees.NurseService;
 import com.inteliMedExpress.classes.appointments.Appointment;
 import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
 import com.inteliMedExpress.classes.patients.Patient;
@@ -31,7 +32,7 @@ public class LoginController {
         PEDIATRICS("Pediatrics"),
         GENERAL_MEDICINE("General"),
         MICROBIOLOGY("Microbiology"),
-        PHARMACOLOGY("Pharmacology"),
+        PHARMACOLOGY("Pharmacy"),  // Changed to match server's expected value
         RADIOLOGY("Radiology");
 
         private final String displayName;
@@ -47,6 +48,12 @@ public class LoginController {
         // Convert from string representation to enum
         public static Department fromString(String department) {
             if (department == null) return GENERAL_MEDICINE;
+
+            // Handle Pharmacy/Pharmacology special case
+            if (department.equalsIgnoreCase("Pharmacy") ||
+                    department.equalsIgnoreCase("Pharmacology")) {
+                return PHARMACOLOGY;
+            }
 
             // Remove spaces and convert to uppercase for comparison
             String normalizedDept = department.replaceAll("\\s", "_").toUpperCase();
@@ -78,17 +85,13 @@ public class LoginController {
     @FXML
     private Hyperlink credits;
 
-    private static final String LOGIN_API_URL = "https://127.0.0.1:8080/api/auth/login";
+    private static final String LOGIN_API_URL = "https://springserver-kl8q.onrender.com/api/auth/login";
 
     public void initialize() {
         AppLogger.initialize();
         AppLogger.info(CLASS_NAME, "LoginController initialized");
-
-        //Setting up the certificate verification
-        HttpsUtil.setupSSL();
     }
 
-    // function that gets triggered by the login button
     public void login(ActionEvent event) {
         String username = username_textfield.getText();
         String password = password_textfield.getText();
@@ -111,6 +114,9 @@ public class LoginController {
                 String department = (String) response.get("department");
                 String profession = (String) response.get("profession");
 
+                // Log the received department for debugging
+                AppLogger.info(CLASS_NAME, "Department received from server: " + department);
+
                 // Set the department for all API calls
                 Department dept = Department.fromString(department);
 
@@ -121,6 +127,7 @@ public class LoginController {
                 try {
                     MedicalRecord.setDepartment(dept.getDisplayName());
                     Patient.setDepartment(dept.getDisplayName());
+                    NurseService.setDepartment(dept.getDisplayName());
                 } catch (Exception e) {
                     AppLogger.warning(CLASS_NAME, "Could not set department for all classes: " + e.getMessage());
                 }
@@ -128,7 +135,7 @@ public class LoginController {
                 AppLogger.info(CLASS_NAME, "Department set to: " + dept.getDisplayName());
 
                 // Navigate to appropriate page based on department and profession
-                navigateBasedOnDepartment(name, surname, dept.getDisplayName(), profession);
+                navigateBasedOnDepartment(name, surname, department, profession);
             } else {
                 UIHelper.showAlert("Error", "Login failed");
             }
@@ -139,28 +146,80 @@ public class LoginController {
     }
 
     private void navigateBasedOnDepartment(String name, String surname, String department, String profession) throws IOException {
-        // FXML path - currently we only have GeneralMedicineDoctor.fxml
-        String fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
-
-        // Set the window title based on department and role
+        // Determine which FXML to load based on department
+        String fxmlPath;
         String title = "InteliMedExpress";
         boolean isDoctorRole = "DOCTOR".equalsIgnoreCase(profession);
+        String roleText = isDoctorRole ? "Doctor" : "Nurse";
 
-        // Format department for display (replace underscores with spaces)
-        String displayDepartment = department.replace("_", " ");
-        title += " - " + displayDepartment + " " + (isDoctorRole ? "Doctor" : "Nurse");
+        // Log which department we're processing
+        AppLogger.info(CLASS_NAME, "Processing navigation for department: " + department);
+
+        // Check department and load appropriate view
+        if ("Microbiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/microbiology.fxml";
+            title += " - Microbiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Microbiology interface");
+        }
+        else if ("Radiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/radiology.fxml";
+            title += " - Radiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Radiology interface");
+        }
+        else if ("Pharmacy".equalsIgnoreCase(department) || "Pharmacology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/pharmacology.fxml";
+            title += " - Pharmacology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Pharmacology interface");
+        }
+        else if ("Cardiology".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - Cardiology " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Cardiology interface");
+        }
+        else if ("Pediatrics".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - Pediatrics " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to Pediatrics interface");
+        }
+        else if ("General".equalsIgnoreCase(department) || "General Medicine".equalsIgnoreCase(department)) {
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - General Medicine " + roleText;
+            AppLogger.info(CLASS_NAME, "Directing to General Medicine interface");
+        }
+        else {
+            // Default case
+            AppLogger.warning(CLASS_NAME, "Unknown department '" + department + "', defaulting to General Medicine");
+            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            title += " - " + department + " " + roleText;
+        }
 
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboardRoot = loader.load();
 
-            // Get the controller and set the user name
-            GeneralMedicineDoctorController controller = loader.getController();
-            controller.setDoctorName(name + " " + surname);
-
-            // Log which department was loaded
-            AppLogger.info(CLASS_NAME, "Loaded view for " + displayDepartment + " with role " + profession);
+            // Handle controller setup
+            if ("Microbiology".equalsIgnoreCase(department)) {
+                MicrobiologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Microbiology controller for " + name + " " + surname);
+            }
+            else if ("Radiology".equalsIgnoreCase(department)) {
+                RadiologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Radiology controller for " + name + " " + surname);
+            }
+            else if ("Pharmacy".equalsIgnoreCase(department) || "Pharmacology".equalsIgnoreCase(department)) {
+                PharmacologyController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                AppLogger.info(CLASS_NAME, "Loaded Pharmacology controller for " + name + " " + surname);
+            }
+            else {
+                // General controller for Cardiology, Pediatrics, General Medicine, and default
+                GeneralMedicineDoctorController controller = loader.getController();
+                controller.setDoctorName(name + " " + surname);
+                controller.setDepartment(department);
+                AppLogger.info(CLASS_NAME, "Loaded General controller with department " + department);
+            }
 
             // Create and set the scene
             Scene dashboardScene = new Scene(dashboardRoot);
@@ -178,63 +237,73 @@ public class LoginController {
 
     private JSONObject sendLoginRequest(String username, String password) throws IOException {
         URL url = new URL(LOGIN_API_URL);
-
-        // Cast to HttpsURLConnection for HTTPS
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-        // Sets request method
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
-        // Enables input/output streams
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-
-        // Create JSON payload
         JSONObject loginData = new JSONObject();
         loginData.put("username", username);
         loginData.put("password", password);
 
-        // Convert JSON to string and get bytes
         String jsonInputString = loginData.toString();
         byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 
-        // Set content length
         connection.setRequestProperty("Content-Length", String.valueOf(input.length));
 
-        // Write JSON data to output stream
         try (OutputStream outputStream = connection.getOutputStream()) {
             outputStream.write(input, 0, input.length);
         }
 
-        // Get response code
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Read the response
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
 
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
 
-            // Parse the JSON response
-            JSONParser parser = new JSONParser();
-            try {
-                return (JSONObject) parser.parse(response.toString());
-            } catch (org.json.simple.parser.ParseException e) {
-                throw new IOException("Error parsing response: " + e.getMessage());
+                // Log the raw response for debugging
+                AppLogger.info(CLASS_NAME, "Server response: " + response.toString());
+
+                // Parse the JSON response
+                JSONParser parser = new JSONParser();
+                try {
+                    return (JSONObject) parser.parse(response.toString());
+                } catch (org.json.simple.parser.ParseException e) {
+                    throw new IOException("Error parsing response: " + e.getMessage());
+                }
             }
         } else {
+            // Log error response
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getErrorStream() != null ?
+                            connection.getErrorStream() :
+                            connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                AppLogger.error(CLASS_NAME, "Login failed with code " + responseCode +
+                        " and response: " + response.toString());
+            } catch (Exception e) {
+                AppLogger.error(CLASS_NAME, "Failed to read error response: " + e.getMessage());
+            }
             return null;
         }
     }
 
     public void register(ActionEvent event) {
         try {
-            // Load the register.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/register.fxml"));
             Parent registerRoot = loader.load();
             Scene registerScene = new Scene(registerRoot);
@@ -253,6 +322,6 @@ public class LoginController {
     }
 
     public void showCredits(ActionEvent event) {
-        UIHelper.showAlert("Credits", "Icons by icons8.com - https:/icon8.com");
+        UIHelper.showAlert("Credits", "Icons by icons8.com - https://icons8.com");
     }
 }

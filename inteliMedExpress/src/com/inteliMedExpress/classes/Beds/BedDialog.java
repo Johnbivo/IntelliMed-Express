@@ -11,7 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BedDialog {
@@ -48,19 +50,50 @@ public class BedDialog {
         // Initialize a list for patients outside the try-catch so it's accessible to the result converter
         final List<Patient> patientsList = new ArrayList<>();
 
-        // Load patients
-        PatientService patientService = new PatientService();
         try {
-            List<Patient> patients = patientService.getAllPatients();
-            // Store the patients in our accessible list
-            patientsList.addAll(patients);
+            // First, get all beds to determine which patients are already assigned
+            BedService bedService = new BedService();
+            List<Bed> allBeds = bedService.getAllBeds();
 
-            // Add patients to the combo box
-            for (Patient patient : patients) {
+            // Create a set of all patient IDs that are already assigned to beds
+            Set<Integer> assignedPatientIds = new HashSet<>();
+            for (Bed existingBed : allBeds) {
+                if ("Occupied".equalsIgnoreCase(existingBed.getStatus()) && existingBed.getPatientId() != null) {
+                    assignedPatientIds.add(existingBed.getPatientId());
+                }
+            }
+
+            System.out.println("Found " + assignedPatientIds.size() + " patients already assigned to beds");
+
+            // Load all patients
+            PatientService patientService = new PatientService();
+            List<Patient> allPatients = patientService.getAllPatients();
+
+            // Filter out patients that are already assigned to beds
+            List<Patient> availablePatients = allPatients.stream()
+                    .filter(patient -> !assignedPatientIds.contains(patient.getPatientId()))
+                    .collect(Collectors.toList());
+
+            System.out.println("Showing " + availablePatients.size() + " available patients out of " +
+                    allPatients.size() + " total patients");
+
+            // Store the available patients in our accessible list
+            patientsList.addAll(availablePatients);
+
+            // Add available patients to the combo box
+            for (Patient patient : availablePatients) {
                 patientComboBox.getItems().add(patient.getPatientId() + ": " +
                         patient.getName() + " " +
                         patient.getSurname());
             }
+
+            // Show a message if no patients are available
+            if (availablePatients.isEmpty()) {
+                Label noPatientLabel = new Label("No unassigned patients available.");
+                noPatientLabel.setStyle("-fx-text-fill: #721c24;");
+                grid.add(noPatientLabel, 1, 1);
+            }
+
         } catch (IOException e) {
             UIHelper.showAlert("Error", "Could not load patients: " + e.getMessage());
         }
@@ -97,8 +130,8 @@ public class BedDialog {
                     if (patient != null) {
                         // Update bed with patient information
                         bed.setPatientId(patient.getPatientId());
-                        bed.setPatientName(patient.getName());
-                        bed.setPatientSurname(patient.getSurname());
+                        bed.setPatientFirstName(patient.getName());
+                        bed.setPatientLastName(patient.getSurname());
                         bed.setStatus("Occupied");
                         return bed;
                     } else {
@@ -123,7 +156,7 @@ public class BedDialog {
         alert.setTitle("Confirm Discharge");
         alert.setHeaderText("Discharge Patient from Bed");
         alert.setContentText("Are you sure you want to discharge patient: " +
-                bed.getPatientName() + " " + bed.getPatientSurname() + " from Bed #" + bed.getBedId() + "?");
+                bed.getPatientFirstName() + " " + bed.getPatientLastName() + " from Bed #" + bed.getBedId() + "?");
 
         // Apply custom styling to the alert
         DialogPane dialogPane = alert.getDialogPane();

@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Patient {
     // Server URLs
-    private static final String SERVER_BASE_URL = "https://127.0.0.1:8080/api/";
+    private static final String SERVER_BASE_URL = "https://springserver-kl8q.onrender.com/api/";
 
     // Department-specific URLs
     private static String department = "General"; // Default department
@@ -63,7 +63,7 @@ public class Patient {
 
     // Constructors
     public Patient() {
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     public Patient(Integer patientId, String name, String surname, String email,
@@ -80,7 +80,7 @@ public class Patient {
         this.birthDate = birthDate;
         this.status = status;
 
-        HttpsUtil.setupSSL();
+        //HttpsUtil.setupSSL();
     }
 
     // Getters and Setters
@@ -151,7 +151,7 @@ public class Patient {
                 JSONObject patientJson = (JSONObject) obj;
 
                 // Extract patient data with type conversion
-                Long idLong = (Long) patientJson.get("id");
+                Long idLong = (Long) patientJson.get("patientId");
                 Integer id = (idLong != null) ? idLong.intValue() : null;
 
                 String name = (String) patientJson.get("firstName");

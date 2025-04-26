@@ -21,11 +21,21 @@ module com.inteliMedExpress {
     exports com.inteliMedExpress.classes.medicalRecords;
     exports com.inteliMedExpress.classes.appointments;
     exports com.inteliMedExpress.classes.patients;
+    exports com.inteliMedExpress.classes.Beds;
+    exports com.inteliMedExpress.classes.Employees;
+    exports com.inteliMedExpress.classes.labTests;
+    exports com.inteliMedExpress.classes.Medications;
+    exports com.inteliMedExpress.classes.Prescriptions;
     // Open packages for FXML and reflection
     opens com.inteliMedExpress to javafx.fxml, javafx.graphics;
-    opens com.inteliMedExpress.controllers to javafx.fxml;
+    opens com.inteliMedExpress.controllers to javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.classes to java.base, javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.classes.patients to java.base, javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.classes.appointments to java.base, javafx.fxml, javafx.graphics;
     opens com.inteliMedExpress.classes.medicalRecords to javafx.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.labTests to java.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.Beds to java.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.Employees to java.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.Medications to java.base, javafx.fxml, javafx.graphics;
+    opens com.inteliMedExpress.classes.Prescriptions to java.base, javafx.fxml, javafx.graphics;
 }

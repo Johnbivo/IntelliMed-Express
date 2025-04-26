@@ -1,6 +1,8 @@
 package com.inteliMedExpress.classes.medicalRecords;
 
 import com.inteliMedExpress.classes.UIHelper;
+import com.inteliMedExpress.classes.Employees.Nurse;
+import com.inteliMedExpress.classes.Employees.NurseService;
 import com.inteliMedExpress.classes.patients.Patient;
 import com.inteliMedExpress.classes.patients.PatientService;
 import javafx.geometry.Insets;
@@ -97,8 +99,9 @@ public class MedicalRecordsDialog {
         patientComboBox.setPrefWidth(250);
         patientComboBox.setPromptText("Select Patient");
 
-        // Initialize a list for patients outside the try-catch so it's accessible to the result converter
+        // Initialize lists for data outside the try-catch so they're accessible to the result converter
         final List<Patient> patientsList = new ArrayList<>();
+        final List<Nurse> nursesList = new ArrayList<>();
 
         // Load patients
         PatientService patientService = new PatientService();
@@ -117,7 +120,30 @@ public class MedicalRecordsDialog {
             UIHelper.showAlert("Error", "Could not load patients: " + e.getMessage());
         }
 
+        // Create dropdown for nurses
+        ComboBox<String> nurseComboBox = new ComboBox<>();
+        nurseComboBox.setPrefWidth(250);
+        nurseComboBox.setPromptText("Select Nurse");
+
+        // Load nurses
+        NurseService nurseService = new NurseService();
+        try {
+            List<Nurse> nurses = nurseService.getAllNurses();
+            // Store the nurses in our accessible list
+            nursesList.addAll(nurses);
+
+            // Add nurses to the combo box
+            for (Nurse nurse : nurses) {
+                nurseComboBox.getItems().add(nurse.getNurseId() + ": " +
+                        nurse.getNurseName() + " " +
+                        nurse.getNurseSurname());
+            }
+        } catch (IOException e) {
+            UIHelper.showAlert("Error", "Could not load nurses: " + e.getMessage());
+        }
+
         // Create other form fields
+        TextField doctorNameField = new TextField();
         TextField doctorSurnameField = new TextField();
         TextArea diagnosisArea = new TextArea();
         diagnosisArea.setPrefRowCount(3);
@@ -145,7 +171,9 @@ public class MedicalRecordsDialog {
 
         // Set preferred width for consistent form field sizes
         patientComboBox.setPrefWidth(250);
+        doctorNameField.setPrefWidth(250);
         doctorSurnameField.setPrefWidth(250);
+        nurseComboBox.setPrefWidth(250);
         diagnosisArea.setPrefWidth(250);
         treatmentArea.setPrefWidth(250);
         prescriptionArea.setPrefWidth(250);
@@ -169,6 +197,20 @@ public class MedicalRecordsDialog {
                 }
             }
 
+            // For nurse selection, find the matching nurse in the dropdown
+            if (existingRecord.getNurseName() != null && existingRecord.getNurseSurname() != null) {
+                for (Nurse nurse : nursesList) {
+                    if (nurse.getNurseName().equals(existingRecord.getNurseName()) &&
+                            nurse.getNurseSurname().equals(existingRecord.getNurseSurname())) {
+                        nurseComboBox.setValue(nurse.getNurseId() + ": " +
+                                nurse.getNurseName() + " " +
+                                nurse.getNurseSurname());
+                        break;
+                    }
+                }
+            }
+
+            doctorNameField.setText(existingRecord.getDoctorName());
             doctorSurnameField.setText(existingRecord.getDoctorSurname());
             diagnosisArea.setText(existingRecord.getDiagnosis());
             treatmentArea.setText(existingRecord.getTreatment());
@@ -202,26 +244,39 @@ public class MedicalRecordsDialog {
         // Add labels and fields to the grid
         grid.add(new Label("Patient:"), 0, 0);
         grid.add(patientComboBox, 1, 0);
-        grid.add(new Label("Doctor Surname:"), 0, 1);
-        grid.add(doctorSurnameField, 1, 1);
-        grid.add(new Label("Diagnosis:"), 0, 2);
-        grid.add(diagnosisArea, 1, 2);
-        grid.add(new Label("Treatment:"), 0, 3);
-        grid.add(treatmentArea, 1, 3);
-        grid.add(new Label("Prescription:"), 0, 4);
-        grid.add(prescriptionArea, 1, 4);
-        grid.add(new Label("Status:"), 0, 5);
-        grid.add(statusComboBox, 1, 5);
-        grid.add(new Label("Record Date:"), 0, 6);
-        grid.add(recordDatePicker, 1, 6);
-        grid.add(new Label("Record Time:"), 0, 7);
-        grid.add(timeBox, 1, 7);
+
+        grid.add(new Label("Doctor Name:"), 0, 1);
+        grid.add(doctorNameField, 1, 1);
+
+        grid.add(new Label("Doctor Surname:"), 0, 2);
+        grid.add(doctorSurnameField, 1, 2);
+
+        grid.add(new Label("Nurse:"), 0, 3);
+        grid.add(nurseComboBox, 1, 3);
+
+        grid.add(new Label("Diagnosis:"), 0, 4);
+        grid.add(diagnosisArea, 1, 4);
+
+        grid.add(new Label("Treatment:"), 0, 5);
+        grid.add(treatmentArea, 1, 5);
+
+        grid.add(new Label("Prescription:"), 0, 6);
+        grid.add(prescriptionArea, 1, 6);
+
+        grid.add(new Label("Status:"), 0, 7);
+        grid.add(statusComboBox, 1, 7);
+
+        grid.add(new Label("Record Date:"), 0, 8);
+        grid.add(recordDatePicker, 1, 8);
+
+        grid.add(new Label("Record Time:"), 0, 9);
+        grid.add(timeBox, 1, 9);
 
         dialog.getDialogPane().setContent(grid);
 
         // Add some spacing to improve layout
         dialogPane.setPrefWidth(450);
-        dialogPane.setPrefHeight(650); // Increased height to accommodate the time picker
+        dialogPane.setPrefHeight(700); // Increased height to accommodate additional fields
 
         // Request focus on the patient selector by default
         patientComboBox.requestFocus();
@@ -252,7 +307,30 @@ public class MedicalRecordsDialog {
 
                     String patientName = patient.getName();
                     String patientSurname = patient.getSurname();
+                    String doctorName = doctorNameField.getText().trim();
                     String doctorSurname = doctorSurnameField.getText().trim();
+
+                    // Get nurse information from dropdown (if selected)
+                    String nurseName = "";
+                    String nurseSurname = "";
+                    String selectedNurse = nurseComboBox.getValue();
+
+                    if (selectedNurse != null && !selectedNurse.isEmpty()) {
+                        // Extract nurse ID from selection (format: "ID: Name Surname")
+                        int nurseId = Integer.parseInt(selectedNurse.split(":")[0].trim());
+
+                        // Find the nurse in our list
+                        Nurse nurse = nursesList.stream()
+                                .filter(n -> n.getNurseId() == nurseId)
+                                .findFirst()
+                                .orElse(null);
+
+                        if (nurse != null) {
+                            nurseName = nurse.getNurseName();
+                            nurseSurname = nurse.getNurseSurname();
+                        }
+                    }
+
                     String diagnosis = diagnosisArea.getText().trim();
                     String treatment = treatmentArea.getText().trim();
                     String prescription = prescriptionArea.getText().trim();
@@ -280,7 +358,10 @@ public class MedicalRecordsDialog {
                         medicalRecord = existingRecord;
                         medicalRecord.setPatientName(patientName);
                         medicalRecord.setPatientSurname(patientSurname);
+                        medicalRecord.setDoctorName(doctorName);
                         medicalRecord.setDoctorSurname(doctorSurname);
+                        medicalRecord.setNurseName(nurseName);
+                        medicalRecord.setNurseSurname(nurseSurname);
                         medicalRecord.setDiagnosis(diagnosis);
                         medicalRecord.setTreatment(treatment);
                         medicalRecord.setPrescription(prescription);
@@ -288,7 +369,8 @@ public class MedicalRecordsDialog {
                         medicalRecord.setRecordDate(recordDateTime);
                     } else {
                         medicalRecord = new MedicalRecord(null, patientName, patientSurname,
-                                doctorSurname, diagnosis, treatment, prescription, recordStatus, recordDateTime);
+                                doctorName, doctorSurname, nurseName, nurseSurname,
+                                diagnosis, treatment, prescription, recordStatus, recordDateTime);
                     }
 
                     return medicalRecord;

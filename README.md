@@ -1,4 +1,4 @@
-# IntelliMed-Express
+# IntelliMed-Express - Frontend
 
 A comprehensive JavaFX-based Hospital Management System designed for educational purposes.
 

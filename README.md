@@ -5,6 +5,9 @@ A comprehensive JavaFX-based Hospital Management System designed for educational
 ## Authors
 - **Ioannis Bivolaris**
 - **Mantsiou Olympia**
+- **Revaz Gkelasvili**
+- **Ioannis Meladinis**
+- **Miltiadis Beratis**
 
 ## ⚠️ Important Notice
 

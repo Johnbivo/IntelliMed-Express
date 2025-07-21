@@ -6,6 +6,8 @@ A comprehensive JavaFX-based Hospital Management System designed for educational
 
 **Important**: This source code may not function properly due to technical issues encountered during the deployment process. These issues are related to development environment configurations and should not be considered a reflection of the project's quality or the developers' capabilities.
 
+**Development Note**: Due to the high learning curve of Maven and JavaFX configuration, some setup mistakes may have been made during development. The Maven approach (Option 1) is recommended, but if it doesn't work, please try the manual setup (Option 2) in the installation section below.
+
 **For Recruiters**: Please note that the technical challenges in this repository are deployment-related and do not represent the actual coding skills or project quality. The production version available at https://bivolaris.com demonstrates the fully functional application.
 
 ## Authors

@@ -1,0 +1,250 @@
+2025-04-26 10:15:20.591 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:15:20.593 [INFO] LoginController: LoginController initialized
+2025-04-26 10:21:01.521 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:21:12.759 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:21:17.373 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:21:17.380 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:21:17.622 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:25:51.166 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:25:51.170 [INFO] LoginController: LoginController initialized
+2025-04-26 10:25:58.555 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:25:59.691 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:25:59.698 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:25:59.927 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:37:36.563 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:37:36.567 [INFO] LoginController: LoginController initialized
+2025-04-26 10:38:00.398 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:38:02.988 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:38:02.993 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:38:03.219 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:41:41.493 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:41:41.500 [INFO] LoginController: LoginController initialized
+2025-04-26 10:41:52.514 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:41:53.955 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:41:53.960 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:41:54.194 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:43:58.691 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:43:58.692 [INFO] LoginController: LoginController initialized
+2025-04-26 10:44:05.293 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:44:06.265 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:44:06.269 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:44:06.492 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:49:55.932 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:49:55.934 [INFO] LoginController: LoginController initialized
+2025-04-26 10:50:05.509 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:50:06.944 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:50:06.948 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:50:08.591 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:55:40.838 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 10:55:40.842 [INFO] LoginController: LoginController initialized
+2025-04-26 10:55:50.222 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-26 10:55:51.948 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-26 10:55:51.954 [INFO] LoginController: Department set to: Cardiology
+2025-04-26 10:55:53.106 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-26 10:57:29.565 [INFO] LoginController: LoginController initialized
+2025-04-26 11:04:48.451 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:04:48.453 [INFO] LoginController: LoginController initialized
+2025-04-26 11:05:51.364 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:05:54.188 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:05:54.192 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:05:54.697 [INFO] LoginController: Loaded view for Microbiology with role DOCTOR
+2025-04-26 11:06:05.961 [INFO] LoginController: LoginController initialized
+2025-04-26 11:08:46.217 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:08:46.219 [INFO] LoginController: LoginController initialized
+2025-04-26 11:08:55.607 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:08:57.773 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:08:57.792 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:08:57.794 [INFO] LoginController: Directing to Microbiology interface for Jennifer Murphy
+2025-04-26 11:08:58.188 [INFO] LoginController: Loaded Microbiology controller for Jennifer Murphy
+2025-04-26 11:10:43.743 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:10:43.746 [INFO] LoginController: LoginController initialized
+2025-04-26 11:10:49.590 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:10:50.647 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:10:50.651 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:10:50.651 [INFO] LoginController: Directing to Microbiology interface for Jennifer Murphy
+2025-04-26 11:10:50.808 [INFO] LoginController: Loaded Microbiology controller for Jennifer Murphy
+2025-04-26 11:11:07.765 [INFO] LoginController: LoginController initialized
+2025-04-26 11:11:12.792 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:11:13.949 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:11:13.949 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:11:13.950 [INFO] LoginController: Directing to Microbiology interface for Jennifer Murphy
+2025-04-26 11:11:14.078 [INFO] LoginController: Loaded Microbiology controller for Jennifer Murphy
+2025-04-26 11:13:57.261 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:13:57.265 [INFO] LoginController: LoginController initialized
+2025-04-26 11:14:03.517 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:14:05.151 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:14:05.162 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:14:05.163 [INFO] LoginController: Directing to Microbiology interface for Jennifer Murphy
+2025-04-26 11:14:05.396 [INFO] LoginController: Loaded Microbiology controller for Jennifer Murphy
+2025-04-26 11:14:22.289 [INFO] LoginController: LoginController initialized
+2025-04-26 11:14:30.141 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-26 11:14:31.515 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-26 11:14:31.516 [INFO] LoginController: Department set to: General
+2025-04-26 11:14:32.190 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 11:15:14.018 [INFO] LoginController: LoginController initialized
+2025-04-26 11:15:18.708 [INFO] LoginController: Login attempt for user: jennifer.murphy
+2025-04-26 11:15:20.645 [INFO] LoginController: jennifer.murphy successfully logged in.
+2025-04-26 11:15:20.646 [INFO] LoginController: Department set to: Microbiology
+2025-04-26 11:15:20.646 [INFO] LoginController: Directing to Microbiology interface for Jennifer Murphy
+2025-04-26 11:15:20.985 [INFO] LoginController: Loaded Microbiology controller for Jennifer Murphy
+2025-04-26 11:15:52.558 [INFO] LoginController: LoginController initialized
+2025-04-26 11:15:58.840 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-26 11:15:59.603 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-26 11:15:59.605 [INFO] LoginController: Department set to: General
+2025-04-26 11:15:59.886 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 11:16:29.276 [INFO] LoginController: LoginController initialized
+2025-04-26 11:27:56.085 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:27:56.087 [INFO] LoginController: LoginController initialized
+2025-04-26 11:28:30.604 [INFO] LoginController: Login attempt for user: elizabeth.adams
+2025-04-26 11:28:32.572 [INFO] LoginController: elizabeth.adams successfully logged in.
+2025-04-26 11:28:32.578 [INFO] LoginController: Department set to: Radiology
+2025-04-26 11:28:32.578 [INFO] LoginController: Directing to Radiology interface for Elizabeth Adams
+2025-04-26 11:28:32.990 [INFO] LoginController: Loaded Radiology controller for Elizabeth Adams
+2025-04-26 11:28:41.942 [INFO] LoginController: LoginController initialized
+2025-04-26 11:28:49.644 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-26 11:28:50.643 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-26 11:28:50.643 [INFO] LoginController: Department set to: General
+2025-04-26 11:28:51.091 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 11:29:06.702 [INFO] LoginController: LoginController initialized
+2025-04-26 11:29:11.130 [INFO] LoginController: Login attempt for user: elizabeth.adams
+2025-04-26 11:29:11.941 [INFO] LoginController: elizabeth.adams successfully logged in.
+2025-04-26 11:29:11.941 [INFO] LoginController: Department set to: Radiology
+2025-04-26 11:29:11.941 [INFO] LoginController: Directing to Radiology interface for Elizabeth Adams
+2025-04-26 11:29:12.373 [INFO] LoginController: Loaded Radiology controller for Elizabeth Adams
+2025-04-26 11:32:38.472 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:32:38.475 [INFO] LoginController: LoginController initialized
+2025-04-26 11:32:51.121 [INFO] LoginController: Login attempt for user: elizabeth.adams
+2025-04-26 11:32:52.654 [INFO] LoginController: elizabeth.adams successfully logged in.
+2025-04-26 11:32:52.666 [INFO] LoginController: Department set to: Radiology
+2025-04-26 11:32:52.666 [INFO] LoginController: Directing to Radiology interface for Elizabeth Adams
+2025-04-26 11:32:52.993 [INFO] LoginController: Loaded Radiology controller for Elizabeth Adams
+2025-04-26 11:34:07.606 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 11:34:07.610 [INFO] LoginController: LoginController initialized
+2025-04-26 11:34:21.724 [INFO] LoginController: Login attempt for user: elizabeth.adams
+2025-04-26 11:34:22.655 [INFO] LoginController: elizabeth.adams successfully logged in.
+2025-04-26 11:34:22.662 [INFO] LoginController: Department set to: Radiology
+2025-04-26 11:34:22.662 [INFO] LoginController: Directing to Radiology interface for Elizabeth Adams
+2025-04-26 11:34:22.894 [INFO] LoginController: Loaded Radiology controller for Elizabeth Adams
+2025-04-26 21:56:51.279 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 21:56:51.284 [INFO] LoginController: LoginController initialized
+2025-04-26 21:57:30.288 [INFO] LoginController: Login attempt for user: david.green
+2025-04-26 21:57:33.461 [INFO] LoginController: david.green successfully logged in.
+2025-04-26 21:57:33.467 [INFO] LoginController: Department set to: General
+2025-04-26 21:57:35.073 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 21:59:13.596 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 21:59:13.598 [INFO] LoginController: LoginController initialized
+2025-04-26 21:59:32.159 [INFO] LoginController: Login attempt for user: david.green
+2025-04-26 21:59:33.278 [INFO] LoginController: david.green successfully logged in.
+2025-04-26 21:59:33.282 [INFO] LoginController: Department set to: General
+2025-04-26 21:59:34.372 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 22:00:16.188 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:00:16.193 [INFO] LoginController: LoginController initialized
+2025-04-26 22:01:33.442 [INFO] RegisterController: Registering user: Barbas123
+2025-04-26 22:01:33.443 [INFO] RegisterController: Sending register request to https://springserver-kl8q.onrender.com/api/auth/register
+2025-04-26 22:04:32.066 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:04:32.070 [INFO] LoginController: LoginController initialized
+2025-04-26 22:07:13.352 [INFO] RegisterController: Registering user: Barbas123
+2025-04-26 22:07:13.353 [INFO] RegisterController: Sending register request to https://springserver-kl8q.onrender.com/api/auth/register
+2025-04-26 22:07:36.104 [INFO] RegisterController: Registering user: Barbas123
+2025-04-26 22:07:36.104 [INFO] RegisterController: Sending register request to https://springserver-kl8q.onrender.com/api/auth/register
+2025-04-26 22:07:38.612 [INFO] LoginController: LoginController initialized
+2025-04-26 22:13:29.420 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:13:29.421 [INFO] LoginController: LoginController initialized
+2025-04-26 22:14:43.314 [INFO] LoginController: Login attempt for user: david.green
+2025-04-26 22:14:45.560 [INFO] LoginController: david.green successfully logged in.
+2025-04-26 22:14:45.563 [INFO] LoginController: Department set to: General
+2025-04-26 22:14:46.577 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 22:14:50.921 [INFO] LoginController: LoginController initialized
+2025-04-26 22:16:24.357 [INFO] RegisterController: Registering user: Barbas123
+2025-04-26 22:16:24.358 [INFO] RegisterController: Sending register request to https://springserver-kl8q.onrender.com/api/auth/register
+2025-04-26 22:16:24.358 [INFO] RegisterController: Sending JSON payload: {"profession":"DOCTOR","password":"password123","firstname":"Bar","address":"barbas street 1","gender":"male","phone":"9996663331","department":"Pharmacy","email":"barbas@mail.com","age":45,"username":"Barbas123","lastname":"Bas"}
+2025-04-26 22:16:25.993 [INFO] RegisterController: Barbas123 successfully registered.
+2025-04-26 22:16:26.233 [INFO] LoginController: LoginController initialized
+2025-04-26 22:16:33.157 [INFO] LoginController: Login attempt for user: barbas123
+2025-04-26 22:16:39.199 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:16:40.242 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:16:40.242 [INFO] LoginController: Department set to: General
+2025-04-26 22:16:40.777 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 22:17:41.749 [INFO] LoginController: LoginController initialized
+2025-04-26 22:20:13.802 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:20:13.804 [INFO] LoginController: LoginController initialized
+2025-04-26 22:20:21.505 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:20:22.011 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:20:22.830 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:20:22.830 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:20:22.833 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:20:22.834 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:20:22.834 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:20:23.187 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:24:14.529 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:24:14.530 [INFO] LoginController: LoginController initialized
+2025-04-26 22:24:22.779 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:24:23.203 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:24:23.706 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:24:23.707 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:24:23.709 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:24:23.710 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:24:23.710 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:24:24.075 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:26:19.347 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:26:19.350 [INFO] LoginController: LoginController initialized
+2025-04-26 22:26:26.516 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:26:26.943 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:26:27.538 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:26:27.539 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:26:27.541 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:26:27.541 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:26:27.542 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:26:27.805 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:30:25.993 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:30:25.994 [INFO] LoginController: LoginController initialized
+2025-04-26 22:30:31.340 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:30:31.788 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:30:32.340 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:30:32.340 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:30:32.343 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:30:32.343 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:30:32.343 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:30:32.613 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:33:58.552 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:33:58.556 [INFO] LoginController: LoginController initialized
+2025-04-26 22:34:04.166 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:34:04.583 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:34:05.125 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:34:05.125 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:34:05.128 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:34:05.128 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:34:05.128 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:34:05.575 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:36:51.323 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:36:51.326 [INFO] LoginController: LoginController initialized
+2025-04-26 22:36:57.513 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:36:57.957 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:36:58.448 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:36:58.448 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:36:58.451 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:36:58.451 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:36:58.452 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:36:58.779 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:38:20.625 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:38:20.626 [INFO] LoginController: LoginController initialized
+2025-04-26 22:38:26.551 [INFO] LoginController: Login attempt for user: Barbas123
+2025-04-26 22:38:27.027 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Bas","name":"Bar","message":"User logged in successfully!","department":"Pharmacy","status":"success"}
+2025-04-26 22:38:27.616 [INFO] LoginController: Barbas123 successfully logged in.
+2025-04-26 22:38:27.617 [INFO] LoginController: Department received from server: Pharmacy
+2025-04-26 22:38:27.619 [INFO] LoginController: Department set to: Pharmacy
+2025-04-26 22:38:27.620 [INFO] LoginController: Processing navigation for department: Pharmacy
+2025-04-26 22:38:27.620 [INFO] LoginController: Directing to Pharmacology interface
+2025-04-26 22:38:27.890 [INFO] LoginController: Loaded Pharmacology controller for Bar Bas
+2025-04-26 22:38:55.540 [INFO] LoginController: LoginController initialized
+2025-04-26 22:39:26.007 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-26.log
+2025-04-26 22:39:26.010 [INFO] LoginController: LoginController initialized
+2025-04-26 22:39:34.621 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-26 22:39:35.049 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Collins","name":"Richard","message":"User logged in successfully!","department":"General","status":"success"}
+2025-04-26 22:39:35.504 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-26 22:39:35.504 [INFO] LoginController: Department received from server: General
+2025-04-26 22:39:35.507 [INFO] LoginController: Department set to: General
+2025-04-26 22:39:35.507 [INFO] LoginController: Processing navigation for department: General
+2025-04-26 22:39:35.508 [INFO] LoginController: Directing to General Medicine interface
+2025-04-26 22:39:36.078 [INFO] LoginController: Loaded General controller with department General
+2025-04-26 22:39:40.683 [INFO] LoginController: LoginController initialized

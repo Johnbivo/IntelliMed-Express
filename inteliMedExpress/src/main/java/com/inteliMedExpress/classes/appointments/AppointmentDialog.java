@@ -49,7 +49,7 @@ public class AppointmentDialog {
         // Apply custom styling to the alert
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                AppointmentDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                AppointmentDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("alert");
         dialogPane.getStyleClass().add("confirmation");
 
@@ -80,7 +80,7 @@ public class AppointmentDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                AppointmentDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                AppointmentDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
@@ -427,7 +427,7 @@ public class AppointmentDialog {
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStyleClass().add("appointment-details-dialog");
         dialogPane.getStylesheets().add(
-                AppointmentDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm()
+                AppointmentDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm()
         );
 
         dialogPane.setContent(textArea);
@@ -435,7 +435,7 @@ public class AppointmentDialog {
 
         // Add app icon
         Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        dialogStage.getIcons().add(new javafx.scene.image.Image(AppointmentDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+        dialogStage.getIcons().add(new javafx.scene.image.Image(AppointmentDialog.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png")));
 
         dialog.showAndWait();
     }

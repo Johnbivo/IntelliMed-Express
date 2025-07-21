@@ -13,14 +13,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("com/inteliMedExpress/resources/fxml/login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setTitle("InteliMedExpress - Login");
             primaryStage.setScene(scene);
 
 
-            Image icon = new Image(getClass().getResource("/com/inteliMedExpress/resources/images/logo.png").toString());
+            Image icon = new Image(getClass().getResource("=logo.png").toString());
             primaryStage.getIcons().add(icon);
             primaryStage.setMinWidth(1280);
             primaryStage.setMinHeight(720);

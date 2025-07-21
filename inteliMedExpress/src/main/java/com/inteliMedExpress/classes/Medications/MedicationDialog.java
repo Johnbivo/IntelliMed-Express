@@ -31,7 +31,7 @@ public class MedicationDialog {
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                MedicationDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                MedicationDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
         dialogPane.getStyleClass().addAll("alert", "confirmation");
 
         ButtonType buttonYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
@@ -56,7 +56,7 @@ public class MedicationDialog {
 
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                MedicationDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                MedicationDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialogPane.getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);

@@ -1,0 +1,248 @@
+2025-04-15 12:55:20.378 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 12:55:20.382 [INFO] LoginController: LoginController initialized
+2025-04-15 12:55:20.462 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 12:56:40.101 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 12:56:41.581 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 12:56:41.587 [INFO] LoginController: Department set to: General
+2025-04-15 12:56:41.745 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 12:58:26.981 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 12:58:26.983 [INFO] LoginController: LoginController initialized
+2025-04-15 12:58:27.035 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 12:58:44.159 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 12:58:44.976 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 12:58:44.982 [INFO] LoginController: Department set to: General
+2025-04-15 12:58:45.127 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:03:14.407 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:03:14.409 [INFO] LoginController: LoginController initialized
+2025-04-15 13:03:14.468 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:03:26.795 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:03:27.603 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:03:27.619 [INFO] LoginController: Department set to: General
+2025-04-15 13:03:27.772 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:16:35.330 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:16:35.332 [INFO] LoginController: LoginController initialized
+2025-04-15 13:16:35.388 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:16:47.477 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:16:48.314 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:16:48.317 [INFO] LoginController: Department set to: General
+2025-04-15 13:16:48.461 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:17:36.866 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:17:36.868 [INFO] LoginController: LoginController initialized
+2025-04-15 13:17:36.925 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:17:46.846 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:17:47.614 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:17:47.622 [INFO] LoginController: Department set to: General
+2025-04-15 13:17:47.795 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:21:30.349 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:21:30.353 [INFO] LoginController: LoginController initialized
+2025-04-15 13:21:30.451 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:21:55.676 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:21:56.399 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:21:56.403 [INFO] LoginController: Department set to: General
+2025-04-15 13:21:56.544 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:23:11.968 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:23:11.970 [INFO] LoginController: LoginController initialized
+2025-04-15 13:23:12.021 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:23:21.850 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:23:22.629 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:23:22.649 [INFO] LoginController: Department set to: General
+2025-04-15 13:23:22.828 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:34:42.909 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:34:42.912 [INFO] LoginController: LoginController initialized
+2025-04-15 13:34:43.027 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:34:51.556 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:34:52.368 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:34:52.374 [INFO] LoginController: Department set to: General
+2025-04-15 13:34:52.517 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:36:38.656 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:36:38.660 [INFO] LoginController: LoginController initialized
+2025-04-15 13:36:38.771 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:36:50.455 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:36:51.221 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:36:51.225 [INFO] LoginController: Department set to: General
+2025-04-15 13:36:51.366 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:37:16.388 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:37:16.389 [INFO] LoginController: LoginController initialized
+2025-04-15 13:37:16.442 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:37:25.568 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:37:26.283 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:37:26.296 [INFO] LoginController: Department set to: General
+2025-04-15 13:37:26.444 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:39:53.532 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:39:53.534 [INFO] LoginController: LoginController initialized
+2025-04-15 13:39:53.591 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:40:02.827 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:40:03.683 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:40:03.698 [INFO] LoginController: Department set to: General
+2025-04-15 13:40:03.849 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:44:52.092 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:44:52.094 [INFO] LoginController: LoginController initialized
+2025-04-15 13:44:52.152 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:45:03.658 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:45:04.773 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:45:04.779 [INFO] LoginController: Department set to: General
+2025-04-15 13:45:04.922 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:45:54.187 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:45:54.190 [INFO] LoginController: LoginController initialized
+2025-04-15 13:45:54.302 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:46:03.190 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:46:08.513 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:46:14.713 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:46:15.416 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:46:15.421 [INFO] LoginController: Department set to: General
+2025-04-15 13:46:15.572 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:46:47.918 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:46:47.921 [INFO] LoginController: LoginController initialized
+2025-04-15 13:46:48.013 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:46:57.876 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:46:59.231 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:46:59.235 [INFO] LoginController: Department set to: General
+2025-04-15 13:46:59.382 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:50:34.403 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:50:34.405 [INFO] LoginController: LoginController initialized
+2025-04-15 13:50:34.463 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:50:42.158 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:50:42.927 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:50:42.947 [INFO] LoginController: Department set to: General
+2025-04-15 13:50:43.113 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:55:32.131 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:55:32.134 [INFO] LoginController: LoginController initialized
+2025-04-15 13:55:32.201 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:55:40.246 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:55:41.149 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:55:41.169 [INFO] LoginController: Department set to: General
+2025-04-15 13:55:41.328 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:57:08.506 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:57:08.508 [INFO] LoginController: LoginController initialized
+2025-04-15 13:57:08.563 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:57:16.849 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:57:17.901 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:57:17.906 [INFO] LoginController: Department set to: General
+2025-04-15 13:57:18.061 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:58:22.957 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:58:22.959 [INFO] LoginController: LoginController initialized
+2025-04-15 13:58:23.013 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:58:31.383 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:58:32.450 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:58:32.467 [INFO] LoginController: Department set to: General
+2025-04-15 13:58:32.632 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 13:58:59.114 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 13:58:59.116 [INFO] LoginController: LoginController initialized
+2025-04-15 13:58:59.170 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 13:59:09.477 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 13:59:10.351 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 13:59:10.362 [INFO] LoginController: Department set to: General
+2025-04-15 13:59:10.517 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 14:07:24.956 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:07:24.961 [INFO] LoginController: LoginController initialized
+2025-04-15 14:07:25.064 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:07:37.954 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 14:07:38.849 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 14:07:38.856 [INFO] LoginController: Department set to: General
+2025-04-15 14:07:39.020 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 14:19:04.332 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:19:04.334 [INFO] LoginController: LoginController initialized
+2025-04-15 14:19:04.399 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:19:18.506 [INFO] LoginController: Login attempt for user: robert.harris
+2025-04-15 14:19:19.269 [INFO] LoginController: robert.harris successfully logged in.
+2025-04-15 14:19:19.273 [INFO] LoginController: Department set to: Microbiology
+2025-04-15 14:19:19.462 [INFO] LoginController: Loaded view for Microbiology with role NURSE
+2025-04-15 14:21:13.585 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:21:13.587 [INFO] LoginController: LoginController initialized
+2025-04-15 14:21:13.649 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:21:25.070 [INFO] LoginController: Login attempt for user: lisa.baker
+2025-04-15 14:21:25.838 [INFO] LoginController: lisa.baker successfully logged in.
+2025-04-15 14:21:25.846 [INFO] LoginController: Department set to: General
+2025-04-15 14:21:26.040 [INFO] LoginController: Loaded view for General with role NURSE
+2025-04-15 14:22:27.740 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:22:27.744 [INFO] LoginController: LoginController initialized
+2025-04-15 14:22:27.861 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:22:36.431 [INFO] LoginController: Login attempt for user: david.green
+2025-04-15 14:22:37.388 [INFO] LoginController: david.green successfully logged in.
+2025-04-15 14:22:37.392 [INFO] LoginController: Department set to: General
+2025-04-15 14:22:37.612 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 14:28:11.453 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:28:11.455 [INFO] LoginController: LoginController initialized
+2025-04-15 14:28:11.516 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:28:25.727 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-15 14:28:26.374 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-15 14:28:26.384 [INFO] LoginController: Department set to: Cardiology
+2025-04-15 14:31:13.573 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 14:31:13.577 [INFO] LoginController: LoginController initialized
+2025-04-15 14:31:13.689 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 14:31:26.903 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-15 14:31:27.566 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-15 14:31:27.570 [INFO] LoginController: Department set to: Cardiology
+2025-04-15 19:33:31.731 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 19:33:31.734 [INFO] LoginController: LoginController initialized
+2025-04-15 19:33:31.812 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 19:35:24.443 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-15 19:35:26.052 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-15 19:35:26.056 [INFO] LoginController: Department set to: Cardiology
+2025-04-15 19:35:26.060 [WARNING] LoginController: Controller doesn't have setDoctorName method: com.inteliMedExpress.controllers.CardiologyDoctorController.setDoctorName(java.lang.String)
+2025-04-15 19:35:26.060 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-15 19:56:47.734 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 19:56:47.736 [INFO] LoginController: LoginController initialized
+2025-04-15 19:56:47.788 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 19:56:57.316 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 19:56:58.394 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 19:56:58.403 [INFO] LoginController: Department set to: General
+2025-04-15 19:56:58.648 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:07:00.106 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:07:00.108 [INFO] LoginController: LoginController initialized
+2025-04-15 20:07:00.179 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:08:30.812 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:08:31.909 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:08:31.915 [INFO] LoginController: Department set to: General
+2025-04-15 20:08:32.111 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:14:26.264 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:14:26.265 [INFO] LoginController: LoginController initialized
+2025-04-15 20:14:26.312 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:14:34.004 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:14:34.662 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:14:34.665 [INFO] LoginController: Department set to: General
+2025-04-15 20:14:34.859 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:16:57.222 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:16:57.226 [INFO] LoginController: LoginController initialized
+2025-04-15 20:16:57.326 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:17:08.991 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:17:10.918 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:17:10.921 [INFO] LoginController: Department set to: General
+2025-04-15 20:17:11.134 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:20:43.240 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:20:43.242 [INFO] LoginController: LoginController initialized
+2025-04-15 20:20:43.286 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:20:55.579 [INFO] LoginController: Login attempt for user: richard.collis
+2025-04-15 20:21:03.109 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:21:03.923 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:21:03.926 [INFO] LoginController: Department set to: General
+2025-04-15 20:21:04.123 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:23:18.064 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:23:18.067 [INFO] LoginController: LoginController initialized
+2025-04-15 20:23:18.162 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:23:25.996 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:23:26.674 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:23:26.676 [INFO] LoginController: Department set to: General
+2025-04-15 20:23:26.858 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:25:06.764 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:25:06.765 [INFO] LoginController: LoginController initialized
+2025-04-15 20:25:06.806 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:25:15.077 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:25:15.713 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:25:15.716 [INFO] LoginController: Department set to: General
+2025-04-15 20:25:15.914 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:26:38.823 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:26:38.824 [INFO] LoginController: LoginController initialized
+2025-04-15 20:26:38.867 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:26:47.706 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:26:48.339 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:26:48.342 [INFO] LoginController: Department set to: General
+2025-04-15 20:26:48.529 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:29:53.846 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-15.log
+2025-04-15 20:29:53.848 [INFO] LoginController: LoginController initialized
+2025-04-15 20:29:53.898 [INFO] HttpsUtil: SSL setup complete with specific certificate and hostname verification disabled
+2025-04-15 20:30:26.497 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-15 20:30:27.512 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-15 20:30:27.514 [INFO] LoginController: Department set to: General
+2025-04-15 20:30:27.773 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-15 20:34:54.619 [INFO] LoginController: LoginController initialized

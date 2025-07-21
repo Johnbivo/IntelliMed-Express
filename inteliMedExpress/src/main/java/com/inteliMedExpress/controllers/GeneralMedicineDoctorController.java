@@ -79,8 +79,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -518,7 +516,7 @@ public class GeneralMedicineDoctorController {
     @FXML
     public void logout(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com/inteliMedExpress/fxml/login.fxml"));
             Parent loginRoot = loader.load();
             Scene loginScene = new Scene(loginRoot);
             Stage currentStage = (Stage) logout_button.getScene().getWindow();
@@ -1073,12 +1071,12 @@ public class GeneralMedicineDoctorController {
     private void initializePatientRefreshButton() {
         try {
             // Load static icon for normal state
-            staticRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIcon.setFitHeight(20);
             staticRefreshIcon.setFitWidth(20);
 
             // Load animated GIF for active state
-            animatedRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIcon.setFitHeight(20);
             animatedRefreshIcon.setFitWidth(20);
 
@@ -1113,11 +1111,11 @@ public class GeneralMedicineDoctorController {
 
         try {
 
-            staticRefreshIconAppointment = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconAppointment = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIconAppointment.setFitHeight(20);
             staticRefreshIconAppointment.setFitWidth(20);
 
-            animatedRefreshIconAppointment = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconAppointment = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIconAppointment.setFitHeight(20);
             animatedRefreshIconAppointment.setFitWidth(20);
 
@@ -1143,11 +1141,11 @@ public class GeneralMedicineDoctorController {
         });
 
         try {
-            staticRefreshIconRecords = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconRecords = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIconRecords.setFitHeight(20);
             staticRefreshIconRecords.setFitWidth(20);
 
-            animatedRefreshIconRecords = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconRecords = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIconRecords.setFitHeight(20);
             animatedRefreshIconRecords.setFitWidth(20);
 
@@ -1174,11 +1172,11 @@ public class GeneralMedicineDoctorController {
         });
         try {
             // Reuse the same icon resources for lab tests
-            staticRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIconLabTests.setFitHeight(20);
             staticRefreshIconLabTests.setFitWidth(20);
 
-            animatedRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconLabTests = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIconLabTests.setFitHeight(20);
             animatedRefreshIconLabTests.setFitWidth(20);
 
@@ -1207,11 +1205,11 @@ public class GeneralMedicineDoctorController {
     private void initializePrescriptionRefreshButton() {
         try {
             // Reuse the same icon resources for prescriptions
-            staticRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIconPrescription.setFitHeight(20);
             staticRefreshIconPrescription.setFitWidth(20);
 
-            animatedRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIconPrescription = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIconPrescription.setFitHeight(20);
             animatedRefreshIconPrescription.setFitWidth(20);
 
@@ -1756,7 +1754,7 @@ public class GeneralMedicineDoctorController {
 
             DialogPane dialogPane = dialog.getDialogPane();
             dialogPane.getStylesheets().add(
-                    MedicalRecordsDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                    MedicalRecordsDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
             dialogPane.setPrefWidth(900);
             dialogPane.setPrefHeight(600);
 
@@ -1884,7 +1882,7 @@ public class GeneralMedicineDoctorController {
 
         DialogPane dialogPane = detailsDialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                MedicalRecordsDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                MedicalRecordsDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         VBox content = new VBox(15);
         content.setPadding(new Insets(10));

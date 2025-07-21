@@ -2,7 +2,6 @@ package com.inteliMedExpress.controllers;
 
 import com.inteliMedExpress.classes.UIHelper;
 import com.inteliMedExpress.utils.AppLogger;
-import com.inteliMedExpress.utils.HttpsUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -220,7 +219,7 @@ public class RegisterController implements Initializable {
 
     public void back_to_login(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com/inteliMedExpress/fxml/login.fxml"));
             Parent loginRoot = loader.load();
 
             Scene loginScene = new Scene(loginRoot);

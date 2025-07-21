@@ -100,7 +100,7 @@ public class UIHelper {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
         // Load your application's icon - update the path to match your icon location
-        Image appIcon = new Image(UIHelper.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png"));
+        Image appIcon = new Image(UIHelper.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png"));
         stage.getIcons().add(appIcon);
 
         alert.showAndWait();

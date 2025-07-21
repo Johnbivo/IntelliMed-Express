@@ -1,0 +1,259 @@
+2025-04-25 14:07:54.349 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 14:07:54.352 [INFO] LoginController: LoginController initialized
+2025-04-25 14:08:05.764 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 14:08:08.327 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 14:08:08.333 [INFO] LoginController: Department set to: General
+2025-04-25 14:08:08.572 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 14:09:52.551 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 14:09:52.556 [INFO] LoginController: LoginController initialized
+2025-04-25 14:09:59.995 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 14:10:01.508 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 14:10:01.512 [INFO] LoginController: Department set to: General
+2025-04-25 14:10:01.738 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 14:12:34.146 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 14:12:34.148 [INFO] LoginController: LoginController initialized
+2025-04-25 14:12:41.147 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 14:12:42.593 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 14:12:42.596 [INFO] LoginController: Department set to: General
+2025-04-25 14:12:42.809 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:18:28.800 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:18:28.804 [INFO] LoginController: LoginController initialized
+2025-04-25 15:18:39.344 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:24:23.575 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:24:23.604 [INFO] LoginController: Department set to: General
+2025-04-25 15:24:25.380 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:26:29.485 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:26:29.487 [INFO] LoginController: LoginController initialized
+2025-04-25 15:26:40.476 [INFO] LoginController: Login attempt for user: ricahrd.collins
+2025-04-25 15:26:52.376 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:26:53.553 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:26:53.576 [INFO] LoginController: Department set to: General
+2025-04-25 15:26:53.968 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:32:22.521 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:32:22.524 [INFO] LoginController: LoginController initialized
+2025-04-25 15:32:30.213 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:32:31.956 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:32:31.968 [INFO] LoginController: Department set to: General
+2025-04-25 15:32:32.289 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:38:43.878 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:38:43.879 [INFO] LoginController: LoginController initialized
+2025-04-25 15:39:27.056 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:39:29.457 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:39:29.464 [INFO] LoginController: Department set to: General
+2025-04-25 15:39:30.080 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:45:45.369 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:45:45.373 [INFO] LoginController: LoginController initialized
+2025-04-25 15:45:59.651 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:46:00.867 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:46:00.871 [INFO] LoginController: Department set to: General
+2025-04-25 15:46:01.182 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:52:23.151 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:52:23.154 [INFO] LoginController: LoginController initialized
+2025-04-25 15:52:32.100 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:53:27.067 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:53:27.079 [INFO] LoginController: Department set to: General
+2025-04-25 15:53:27.976 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 15:57:40.106 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 15:57:40.107 [INFO] LoginController: LoginController initialized
+2025-04-25 15:57:48.602 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 15:57:49.954 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 15:57:49.958 [INFO] LoginController: Department set to: General
+2025-04-25 15:57:50.298 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 16:00:44.319 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:00:44.321 [INFO] LoginController: LoginController initialized
+2025-04-25 16:00:53.964 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 16:00:55.104 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 16:00:55.118 [INFO] LoginController: Department set to: General
+2025-04-25 16:00:55.351 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 16:01:32.804 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:01:32.805 [INFO] LoginController: LoginController initialized
+2025-04-25 16:01:41.530 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 16:01:42.712 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 16:01:42.721 [INFO] LoginController: Department set to: General
+2025-04-25 16:01:43.063 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 16:03:46.291 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:03:46.295 [INFO] LoginController: LoginController initialized
+2025-04-25 16:04:31.080 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:04:32.424 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:04:32.428 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:04:32.650 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 16:09:00.844 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:09:00.849 [INFO] LoginController: LoginController initialized
+2025-04-25 16:09:18.497 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:09:20.417 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:09:20.424 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:09:20.664 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 16:13:18.014 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:13:18.016 [INFO] LoginController: LoginController initialized
+2025-04-25 16:13:25.109 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 16:13:26.191 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 16:13:26.201 [INFO] LoginController: Department set to: General
+2025-04-25 16:13:26.427 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 16:15:43.325 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:15:43.328 [INFO] LoginController: LoginController initialized
+2025-04-25 16:16:13.205 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:16:14.375 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:16:14.380 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:16:14.561 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 16:22:29.052 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:22:29.054 [INFO] LoginController: LoginController initialized
+2025-04-25 16:22:41.760 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:22:42.991 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:22:42.995 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:22:43.176 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 16:28:20.449 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:28:20.452 [INFO] LoginController: LoginController initialized
+2025-04-25 16:28:33.899 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:29:52.693 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:29:52.700 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:29:52.884 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 16:59:35.149 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 16:59:35.154 [INFO] LoginController: LoginController initialized
+2025-04-25 16:59:45.320 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 16:59:54.235 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 16:59:54.239 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 16:59:54.415 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 17:01:52.583 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:01:52.584 [INFO] LoginController: LoginController initialized
+2025-04-25 17:02:03.618 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 17:02:05.356 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 17:02:05.361 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 17:02:05.545 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 17:03:08.303 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:03:08.307 [INFO] LoginController: LoginController initialized
+2025-04-25 17:03:15.450 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 17:03:16.523 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 17:03:16.527 [INFO] LoginController: Department set to: General
+2025-04-25 17:03:16.699 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 17:05:51.762 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:05:51.766 [INFO] LoginController: LoginController initialized
+2025-04-25 17:06:00.678 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 17:06:01.924 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 17:06:01.929 [INFO] LoginController: Department set to: General
+2025-04-25 17:06:02.111 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 17:09:05.610 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:09:05.612 [INFO] LoginController: LoginController initialized
+2025-04-25 17:09:15.668 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 17:09:16.806 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 17:09:16.813 [INFO] LoginController: Department set to: General
+2025-04-25 17:09:16.995 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 17:14:08.159 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:14:08.162 [INFO] LoginController: LoginController initialized
+2025-04-25 17:14:16.281 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 17:14:18.169 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 17:14:18.181 [INFO] LoginController: Department set to: General
+2025-04-25 17:14:18.378 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 17:22:59.978 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:22:59.980 [INFO] LoginController: LoginController initialized
+2025-04-25 17:23:07.359 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 17:23:09.683 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 17:23:09.694 [INFO] LoginController: Department set to: General
+2025-04-25 17:23:09.877 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 17:31:51.360 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 17:31:51.362 [INFO] LoginController: LoginController initialized
+2025-04-25 17:32:07.863 [INFO] LoginController: Login attempt for user: susan.evans
+2025-04-25 17:32:11.551 [INFO] LoginController: susan.evans successfully logged in.
+2025-04-25 17:32:11.555 [INFO] LoginController: Department set to: General
+2025-04-25 17:32:11.739 [INFO] LoginController: Loaded view for General with role NURSE
+2025-04-25 18:03:31.373 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:03:31.375 [INFO] LoginController: LoginController initialized
+2025-04-25 18:03:44.331 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:03:46.286 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:03:46.299 [INFO] LoginController: Department set to: General
+2025-04-25 18:03:46.484 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:06:40.476 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:06:40.478 [INFO] LoginController: LoginController initialized
+2025-04-25 18:06:49.441 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:06:50.939 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:06:50.944 [INFO] LoginController: Department set to: General
+2025-04-25 18:06:51.139 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:08:46.384 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:08:46.386 [INFO] LoginController: LoginController initialized
+2025-04-25 18:08:53.866 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:08:55.045 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:08:55.049 [INFO] LoginController: Department set to: General
+2025-04-25 18:08:55.234 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:09:36.183 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:09:36.185 [INFO] LoginController: LoginController initialized
+2025-04-25 18:09:47.919 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:09:49.283 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:09:49.289 [INFO] LoginController: Department set to: General
+2025-04-25 18:09:49.476 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:11:28.104 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:11:28.106 [INFO] LoginController: LoginController initialized
+2025-04-25 18:11:35.457 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:11:36.916 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:11:36.921 [INFO] LoginController: Department set to: General
+2025-04-25 18:11:37.116 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:16:02.870 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:16:02.872 [INFO] LoginController: LoginController initialized
+2025-04-25 18:16:11.131 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:16:12.295 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:16:12.302 [INFO] LoginController: Department set to: General
+2025-04-25 18:16:12.496 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:17:09.123 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:17:09.127 [INFO] LoginController: LoginController initialized
+2025-04-25 18:17:15.562 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:17:16.911 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:17:16.917 [INFO] LoginController: Department set to: General
+2025-04-25 18:17:17.149 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:19:27.824 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:19:27.826 [INFO] LoginController: LoginController initialized
+2025-04-25 18:19:34.389 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:19:36.230 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:19:36.234 [INFO] LoginController: Department set to: General
+2025-04-25 18:19:36.464 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:23:48.275 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:23:48.277 [INFO] LoginController: LoginController initialized
+2025-04-25 18:23:55.203 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:23:56.300 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:23:56.310 [INFO] LoginController: Department set to: General
+2025-04-25 18:23:56.535 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:25:47.942 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:25:47.944 [INFO] LoginController: LoginController initialized
+2025-04-25 18:25:55.957 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:25:57.028 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:25:57.035 [INFO] LoginController: Department set to: General
+2025-04-25 18:25:57.265 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:28:18.506 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:28:18.508 [INFO] LoginController: LoginController initialized
+2025-04-25 18:28:26.336 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:28:27.808 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:28:27.813 [INFO] LoginController: Department set to: General
+2025-04-25 18:28:28.035 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:30:18.925 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:30:18.927 [INFO] LoginController: LoginController initialized
+2025-04-25 18:30:26.517 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:30:28.047 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:30:28.053 [INFO] LoginController: Department set to: General
+2025-04-25 18:30:28.281 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:31:02.186 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:31:02.188 [INFO] LoginController: LoginController initialized
+2025-04-25 18:31:17.010 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 18:31:18.053 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 18:31:18.058 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 18:31:18.276 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 18:33:33.899 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:33:33.901 [INFO] LoginController: LoginController initialized
+2025-04-25 18:33:41.104 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-25 18:33:42.152 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-25 18:33:42.156 [INFO] LoginController: Department set to: General
+2025-04-25 18:33:42.385 [INFO] LoginController: Loaded view for General with role DOCTOR
+2025-04-25 18:33:50.190 [INFO] LoginController: LoginController initialized
+2025-04-25 18:34:03.413 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 18:34:04.369 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 18:34:04.369 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 18:34:04.450 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 18:38:53.856 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:38:53.858 [INFO] LoginController: LoginController initialized
+2025-04-25 18:39:04.613 [INFO] LoginController: Login attempt for user: sarah.mitchell
+2025-04-25 18:39:06.003 [INFO] LoginController: sarah.mitchell successfully logged in.
+2025-04-25 18:39:06.008 [INFO] LoginController: Department set to: Pediatrics
+2025-04-25 18:39:06.231 [INFO] LoginController: Loaded view for Pediatrics with role DOCTOR
+2025-04-25 18:39:29.973 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-25.log
+2025-04-25 18:39:29.975 [INFO] LoginController: LoginController initialized
+2025-04-25 18:39:49.667 [INFO] LoginController: Login attempt for user: thomas.anderson
+2025-04-25 18:39:50.694 [INFO] LoginController: thomas.anderson successfully logged in.
+2025-04-25 18:39:50.698 [INFO] LoginController: Department set to: Cardiology
+2025-04-25 18:39:50.923 [INFO] LoginController: Loaded view for Cardiology with role DOCTOR
+2025-04-25 18:40:45.507 [INFO] LoginController: LoginController initialized

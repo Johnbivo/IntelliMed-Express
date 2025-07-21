@@ -29,7 +29,7 @@ public class BedDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                BedDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                BedDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         ButtonType assignButtonType = new ButtonType("Assign", ButtonBar.ButtonData.OK_DONE);
@@ -161,7 +161,7 @@ public class BedDialog {
         // Apply custom styling to the alert
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                BedDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                BedDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
         dialogPane.getStyleClass().add("alert");
         dialogPane.getStyleClass().add("confirmation");
 

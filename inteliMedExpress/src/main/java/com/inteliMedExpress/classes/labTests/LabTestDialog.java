@@ -46,7 +46,7 @@ public class LabTestDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                LabTestDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                LabTestDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         ButtonType requestButtonType = new ButtonType("Request Test", ButtonBar.ButtonData.OK_DONE);
@@ -198,7 +198,7 @@ public class LabTestDialog {
         // Add app icon if available
         try {
             Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png")));
         } catch (Exception e) {
             // If icon loading fails, just continue
             System.err.println("Could not load application icon: " + e.getMessage());
@@ -221,7 +221,7 @@ public class LabTestDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                LabTestDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                LabTestDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         ButtonType assignButtonType = new ButtonType("Assign", ButtonBar.ButtonData.OK_DONE);
@@ -270,7 +270,7 @@ public class LabTestDialog {
         // Add app icon if available
         try {
             Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png")));
         } catch (Exception e) {
             // If icon loading fails, just continue
             System.err.println("Could not load application icon: " + e.getMessage());
@@ -292,7 +292,7 @@ public class LabTestDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                LabTestDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                LabTestDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         ButtonType completeButtonType = new ButtonType("Complete Test", ButtonBar.ButtonData.OK_DONE);
@@ -382,7 +382,7 @@ public class LabTestDialog {
         // Add app icon if available
         try {
             Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png")));
         } catch (Exception e) {
             // If icon loading fails, just continue
             System.err.println("Could not load application icon: " + e.getMessage());
@@ -405,7 +405,7 @@ public class LabTestDialog {
         // Apply custom styling to the dialog
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(
-                LabTestDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                LabTestDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         // Set the button types
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
@@ -536,7 +536,7 @@ public class LabTestDialog {
         // Add app icon if available
         try {
             Stage dialogStage = (Stage) dialog.getDialogPane().getScene().getWindow();
-            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/com/inteliMedExpress/resources/images/logo.png")));
+            dialogStage.getIcons().add(new Image(LabTestDialog.class.getResourceAsStream("/resources/com/inteliMedExpress/images/logo.png")));
         } catch (Exception e) {
             // If icon loading fails, just continue
             System.err.println("Could not load application icon: " + e.getMessage());
@@ -557,7 +557,7 @@ public class LabTestDialog {
         // Add custom styling
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                LabTestDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                LabTestDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
 
         ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.NO);

@@ -1,0 +1,10 @@
+2025-04-27 11:11:31.104 [INFO] com.inteliMedExpress.utils.AppLogger: Logger initialized. Log file: logs/app_2025-04-27.log
+2025-04-27 11:11:31.117 [INFO] LoginController: LoginController initialized
+2025-04-27 11:11:42.518 [INFO] LoginController: Login attempt for user: richard.collins
+2025-04-27 11:11:44.252 [INFO] LoginController: Server response: {"profession":"DOCTOR","surname":"Collins","name":"Richard","message":"User logged in successfully!","department":"General","status":"success"}
+2025-04-27 11:11:46.308 [INFO] LoginController: richard.collins successfully logged in.
+2025-04-27 11:11:46.309 [INFO] LoginController: Department received from server: General
+2025-04-27 11:11:46.318 [INFO] LoginController: Department set to: General
+2025-04-27 11:11:46.318 [INFO] LoginController: Processing navigation for department: General
+2025-04-27 11:11:46.319 [INFO] LoginController: Directing to General Medicine interface
+2025-04-27 11:11:48.369 [INFO] LoginController: Loaded General controller with department General

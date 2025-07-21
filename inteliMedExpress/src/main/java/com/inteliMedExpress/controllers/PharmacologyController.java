@@ -286,12 +286,12 @@ public class PharmacologyController {
     private void initializeRefreshButton() {
         try {
             // Load static icon for normal state
-            staticRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-static.png")));
+            staticRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-static.png")));
             staticRefreshIcon.setFitHeight(20);
             staticRefreshIcon.setFitWidth(20);
 
             // Load animated GIF for active state
-            animatedRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/com/inteliMedExpress/resources/images/refresh-animated.gif")));
+            animatedRefreshIcon = new ImageView(new Image(getClass().getResourceAsStream("/resources/com/inteliMedExpress/images/refresh-animated.gif")));
             animatedRefreshIcon.setFitHeight(20);
             animatedRefreshIcon.setFitWidth(20);
 
@@ -515,7 +515,7 @@ public class PharmacologyController {
             // Apply the same CSS as other dialogs
             DialogPane dialogPane = dialog.getDialogPane();
             dialogPane.getStylesheets().add(
-                    MedicationDialog.class.getResource("/com/inteliMedExpress/resources/css/patient_dialogs.css").toExternalForm());
+                    MedicationDialog.class.getResource("/resources/com/inteliMedExpress/css/patient_dialogs.css").toExternalForm());
             dialogPane.getStyleClass().add("dialog-pane");
 
             // Set up the buttons
@@ -668,7 +668,7 @@ public class PharmacologyController {
     @FXML
     public void logout(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com/inteliMedExpress/fxml/login.fxml"));
             Parent loginRoot = loader.load();
             Scene loginScene = new Scene(loginRoot);
             Stage currentStage = (Stage) logout_button.getScene().getWindow();

@@ -6,7 +6,6 @@ import com.inteliMedExpress.classes.medicalRecords.MedicalRecord;
 import com.inteliMedExpress.classes.patients.Patient;
 import com.inteliMedExpress.classes.UIHelper;
 import com.inteliMedExpress.utils.AppLogger;
-import com.inteliMedExpress.utils.HttpsUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -172,24 +171,24 @@ public class LoginController {
             AppLogger.info(CLASS_NAME, "Directing to Pharmacology interface");
         }
         else if ("Cardiology".equalsIgnoreCase(department)) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            fxmlPath = "/resources/com/inteliMedExpress/fxml/GeneralMedicineDoctor.fxml";
             title += " - Cardiology " + roleText;
             AppLogger.info(CLASS_NAME, "Directing to Cardiology interface");
         }
         else if ("Pediatrics".equalsIgnoreCase(department)) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            fxmlPath = "/resources/com/inteliMedExpress/fxml/GeneralMedicineDoctor.fxml";
             title += " - Pediatrics " + roleText;
             AppLogger.info(CLASS_NAME, "Directing to Pediatrics interface");
         }
         else if ("General".equalsIgnoreCase(department) || "General Medicine".equalsIgnoreCase(department)) {
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            fxmlPath = "/resources/com/inteliMedExpress/fxml/GeneralMedicineDoctor.fxml";
             title += " - General Medicine " + roleText;
             AppLogger.info(CLASS_NAME, "Directing to General Medicine interface");
         }
         else {
             // Default case
             AppLogger.warning(CLASS_NAME, "Unknown department '" + department + "', defaulting to General Medicine");
-            fxmlPath = "/com/inteliMedExpress/resources/fxml/GeneralMedicineDoctor.fxml";
+            fxmlPath = "/resources/com/inteliMedExpress/fxml/GeneralMedicineDoctor.fxml";
             title += " - " + department + " " + roleText;
         }
 
@@ -304,7 +303,7 @@ public class LoginController {
 
     public void register(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/inteliMedExpress/resources/fxml/register.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/com/inteliMedExpress/fxml/register.fxml"));
             Parent registerRoot = loader.load();
             Scene registerScene = new Scene(registerRoot);
             Stage currentStage = (Stage) register_hyper.getScene().getWindow();
